@@ -15,12 +15,12 @@
             echo '</div>';
         }else{
             foreach($listCar as $car){
-                $hinhanh = !empty($car['link']) ? $car['link'] : 'https://via.placeholder.com/300x200?text=No+Image';
-                $giathue = numfmt_format($car['giathue'],0,'...','...');
-                $hangxe = isset($car['tenhang']) ? $car['tenhang'] : 'Chưa rõ hãng';
-                $loaixe = isset($car['loaixe']) ? $car['loaixe'] : 'Chưa rõ loại';
+                $hinhAnh = !empty($car['hinh_anh']) ? $car['hinh_anh'] : 'https://via.placeholder.com/300x200?text=No+Image';
+                $giaThue = number_format($car['giathue'],0,',','.');
+                $hangXe = isset($car['tenhang']) ? $car['tenhang'] : 'Chưa rõ hãng';
+                $loaiXe = isset($car['loaixe']) ? $car['loaixe'] : 'Chưa rõ loại';
 
-                echo '
+        echo '
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card h-100 shadow-sm border-0 hover-card">
                     <div class="position-relative" style="height: 200px; overflow: hidden;">
@@ -31,7 +31,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-truncate fw-bold text-primary" title="' . $car['tenxe'] . '">
                             ' . $car['tenxe'] . '
-                        </h5>
+                           </h5>
                         
                         <div class="mb-3">
                             <small class="text-muted"><i class="fa-solid fa-tag"></i> ' . $hangXe . '</small>
