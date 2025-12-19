@@ -37,7 +37,7 @@ class taikhoanController
             if ($this->dao->checkExist($username)) {
                 echo "<script>
                     alert('Tên đăng nhập này đã tồn tại!');
-                    window.location='/web_project/View/taikhoan/register.html';
+                    window.location='/web_project/View/taikhoan/register.php';
                     </script>";
                 exit;
             }
@@ -46,7 +46,7 @@ class taikhoanController
                 //header("Location: index.php?controller=taikhoan&action=login");
                 echo "<script>
                     alert('Đăng ký thành công!');
-                    window.location='/web_project/View/taikhoan/login.html';
+                    window.location='/web_project/View/taikhoan/login.php';
                     </script>";
                 exit;
             } else {
@@ -76,14 +76,112 @@ class taikhoanController
             }
         }
     }
-    //xóa sesion
+
     public function logout()
     {
         session_unset();
         session_destroy();
         header("Location: /web_project/index.php");
         exit();
+    }
+    public function updateinforUser()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if (!isset($_SESSION['idtaikhoan'])) {
+                echo "<script>alert('Vui lòng đăng nhập!'); 
+            window.location='/web_project/View/taikhoan/login.php';</script>";
+                exit;
+            }
 
+            $idtaikhoan = $_SESSION['idtaikhoan'];
+            $idthongtin = $_POST["idthongtin"] ?? 0;
+            $hoten = trim($_POST["hoten"] ?? "");
+            $sdt = trim($_POST["sdt"] ?? "");
+            $email = trim($_POST["email"] ?? "");
+            $cccd = trim($_POST["cccd"] ?? "");
+
+            if ($hoten === "" || $sdt === "" || $email === "" || $cccd === "") {
+                echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); history.back();</script>";
+                exit;
+            }
+
+            // old img
+            $anhdaidien = "";
+            $thongtinCu = $this->dao->getThongTinTaiKhoanbyID($idtaikhoan);
+            if ($thongtinCu) {
+                $anhdaidien = $thongtinCu->get_anhdaidien();
+            }
+
+            // update img
+            if (isset($_FILES['anhdaidien']) && $_FILES['anhdaidien']['error'] === 0) {
+                // del old img
+                if ($anhdaidien != "") {
+                    $oldImagePath = __DIR__ . "/../View/image/" . $anhdaidien;
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath); //del
+                    }
+                }
+
+                // new img
+                $filename = $_FILES["anhdaidien"]["name"];
+                $tmpname = $_FILES["anhdaidien"]["tmp_name"];
+                $path = __DIR__ . "/../View/image/" . $filename;
+                move_uploaded_file($tmpname, $path);
+                $anhdaidien = $filename;
+            }
+
+            $thongtin = new thongtintaikhoan($idthongtin, $idtaikhoan, $hoten, $sdt, $email, $cccd, $anhdaidien);
+
+            try {
+                if ($idthongtin > 0) {
+                    if ($this->dao->updateThongTinTaiKhoan($thongtin)) {
+                        echo "<script>alert('Cập nhật thành công!'); window.location='/web_project/index.php';</script>";
+                    } else {
+                        echo "<script>alert('Cập nhật thất bại!'); history.back();</script>";
+                    }
+                } else {
+                    if ($this->dao->addThongTinTaiKhoan($thongtin)) {
+                        echo "<script>alert('Thêm thông tin thành công!'); window.location='/web_project/index.php';</script>";
+                    } else {
+                        echo "<script>alert('Thêm thất bại!'); history.back();</script>";
+                    }
+                }
+            } catch (Exception $e) {
+                echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
+            }
+            exit;
+        }
+    }
+    public function deleteAccount(){
+    if (!isset($_SESSION['idtaikhoan'])) {
+        echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
+        exit;
     }
 
+    $idtaikhoan = $_SESSION['idtaikhoan'];
+    
+    $thongtin = $this->dao->getThongTinTaiKhoanbyID($idtaikhoan);
+    if ($thongtin) {
+        $anhdaidien = $thongtin->get_anhdaidien();
+        if ($anhdaidien != "") {
+            $imagePath = __DIR__ . "/../View/image/" . $anhdaidien;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+    }
+    
+    try {
+        if ($this->dao->deleteTaikhoan($idtaikhoan)) {
+            session_unset();
+            session_destroy();
+            echo "<script>alert('Xóa tài khoản thành công!'); window.location='/web_project/index.php';</script>";
+        } else {
+            echo "<script>alert('Xóa tài khoản thất bại!'); history.back();</script>";
+        }
+    } catch (Exception $e) {
+        echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
+    }
+    exit;
+}
 }

@@ -2,7 +2,7 @@
 session_start();
 include "Model/Database/dbconnect.php";
 include "Model/DAO/CarDAO.php";
-//lay session
+//sd session
 $controller = $_GET['controller'] ?? 'home';
 $action = $_GET['action'] ?? 'index';
 if ($controller === 'taikhoan') {
@@ -23,7 +23,6 @@ echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nh
 echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho thuê xe nhanh hơn độ ghen của vợ bạn >v<</h3>";
 
 
-// echo "<p>ở góc trên bên phải để xem menu xổ</p>";
 
 echo '<div class="container">';
 switch ($controller) {
@@ -38,7 +37,6 @@ switch ($controller) {
     case 'vehicle':
         require_once "Controller/VehicleController.php";
         require_once "Model/Object/xe.php";
-        require_once "Model/Object/hangxe.php";
         require_once "Model/Object/anhxe.php";
         $vehicle = new vehicleController();
         if (method_exists($vehicle, $action)) {
@@ -48,7 +46,7 @@ switch ($controller) {
         }
         break;
     case 'taikhoan':
-        // Vì ta đã khởi tạo $taikhoan ở trên, ở đây chỉ cần gọi hiển thị
+
         if (method_exists($taikhoan, $action)) {
             $taikhoan->$action();
         } else {

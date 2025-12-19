@@ -10,18 +10,13 @@
 <div class="container">
     <h2>Thông tin xe</h2>
 
-    <form action="xuly_themxe.php" method="post" enctype="multipart/form-data">
+    <form action="/web_project/index.php?controller=vehicle&action=add" method="post" enctype="multipart/form-data">
 
         <label>Tên xe<span style="color: red">*</span></label>
         <input type="text" name="tenxe" required>
 
         <label>Hãng xe<span style="color: red">*</span></label>
-        <select name="idhangxe" required>
-            <option value="">-- Chọn hãng xe --</option>
-            <option value="1">Honda</option>
-            <option value="2">Yamaha</option>
-            <option value="3">Toyota</option>
-        </select>
+        <input type="text" name="hangxe" required>
 
         <label>Loại xe<span style="color: red">*</span></label>
         <div class="radio-group">
@@ -38,7 +33,7 @@
         <label>Ảnh mô tả<span style="color: red">*(1 hoặc nhiều)</span></label>
         <input type="file" id="anhxe" name="anhxe[]" multiple accept="image/*">
 
-        <!-- Preview ảnh -->
+        <!-- Preview  -->
         <div id="preview"></div>
 
         <button type="submit">Đăng</button>
