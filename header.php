@@ -42,8 +42,8 @@
                         <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-user fa-user-circle"></i>Tài Khoản</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="index.php?controller=user&action=login">Đăng Nhập</a></li>
-                            <li><a class="dropdown-item" href="index.php?controller=user&action=register">Đăng Ký</a></li>
+                            <li><a class="dropdown-item" href="View/taikhoan/login.html">Đăng Nhập</a></li>
+                            <li><a class="dropdown-item" href="View/taikhoan/register.html">Đăng Ký</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
