@@ -1,6 +1,6 @@
 <?php
-    // $carDAO = new CarDAO();
-    // $listCar = $carDAO->getAllCar(); 
+    $vehicleDAO = new vehicleDAO($conn);
+    $listCar = $vehicleDAO->getAllHangxe();
 
-    // include "./View/Home/home.php";
+    include "./View/Home/home.php";
 ?> 

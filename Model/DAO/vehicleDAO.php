@@ -1,7 +1,7 @@
 <?php
-require_once("../Object/xe.php");
-require_once("../Object/anhxe.php");
-require_once("../Object/hangxe.php");
+require_once(__DIR__ . "/../Object/xe.php");
+require_once(__DIR__ . "/../Object/anhxe.php");
+require_once(__DIR__ . "/../Object/hangxe.php");
 
 class vehicleDAO
 {
@@ -12,7 +12,6 @@ class vehicleDAO
         $this->conn = $conn;
     }
 
-    //HÃNG XE 
     public function addHangxe($hangxe)
     {
         $tenhangxe = $hangxe->get_tenhang();
@@ -63,8 +62,6 @@ class vehicleDAO
         return $row["idhangxe"];
     }
 
-
-    // XE 
     public function addXe($xe)
     {
         $idhangxe = $xe->get_idhangxe();
@@ -127,7 +124,6 @@ class vehicleDAO
         return $this->fetchXeList("SELECT * FROM xe WHERE tenxe LIKE '%$tenxe%'");
     }
 
-    // ẢNH XE 
     public function addAnhxe($anhxe)
     {
         $idanh = $anhxe->get_idanh();
@@ -163,6 +159,43 @@ class vehicleDAO
         return $list;
     }
 
-   
+    public function getDanhSachXeHienThi() {
+        $sql = "SELECT x.*, h.tenhangxe AS tenhang, a.duongdan AS hinh_anh
+                FROM xe x 
+                LEFT JOIN hangxe h ON x.idhangxe = h.idhangxe
+                LEFT JOIN (
+                    SELECT * FROM anhxe GROUP BY idxe
+                ) a ON x.idxe = a.idxe 
+                ORDER BY x.idxe DESC";
+                
+        $result = mysqli_query($this->conn, $sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
+    public function getChiTietXe($idxe)
+    {
+        $sql = "SELECT x.*, h.tenhangxe, t.hoten as tenchuxe, t.sdt 
+                FROM xe x 
+                LEFT JOIN hangxe h ON x.idhangxe = h.idhangxe
+                LEFT JOIN thongtintaikhoan t ON x.idchuxe = t.idtaikhoan
+                WHERE x.idxe = '$idxe'";
+                
+        $result = mysqli_query($this->conn, $sql);
+        $xe = mysqli_fetch_assoc($result);
+
+        if ($xe) {
+            $sqlAnh = "SELECT * FROM anhxe WHERE idxe = '$idxe'";
+            $resultAnh = mysqli_query($this->conn, $sqlAnh);
+            
+            $arrAnh = array();
+            while ($row = mysqli_fetch_assoc($resultAnh)) {
+                $arrAnh[] = $row['duongdan']; 
+            }
+            
+            $xe['ds_anh'] = $arrAnh;
+        }
+
+        return $xe;
+    }
 }
 ?>
