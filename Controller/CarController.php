@@ -4,6 +4,6 @@
         $carDAO = new CarDAO();
         $xe = $carDAO->getOneCarById($id);
 
-        include "../View/Home/carDetail.php";
+        include "./View/Home/carDetail.php";
     }
 ?>
