@@ -20,8 +20,3 @@
 - updateAnhxe
 - getAnhxebyIdxe
 
-4.thongtinxe:
-- addThongtinxe
-- deleteThongtinxe
-- updateThongtinxe
-- getThongtinxebyIdxe

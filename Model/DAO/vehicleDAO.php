@@ -1,7 +1,6 @@
 <?php
 require_once("../Object/xe.php");
 require_once("../Object/anhxe.php");
-require_once("../Object/thongtinxe.php");
 require_once("../Object/hangxe.php");
 
 class vehicleDAO
@@ -98,7 +97,7 @@ class vehicleDAO
         $result = mysqli_query($this->conn, $sql);
         $list = array();
         while ($row = mysqli_fetch_assoc($result)) {
-            $list[] = new xe($row['idxe'], $row['idhangxe'], $row['tenxe'], $row['giathue'], $row['loaixe']);
+            $list[] = new xe($row['idxe'], $row['idhangxe'], $row['tenxe'], $row['giathue'], $row['mota'], $row['loaixe'], $row['idchuxe']);
         }
         return $list;
     }
@@ -164,37 +163,6 @@ class vehicleDAO
         return $list;
     }
 
-    // THÔNG TIN XE 
-    public function addThongtinxe($tt)
-    {
-        $idxe = $tt->get_idxe();
-        $mota = $tt->get_mota();
-        $sql = "INSERT INTO thongtinxe VALUES ('$idxe', '$mota')";
-        return mysqli_query($this->conn, $sql);
-    }
-
-    public function deleteThongtinxe($idthongtin)
-    {
-        $sql = "DELETE FROM thongtinxe WHERE idthongtin = '$idthongtin'";
-        return mysqli_query($this->conn, $sql);
-    }
-
-    public function updateThongtinxe($tt)
-    {
-        $idthongtin = $tt->get_idthongtin();
-        $idxe = $tt->get_idxe();
-        $mota = $tt->get_mota();
-        $sql = "UPDATE thongtinxe SET idxe='$idxe', mota='$mota' WHERE idthongtin='$idthongtin'";
-        return mysqli_query($this->conn, $sql);
-    }
-
-    public function getThongtinxebyIdxe($idxe)
-    {
-        $sql = "SELECT * FROM thongtinxe WHERE idxe = '$idxe'";
-        $result = mysqli_query($this->conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        return new thongtinxe($row['idthongtin'], $row['idxe'], $row['mota']);
-
-    }
+   
 }
 ?>

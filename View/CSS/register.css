@@ -1,0 +1,106 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== BODY ===== */
+body {
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== TIÊU ĐỀ ===== */
+.header {
+    color: #eeedf5;
+    text-align: center;
+    border-radius: 5px;
+    /* background-image: url("https://wallpapers.com/images/hd/pretty-purple-1920-x-1080-background-tcqxrh4icc58kbyb.jpg"); */
+    background-image: url("https://png.pngtree.com/background/20211215/original/pngtree-sunset-sunset-sky-clouds-sunset-photography-pictures-with-pictures-picture-image_1504665.jpg");
+    background-size: cover;
+    background-clip: text;
+    color: transparent;
+    animation: animate 15s linear infinite;
+}
+@keyframes animate{
+    to{
+        background-position-x: -500px;
+    }
+}
+h1{
+    font-size: 100px;
+    font-family: "Noto Sans" ,sans-serif;
+   
+    
+}
+
+/* ===== LABEL ===== */
+label {
+    width: 300px;
+    margin-bottom: 5px;
+    color: #f1f1f1;
+    font-size: 14px;
+}
+
+/* ===== INPUT ===== */
+input {
+    width: 300px;
+    height: 40px;
+    padding: 0 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    font-size: 14px;
+}
+
+/* ===== BUTTON GROUP ===== */
+.btn {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* ===== BUTTON ===== */
+button {
+    width: 48%;
+    height: 40px;
+
+    border: none;
+    border-radius: 5px;
+
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* BACK */
+#btnBack {
+    background: #bdc3c7;
+}
+
+#btnBack a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    line-height: 40px;
+}
+
+/* REGISTER */
+#btnRegister {
+    background: #2ecc71;
+    color: #fff;
+}
+
+#btnRegister:hover {
+    background: #27ae60;
+}

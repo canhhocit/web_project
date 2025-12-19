@@ -4,16 +4,21 @@ class xe{
     private $idhangxe;
     private $tenxe;
     private $giathue;
+    private $mota;
     private $loaixe;
+    private $idchuxe;
     
-    public function __construct($idxe, $idhangxe, $tenxe, $giathue, $loaixe){
+    public function __construct($idxe, $idhangxe, $tenxe, $giathue, $mota, $loaixe, $idchuxe){
         $this->idxe = $idxe;
         $this->idhangxe = $idhangxe;
         $this->tenxe = $tenxe;
         $this->giathue = $giathue;
+        $this->mota = $mota;
         $this->loaixe = $loaixe;
+        $this->idchuxe = $idchuxe;
     }
     //get set
+
     public function get_idhangxe(){
         return $this->idhangxe;
     }
@@ -28,6 +33,18 @@ class xe{
     }
     public function get_loaixe(){
         return $this->loaixe;
+    }
+    public function get_mota(){
+        return $this->mota;
+    }
+    public function get_idchuxe(){
+        return $this->idchuxe;
+    }
+    public function set_idchuxe($idchuxe){
+        $this->idchuxe = $idchuxe;
+    }   
+    public function set_mota($mota){
+        $this->mota = $mota;
     }
 
     public function set_idhangxe($idhangxe){
