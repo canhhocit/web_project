@@ -4,8 +4,8 @@
         // private static $instance = null;
         public function getAllCar(){
             global $conn;
-            $sql = "SELECT x.*, h.tenhangxe, a.duongdan FROM xe x 
-            JOIN hangxe h ON x.hangxe = h.idhangxe
+            $sql = "SELECT x.*, h.tenhang, a.duongdan FROM xe x 
+            JOIN hangxe h ON x.idhangxe = h.idhangxe
             LEFT JOIN (SELECT * FROM anhxe GROUP BY idxe) a ON x.idxe = a.idxe";
             $pstm = mysqli_query($conn, $sql);
             return mysqli_fetch_all($pstm, MYSQLI_ASSOC);
@@ -14,8 +14,8 @@
         // cái này lấy 1 xe cho mục chi tiết 
         public function getOneCarById($id){
             global $conn;
-            $sql = "SELECT x.*, h.tenhangxe, a.duongdan FROM xe x 
-            JOIN hangxe h ON x.hangxe = h.idhangxe
+            $sql = "SELECT x.*, h.tenhang, a.duongdan FROM xe x 
+            JOIN hangxe h ON x.idhangxe = h.idhangxe
             LEFT JOIN (SELECT * FROM anhxe GROUP BY idxe) a ON x.idxe = a.idxe
             WHERE x.idxe = ?";
             $pstm = mysqli_prepare($conn, $sql);
