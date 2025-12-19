@@ -1,4 +1,5 @@
 <?php 
+
     $vehicleDAO = new vehicleDAO($conn);
 
     if (isset($_GET['action'])) {
@@ -31,4 +32,5 @@
             header("Location: index.php");
             break;
     }
+
 ?>
