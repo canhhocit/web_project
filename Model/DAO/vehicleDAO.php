@@ -197,5 +197,17 @@ class vehicleDAO
 
         return $xe;
     }
+
+    public function timKiemXe($keyword) {
+    $sql = "SELECT x.*, h.tenhangxe AS tenhang, a.duongdan AS hinh_anh
+            FROM xe x 
+            LEFT JOIN hangxe h ON x.idhangxe = h.idhangxe
+            LEFT JOIN (SELECT * FROM anhxe GROUP BY idxe) a ON x.idxe = a.idxe 
+            WHERE x.tenxe LIKE '%$keyword%' 
+            ORDER BY x.idxe DESC";
+            
+    $result = mysqli_query($this->conn, $sql);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
 }
 ?>
