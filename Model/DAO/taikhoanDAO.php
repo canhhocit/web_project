@@ -13,7 +13,7 @@ class taikhoanDAO
     {
         $username = $taikhoan->get_username();
         $pass = $taikhoan->get_pass();
-        $sql = "INSERT INTO taikhoan (username, pass) VALUES ('$username', '$pass')";
+        $sql = "INSERT INTO taikhoan (username, pass, lachuxe, languoithue) VALUES ('$username', '$pass', '0', '0')";
         $result = mysqli_query($this->conn, $sql);
         return $result;
     }
@@ -63,9 +63,17 @@ class taikhoanDAO
         $thongtin = new thongtintaikhoan($row['idthongtin'], $row['idtaikhoan'], $row['hoten'], $row['sdt'], $row['email'], $row['cccd'], $row['anhdaidien']);
         return $thongtin;
     }
+    //-----------------
     public function deleteTaikhoan($idtaikhoan)
     {
         return $this->delTTTK($idtaikhoan) && $this->delTK($idtaikhoan);
+    }
+    //-----------------
+    public function updateisChuxe($idtaikhoan){
+        return mysqli_query($this->conn,"UPDATE taikhoan SET lachuxe = '1' WHERE idtaikhoan = '$idtaikhoan'");
+    }
+    public function updateisNguoithue($idtaikhoan){
+        return mysqli_query($this->conn,"UPDATE taikhoan SET languoithue = '1' WHERE idtaikhoan = '$idtaikhoan'");
     }
 
 }
