@@ -1,16 +1,23 @@
 <?php
+session_start();
 include "Model/Database/dbconnect.php";
-include "Model/DAO/vehicleDAO.php";
-include "header.php";
-//include "Model/Object/xe.php";
-// include "Model/Object/hangxe.php";
-// include "Model/Object/anhxe.php";
-// include "Model/Object/taikhoan.php";
 
-
+include "Model/DAO/CarDAO.php";
+//lay session
 $controller = $_GET['controller'] ?? 'home';
 $action = $_GET['action'] ?? 'index';
+if ($controller === 'taikhoan') {
+    require_once "Controller/taikhoanController.php";
+    require_once "Model/Object/taikhoan.php";
+    require_once "Model/Object/thongtintaikhoan.php";
+    $taikhoan = new taikhoanController();
 
+    if ($action === 'checklogin' || $action === 'add' || $action === 'logout') {
+        $taikhoan->$action();
+        exit();
+    }
+}
+include "header.php";
 echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
 echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
 echo '<div class="container">';
@@ -35,10 +42,7 @@ switch ($controller) {
         }
         break;
     case 'taikhoan':
-        require_once "Controller/taikhoanController.php";
-        require_once "Model/Object/taikhoan.php";
-        require_once "Model/Object/thongtintaikhoan.php";
-        $taikhoan = new taikhoanController();
+        // Vì ta đã khởi tạo $taikhoan ở trên, ở đây chỉ cần gọi hiển thị
         if (method_exists($taikhoan, $action)) {
             $taikhoan->$action();
         } else {
@@ -53,4 +57,3 @@ switch ($controller) {
 echo '</div>';
 
 include "footer.php";
-?>

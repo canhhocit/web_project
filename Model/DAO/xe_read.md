@@ -20,3 +20,4 @@
 - updateAnhxe
 - getAnhxebyIdxe
 
+__DIR__ = thư mục chứa file hiện tại

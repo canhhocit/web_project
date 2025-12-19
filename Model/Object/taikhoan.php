@@ -9,22 +9,22 @@ class taikhoan{
         $this->pass = $pass;
     }
 
-    public function getIdtaikhoan(){
+    public function get_idtaikhoan(){
         return $this->idtaikhoan;
     }
-    public function setIdtaikhoan($idtaikhoan){
+    public function set_idtaikhoan($idtaikhoan){
         $this->idtaikhoan=$idtaikhoan;
     }
-    public function getUsername(){
+    public function get_username(){
         return $this->username;
     }
-    public function setUsername($username){
+    public function set_username($username){
         $this->username=$username;
     }
-    public function getPass(){
+    public function get_pass(){
         return $this->pass;
     }
-    public function setPass($pass){
+    public function set_pass($pass){
         $this->pass=$pass;
     }
     

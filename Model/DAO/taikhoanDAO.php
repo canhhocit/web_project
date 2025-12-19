@@ -1,6 +1,7 @@
 <?php
-require_once("../Object/taikhoan.php");
-require_once("../Object/thongtintaikhoan.php");
+require_once __DIR__ . "/../Object/taikhoan.php";
+require_once __DIR__ . "/../Object/thongtintaikhoan.php";
+
 class taikhoanDAO
 {
     private $conn;
@@ -17,6 +18,19 @@ class taikhoanDAO
         $result = mysqli_query($this->conn, $sql);
         return $result;
     }
+    public function checkExist($username){
+        $rs= mysqli_query($this->conn,"select * from taikhoan where username = '$username'");
+        return mysqli_num_rows($rs) > 0;
+    }
+    public function checkLogin($username,$pass){
+        $result = mysqli_query($this->conn, "select * from taikhoan where username = '$username' and pass = '$pass'");
+        return mysqli_num_rows($result) > 0;
+    }
+    public function getId($username){
+        $rs =  mysqli_query($this->conn,"select idtaikhoan from taikhoan where username = '$username'");
+        $row = mysqli_fetch_array($rs);
+        return $row["idtaikhoan"];
+    }
     private function delTK($idtaikhoan)
     {
         $sql = "DELETE FROM taikhoan WHERE idtaikhoan = '$idtaikhoan'";
@@ -27,7 +41,7 @@ class taikhoanDAO
     //$idthongtin, $idtaikhoan, $hoten, $sdt, $email, $cccd, $anhdaidien
     public function addThongTinTaiKhoan($thongtin)
     {
-        $idtaikhoan = $thongtin->get_idtaikhoan();
+        $idtaikhoan = $thongtin->getIdtaikhoan();
         $hoten = $thongtin->get_hoten();
         $sdt = $thongtin->get_sdt();
         $email = $thongtin->get_email();
