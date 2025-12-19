@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Register</title>
+  </head>
+  <link rel="stylesheet" href="../CSS/register.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Register</title>
-</head>
-<link rel="stylesheet" href="../CSS/register.css">
+  <body>
+    <div class="header">
+      <h1>Register</h1>
+    </div>
+    <form
+      action="/web_project/index.php?controller=taikhoan&action=add" method="post" id="registerForm" >
+      <label>Username:</label><br />
+      <input type="text" id="username" name="username" /><br /><br />
 
-<body>
-  <div class="header">
-    <h1>Register</h1>
-  </div>
-  <label>Username:</label><br />
-  <input type="text" id="username" /><br /><br />
+      <label>Password:</label><br />
+      <input type="password" id="password" name="password" /><br /><br />
 
-  <label>Password:</label><br />
-  <input type="password" id="password" /><br /><br />
-  <label>Confirm Password:</label><br />
-  <input type="password" id="confpassword" /><br /><br />
-  <div class="btn">
-    <button id="btnBack"><a href="login.html">Back</a></button>
-    <button id="btnRegister">Register</button>
-  </div>
-</body>
-<script src="../JS/register.js"></script>
+      <label>Confirm Password:</label><br />
+      <input
+        type="password"
+        id="confpassword"
+        name="confpassword"
+      /><br /><br />
 
+      <div class="btn">
+        <a href="login.html" id="btnBack">Back</a>
+        <button type="submit" id="btnRegister">Register</button>
+      </div>
+    </form>
+  </body>
+  <script src="../JS/register.js"></script>
 </html>

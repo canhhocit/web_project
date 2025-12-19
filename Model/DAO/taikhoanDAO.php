@@ -1,6 +1,7 @@
 <?php
-require_once("../Object/taikhoan.php");
-require_once("../Object/thongtintaikhoan.php");
+require_once __DIR__ . "/../Object/taikhoan.php";
+require_once __DIR__ . "/../Object/thongtintaikhoan.php";
+
 class taikhoanDAO
 {
     private $conn;
@@ -27,7 +28,7 @@ class taikhoanDAO
     //$idthongtin, $idtaikhoan, $hoten, $sdt, $email, $cccd, $anhdaidien
     public function addThongTinTaiKhoan($thongtin)
     {
-        $idtaikhoan = $thongtin->get_idtaikhoan();
+        $idtaikhoan = $thongtin->getIdtaikhoan();
         $hoten = $thongtin->get_hoten();
         $sdt = $thongtin->get_sdt();
         $email = $thongtin->get_email();

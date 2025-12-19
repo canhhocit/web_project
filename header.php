@@ -11,6 +11,7 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="View/CSS/modal.css">
 </head>
 
 <body>
@@ -32,7 +33,7 @@
 
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="btn btn-warning text-dark fw-bold me-2" href="#">
+                        <a class="btn btn-warning text-dark fw-bold me-2" href="View/xe/addVehicle.html">
                             <i class="fa-solid fa-plus">
                             </i>
                             Đăng Xe Lên Diễn Đàn Ngay
@@ -51,8 +52,13 @@
                                 <h6 class="dropdown-header">Quản Lý(Login rồi mới cho vào đây)</h6>
                             </li>
                             <li>
+                                <a class="dropdown-item open-modal-btn">
+                                    <i class="fa-solid fa-gear"></i> Thông tin cá nhân
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="index.php?controller=car&action=mycars">
-                                    <i class="fa-solid fa-car"></i> Xe Của Tôi (minh)
+                                    <i class="fa-solid fa-car"></i> Xe Của Tôi 
                                 </a>
                             </li>
                             <li>
@@ -80,3 +86,35 @@
             </div>
         </div>
     </nav>
+    <!-- MODAL  của CẢnh-->
+     <div class="modal">
+      <div class="modal_inner">
+        <div class="modal_header">
+          <h3>Thông tin tài khoản</h3>
+          <span class="close">x</span>
+        </div>
+        
+        <div class="modal_body">
+          <div class="input_infor">
+            <label for="hoten">Họ tên<span style="color: red">*</span></label>
+            <input type="text" name="hoten" placeholder="Nhập họ tên" />
+            <label for="sdt">SĐT<span style="color: red">*</span></label>
+            <input type="text" name="sdt" placeholder="Nhập SDT" />
+            <label for="email">Email<span style="color: red">*</span></label>
+            <input type="text" name="email" placeholder="Nhập Email" />
+            <label for="cccd">CCCD<span style="color: red">*</span></label>
+            <input type="text" name="cccd" placeholder="Nhập CCCD" />
+            <label for="anhdaidien">Chọn ảnh upload</label>
+            <input type="file" name="anhdaidien" />
+          </div>
+          <div class="sub_modal">
+            <i>Các trường dữ liệu có dấu * là bắt buộc</i>
+          </div>
+        </div>
+
+        <div class="modal_footer">
+          <button class="acp-btn" id="btn_acp">Xác nhận</button>
+          <button class="close-btn">Đóng</button>
+        </div>
+      </div>
+    </div>
