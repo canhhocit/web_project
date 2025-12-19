@@ -16,21 +16,43 @@ echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho 
 // echo "<p>ở góc trên bên phải để xem menu xổ</p>";
 
 echo '<div class="container">';
-   switch ($controller){
-        case 'home':
-            include_once "./Controller/HomeController.php";
-            
-            break;
-        case 'car':
-            include_once "./Controller/CarController.php";
+switch ($controller) {
+    case 'home':
+        include_once "./Controller/HomeController.php";
 
-            break;
-        default:
-            echo "<h1>Làm gì có trang này</h1>";
-            break;
-   }
-   echo '</div>';
+        break;
+    case 'car':
+        include_once "Controller/CarController.php";
+
+        break;
+    case 'vehicle':
+        require_once "Controller/VehicleController.php";
+        require_once "Model/Object/xe.php";
+        require_once "Model/Object/hangxe.php";
+        require_once "Model/Object/anhxe.php";
+        $vehicle = new vehicleController();
+        if (method_exists($vehicle, $action)) {
+            $vehicle->$action();
+        } else {
+            $vehicle->index();
+        }
+        break;
+    case 'taikhoan':
+        require_once "Controller/taikhoanController.php";
+        require_once "Model/Object/taikhoan.php";
+        require_once "Model/Object/thongtintaikhoan.php";
+        $taikhoan = new taikhoanController();
+        if (method_exists($taikhoan, $action)) {
+            $taikhoan->$action();
+        } else {
+            $taikhoan->index();
+        }
+        break;
+    default:
+        echo "<h1>Làm gì có trang này</h1>";
+        break;
+}
+echo '</div>';
 
 include "footer.php";
 ?>
-
