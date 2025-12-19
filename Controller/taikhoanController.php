@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . "/../Model/Database/dbconnect.php";
 require_once __DIR__ . "/../Model/DAO/taikhoanDAO.php";
 require_once __DIR__ . "/../Model/Object/taikhoan.php";
@@ -28,15 +29,19 @@ class taikhoanController
             $password = trim($_POST["password"] ?? "");
             $confpassword = trim($_POST["confpassword"] ?? "");
             if ($username === "" || $password === "" || $confpassword === "") {
-                echo "Thiếu thông tin!";
                 return;
             }
             if ($password !== $confpassword) {
-                echo "Mật khẩu không khớp!";
                 return;
             }
+            if ($this->dao->checkExist($username)) {
+                echo "<script>
+                    alert('Tên đăng nhập này đã tồn tại!');
+                    window.location='/web_project/View/taikhoan/register.html';
+                    </script>";
+                exit;
+            }
             $taikhoan = new taikhoan(0, $username, $password);
-
             if ($this->dao->addTaiKhoan($taikhoan)) {
                 //header("Location: index.php?controller=taikhoan&action=login");
                 echo "<script>
@@ -48,9 +53,37 @@ class taikhoanController
                 echo "<script>
                     alert('Đăng ký thất bại!');
                     </script>";
-                echo "Đăng ký thất bại!";
             }
         }
+    }
+
+    public function checklogin()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+
+            if ($this->dao->checkLogin($username, $password)) {
+                $id = $this->dao->getId($username);
+                $_SESSION["idtaikhoan"] = $id;
+                header("Location: /web_project/index.php?status=1");
+                exit;
+            } else {
+                echo "<script>alert('Sai tài khoản hoặc mật khẩu');history.back();</script>";
+                exit;
+            }
+        }
+    }
+    //xóa sesion
+    public function logout()
+    {
+        session_unset();
+        session_destroy();
+        header("Location: /web_project/index.php");
+        exit();
+
     }
 
 }

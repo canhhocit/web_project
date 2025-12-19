@@ -33,7 +33,7 @@
 
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="btn btn-warning text-dark fw-bold me-2" href="View/xe/addVehicle.html">
+                        <a class="btn btn-warning text-dark fw-bold me-2" href="View/xe/addVehicle.php">
                             <i class="fa-solid fa-plus">
                             </i>
                             Đăng Xe Lên Diễn Đàn Ngay
@@ -43,8 +43,8 @@
                         <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-user fa-user-circle"></i>Tài Khoản</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="View/taikhoan/login.html">Đăng Nhập</a></li>
-                            <li><a class="dropdown-item" href="View/taikhoan/register.html">Đăng Ký</a></li>
+                            <li><a class="dropdown-item" href="View/taikhoan/login.php">Đăng Nhập</a></li>
+                            <li><a class="dropdown-item" href="View/taikhoan/register.php">Đăng Ký</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -76,7 +76,7 @@
                                 <hr class="dropdown-divider">
                             </li>
 
-                            <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
+                            <li><a class="dropdown-item text-danger" href="/web_project/index.php?controller=taikhoan&action=logout">Đăng xuất</a></li>
                         </ul>
                     </li>
                     <li></li>

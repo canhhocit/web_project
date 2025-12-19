@@ -1,12 +1,22 @@
 <?php
+session_start();
 include "Model/Database/dbconnect.php";
 include "Model/DAO/CarDAO.php";
-include "header.php";
-
-
+//lay session
 $controller = $_GET['controller'] ?? 'home';
 $action = $_GET['action'] ?? 'index';
+if ($controller === 'taikhoan') {
+    require_once "Controller/taikhoanController.php";
+    require_once "Model/Object/taikhoan.php";
+    require_once "Model/Object/thongtintaikhoan.php";
+    $taikhoan = new taikhoanController();
 
+    if ($action === 'checklogin' || $action === 'add' || $action === 'logout') {
+        $taikhoan->$action();
+        exit();
+    }
+}
+include "header.php";
 echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
 echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
 echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nhưng bị vợ phát hiện, bạn không biết phải thuê xe hay đi xe của người khác để trốn tránh</p>";
@@ -38,10 +48,7 @@ switch ($controller) {
         }
         break;
     case 'taikhoan':
-        require_once "Controller/taikhoanController.php";
-        require_once "Model/Object/taikhoan.php";
-        require_once "Model/Object/thongtintaikhoan.php";
-        $taikhoan = new taikhoanController();
+        // Vì ta đã khởi tạo $taikhoan ở trên, ở đây chỉ cần gọi hiển thị
         if (method_exists($taikhoan, $action)) {
             $taikhoan->$action();
         } else {
@@ -55,4 +62,3 @@ switch ($controller) {
 echo '</div>';
 
 include "footer.php";
-?>
