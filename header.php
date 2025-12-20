@@ -82,25 +82,14 @@ if (isset($_SESSION['idtaikhoan'])) {
                             <?php else: ?>
                                 <!-- Đã đăng nhập -->
                                 <li>
-                                    <h6 class="dropdown-header">Cá nhân hóa</h6>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item open-modal-btn" href="#" data-modal="modal-info">
-                                        <i class="fa-solid fa-gear"></i> Thông tin cá nhân
+                                    
+                                    <a class="dropdown-item" href="/web_project/index.php?controller=taikhoan&action=personal">
+                                        <i class="fa-solid fa-gear"></i> Cá nhân hóa
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item open-modal-btn" href="#" data-modal="modal-changepass">
-                                        <i class="fa-solid fa-key"></i> Đổi mật khẩu
-                                    </a>
-                                </li>
+                                
                                 <li>
                                     <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="index.php?controller=car&action=mycars">
-                                        <i class="fa-solid fa-car"></i> Xe Của Tôi
-                                    </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">
@@ -145,26 +134,25 @@ if (isset($_SESSION['idtaikhoan'])) {
             <div class="modal_inner">
                 <div class="modal_header">
                     <h3>Thông tin tài khoản</h3>
-                    <span class="close">x</span>
                 </div>
 
                 <div class="modal_body">
                     <div class="input_infor">
                         <label for="hoten">Họ tên<span style="color: red">*</span></label>
-                        <input type="text" name="hoten" placeholder="Nhập họ tên"
+                        <input type="text" name="hoten" id="hoten" placeholder="Nhập họ tên"
                             value="<?php echo $hoten != 'Tài Khoản' ? $hoten : '' ?>" />
 
                         <label for="sdt">SĐT<span style="color: red">*</span></label>
-                        <input type="text" name="sdt" placeholder="Nhập SDT" value="<?php echo $sdt ?>" />
+                        <input type="text" name="sdt" id="sdt" placeholder="Nhập SDT" value="<?php echo $sdt ?>" />
 
                         <label for="email">Email<span style="color: red">*</span></label>
-                        <input type="text" name="email" placeholder="Nhập Email" value="<?php echo $email ?>" />
+                        <input type="text" name="email" id="email" placeholder="Nhập Email" value="<?php echo $email ?>" />
 
                         <label for="cccd">CCCD<span style="color: red">*</span></label>
-                        <input type="text" name="cccd" placeholder="Nhập CCCD" value="<?php echo $cccd ?>" />
+                        <input type="text" name="cccd" id="cccd" placeholder="Nhập CCCD" value="<?php echo $cccd ?>" />
 
                         <label for="anhdaidien">Chọn ảnh upload</label>
-                        <input type="file" name="anhdaidien" />
+                        <input type="file" name="anhdaidien" id="anh" />
                         <?php if ($anhdaidien): ?>
                             <small>Ảnh hiện tại: <img src="View/image/<?php echo $anhdaidien ?>"
                                     style="width: 50px; height: 50px; border-radius: 50%;"></small>
@@ -189,7 +177,6 @@ if (isset($_SESSION['idtaikhoan'])) {
             <div class="modal_inner">
                 <div class="modal_header">
                     <h3>Đổi mật khẩu</h3>
-                    <span class="close">x</span>
                 </div>
 
                 <div class="modal_body">

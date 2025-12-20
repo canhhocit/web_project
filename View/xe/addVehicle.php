@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bạn muốn cho thuê xe?</title>
-    <link rel="stylesheet" href="../CSS/addVehicle.css">
+    <link rel="stylesheet" href="../CSS/vehicle/addVehicle.css">
 </head>
 <body>
 
@@ -42,6 +42,6 @@
     </form>
 </div>
 
-<script src="../JS/addVehicle.js"></script>
+<script src="../JS/vehicle/addVehicle.js"></script>
 </body>
 </html>

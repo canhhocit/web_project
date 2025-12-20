@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Quản lý thuê xe</title>
+        <style>
+            * {
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+
+            body {
+                background: #f5f5f5;
+                padding: 20px;
+            }
+
+            /* ===== TAB ===== */
+            .tabs {
+                display: flex;
+                background: #fff;
+                border-radius: 10px 10px 0 0;
+                overflow: hidden;
+            }
+
+            .tab {
+                flex: 1;
+                padding: 15px;
+                text-align: center;
+                cursor: pointer;
+                font-weight: bold;
+                border-bottom: 3px solid transparent;
+            }
+
+            .tab.active {
+                border-bottom: 3px solid #007bff;
+                color: #007bff;
+            }
+
+            /* ===== CONTENT ===== */
+            .content {
+                background: #fff;
+                padding: 20px;
+                border-radius: 0 0 10px 10px;
+            }
+
+            /* ===== ROW ===== */
+            .row {
+                display: flex;
+                align-items: center;
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .row:last-child {
+                border-bottom: none;
+            }
+
+            .image {
+                width: 80px;
+                height: 60px;
+                border: 2px dashed #ccc;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 15px;
+                font-size: 12px;
+                color: #999;
+            }
+
+            .info {
+                flex: 1;
+            }
+
+            .name {
+                font-weight: bold;
+            }
+
+            .price {
+                color: #666;
+                margin-top: 4px;
+            }
+
+            .status {
+                margin-top: 6px;
+                display: inline-block;
+                padding: 4px 10px;
+                border-radius: 20px;
+                font-size: 12px;
+                color: #fff;
+            }
+
+            .yellow {
+                background: #f1c40f;
+            }
+
+            .green {
+                background: #2ecc71;
+            }
+
+            .actions button {
+                margin-left: 10px;
+                padding: 8px 12px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+
+            .btn-view {
+                background: #3498db;
+                color: #fff;
+            }
+
+            .btn-return {
+                background: #e74c3c;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(1)">Đang thuê</div>
+            <div class="tab" onclick="switchTab(2)">Cho thuê</div>
+            <div class="tab" onclick="switchTab(3)">Đã thuê</div>
+        </div>
+
+        <div class="content" id="content"></div>
+
+        <script>
+            const data = {
+                1: [
+                    {
+                        name: "Honda Vision",
+                        price: "120.000đ / ngày",
+                        status: "Đang thuê",
+                        statusClass: "yellow",
+                        showReturn: true,
+                    },
+                ],
+                2: [
+                    {
+                        name: "Yamaha Sirius",
+                        price: "100.000đ / ngày",
+                        status: "Đang được thuê",
+                        statusClass: "yellow",
+                    },
+                    {
+                        name: "Wave Alpha",
+                        price: "90.000đ / ngày",
+                        status: "Đã trả xe",
+                        statusClass: "green",
+                    },
+                ],
+                3: [
+                    {
+                        name: "Air Blade",
+                        price: "150.000đ / ngày",
+                        status: "Đã thuê",
+                        statusClass: "green",
+                    },
+                ],
+            };
+
+            function switchTab(tabIndex) {
+                document
+                    .querySelectorAll(".tab")
+                    .forEach((t) => t.classList.remove("active"));
+                document
+                    .querySelectorAll(".tab")
+                    [tabIndex - 1].classList.add("active");
+
+                const content = document.getElementById("content");
+                content.innerHTML = "";
+
+                data[tabIndex].forEach((item) => {
+                    content.innerHTML += `
+                <div class="row">
+                    <div class="image">Ảnh xe</div>
+                    <div class="info">
+                        <div class="name">${item.name}</div>
+                        <div class="price">${item.price}</div>
+                        <span class="status ${item.statusClass}">${
+                        item.status
+                    }</span>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-view">Xem chi tiết</button>
+                        ${
+                            item.showReturn
+                                ? '<button class="btn-return">Trả xe</button>'
+                                : ""
+                        }
+                    </div>
+                </div>
+            `;
+                });
+            }
+
+            // Load tab đầu tiên
+            switchTab(1);
+        </script>
+    </body>
+</html>

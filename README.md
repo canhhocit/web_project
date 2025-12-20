@@ -3,12 +3,11 @@ website tương tác giữa người dùng với người dùng
 
 1. PHẠM HỮU CẢNH
 
-- Phần tài khoản
-  - Đăng ký, đăng nhập, đăng xuất, đổi mật khẩu
++ Phần tài khoản
+  - Đăng ký, đăng nhập, đăng xuất
   - Thêm/Cập nhật thông tin cá nhân
   - Xóa tài khoản
-  - Upload ảnh đại diện
-- Phần Đăng xe:
++ Phần xe:
   - Kiểm tra đăng nhập + thông tin trước khi đăng
   - Thêm xe + upload nhiều ảnh
 
@@ -33,3 +32,4 @@ Thống kê doanh thu:
 
   - Biểu đồ cột (Bar Chart): So sánh doanh thu giữa các tháng trong năm để thấy được xu hướng tăng trưởng.
   - Biểu đồ tròn (Doughnut Chart): Phân tích tỷ trọng các loại xe được ưa chuộng (Xe máy điện, Xe đạp điện...).
+
