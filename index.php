@@ -2,7 +2,7 @@
 session_start();
 include "Model/Database/dbconnect.php";
 
-include "Model/DAO/CarDAO.php";
+include "Model/DAO/vehicleDAO.php";
 //lay session
 $controller = $_GET['controller'] ?? 'home';
 $action = $_GET['action'] ?? 'index';
@@ -19,15 +19,22 @@ if ($controller === 'taikhoan') {
 }
 include "header.php";
 echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
-echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
+echo "<h1>Chợ Thuê Xe</h1>";
 echo '<div class="container">';
 switch ($controller) {
     case 'home':
         include_once "./Controller/HomeController.php";
         break;
     case 'car':
-        include_once "Controller/CarController.php";
-
+        require_once "Controller/CarController.php";
+        $carCtrl = new CarController();
+        // Kiểm tra xem hành động (action) có tồn tại trong Controller không
+        if (method_exists($carCtrl, $action)) {
+            $carCtrl->$action();
+        } else {
+            // Nếu action vớ vẩn , quay về trang chủ
+            header("Location: index.php");
+        }
         break;
     case 'vehicle':
         require_once "Controller/VehicleController.php";

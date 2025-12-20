@@ -15,7 +15,7 @@ class vehicleDAO
     public function addHangxe($hangxe)
     {
         $tenhangxe = $hangxe->get_tenhang();
-        $sql = "INSERT INTO hangxe (tenhang) VALUES ('$tenhangxe')";
+        $sql = "INSERT INTO hangxe (tenhangxe) VALUES ('$tenhangxe')";
         return mysqli_query($this->conn, $sql);
     }
 
@@ -29,7 +29,7 @@ class vehicleDAO
     {
         $idhangxe = $hangxe->get_idhangxe();
         $tenhangxe = $hangxe->get_tenhang();
-        $sql = "UPDATE hangxe SET tenhang = '$tenhangxe' WHERE idhangxe = '$idhangxe'";
+        $sql = "UPDATE hangxe SET tenhangxe = '$tenhangxe' WHERE idhangxe = '$idhangxe'";
         return mysqli_query($this->conn, $sql);
     }
 
@@ -39,7 +39,7 @@ class vehicleDAO
         $result = mysqli_query($this->conn, $sql);
         $list = array();
         while ($row = mysqli_fetch_assoc($result)) {
-            $list[] = new hangxe($row['idhangxe'], $row['tenhang']);
+            $list[] = new hangxe($row['idhangxe'], $row['tenhangxe']);
         }
         return $list;
     }
@@ -53,11 +53,11 @@ class vehicleDAO
     {
         $result = $this->getHangxebyDK("idhangxe = '$idhangxe'");
         $row = mysqli_fetch_assoc($result);
-        return $row["tenhang"];
+        return $row["tenhangxe"];
     }
     public function getIDhangxebyTenhangxe($tenhangxe)
     {
-        $result = $this->getHangxebyDK("tenhang = '$tenhangxe'");
+        $result = $this->getHangxebyDK("tenhangxe = '$tenhangxe'");
         $row = mysqli_fetch_assoc($result);
         return $row["idhangxe"];
     }
