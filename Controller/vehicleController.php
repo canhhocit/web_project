@@ -1,9 +1,16 @@
 <?php
+if (!defined('ACCESS_HOPLE')) {
+    die('<script>
+        alert("Truy cập không hợp lệ!");
+        window.location="/web_project/index.php";
+    </script>');
+}
 require_once __DIR__ . "/../Model/Database/dbconnect.php";
 require_once __DIR__ . "/../Model/DAO/vehicleDAO.php";
 require_once __DIR__ . "/../Model/Object/xe.php";
 require_once __DIR__ . "/../Model/Object/anhxe.php";
 require_once __DIR__ . "/../Model/DAO/taikhoanDAO.php";
+
 
 class vehicleController
 {

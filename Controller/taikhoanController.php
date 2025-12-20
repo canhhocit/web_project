@@ -1,5 +1,10 @@
 <?php
-
+if (!defined('ACCESS_HOPLE')) {
+    die('<script>
+        alert("Truy cập không hợp lệ!");
+        window.location="/web_project/index.php";
+    </script>');
+}
 require_once __DIR__ . "/../Model/Database/dbconnect.php";
 require_once __DIR__ . "/../Model/DAO/taikhoanDAO.php";
 require_once __DIR__ . "/../Model/Object/taikhoan.php";
@@ -187,53 +192,53 @@ class taikhoanController
     }
 
     public function changePassword()
-{
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        if (!isset($_SESSION['idtaikhoan'])) {
-            echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
-            exit;
-        }
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if (!isset($_SESSION['idtaikhoan'])) {
+                echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
+                exit;
+            }
 
-        $idtaikhoan = $_SESSION['idtaikhoan'];
-        $oldpass = trim($_POST["oldpass"] ?? "");
-        $newpass = trim($_POST["newpass"] ?? "");
-        $confnewpass = trim($_POST["confnewpass"] ?? "");
+            $idtaikhoan = $_SESSION['idtaikhoan'];
+            $oldpass = trim($_POST["oldpass"] ?? "");
+            $newpass = trim($_POST["newpass"] ?? "");
+            $confnewpass = trim($_POST["confnewpass"] ?? "");
 
-        // Validate
-        if ($oldpass === "" || $newpass === "" || $confnewpass === "") {
-            echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); history.back();</script>";
-            exit;
-        }
+            // Validate
+            if ($oldpass === "" || $newpass === "" || $confnewpass === "") {
+                echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); history.back();</script>";
+                exit;
+            }
 
-        if ($newpass !== $confnewpass) {
-            echo "<script>alert('Mật khẩu mới không khớp!'); history.back();</script>";
-            exit;
-        }
-        if ($newpass ===$oldpass) {
-            echo "<script>alert('Mật khẩu mới và cũ phải khác nhau!'); history.back();</script>";
-            exit;
-        }
-        
-        // if (strlen($newpass) < 6) {
+            if ($newpass !== $confnewpass) {
+                echo "<script>alert('Mật khẩu mới không khớp!'); history.back();</script>";
+                exit;
+            }
+            if ($newpass === $oldpass) {
+                echo "<script>alert('Mật khẩu mới và cũ phải khác nhau!'); history.back();</script>";
+                exit;
+            }
+
+            // if (strlen($newpass) < 6) {
             //     echo "<script>alert('Mật khẩu mới phải có ít nhất 6 ký tự!'); history.back();</script>";
             //     exit;
             // }
 
-        if (!$this->dao->checkOldPassword($idtaikhoan, $oldpass)) {
-            echo "<script>alert('Mật khẩu cũ không đúng!'); history.back();</script>";
+            if (!$this->dao->checkOldPassword($idtaikhoan, $oldpass)) {
+                echo "<script>alert('Mật khẩu cũ không đúng!'); history.back();</script>";
+                exit;
+            }
+
+            try {
+                if ($this->dao->updatePassword($idtaikhoan, $newpass)) {
+                    echo "<script>alert('Đổi mật khẩu thành công!'); window.location='/web_project/index.php';</script>";
+                } else {
+                    echo "<script>alert('Đổi mật khẩu thất bại!'); history.back();</script>";
+                }
+            } catch (Exception $e) {
+                echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
+            }
             exit;
         }
-
-        try {
-            if ($this->dao->updatePassword($idtaikhoan, $newpass)) {
-                echo "<script>alert('Đổi mật khẩu thành công!'); window.location='/web_project/index.php';</script>";
-            } else {
-                echo "<script>alert('Đổi mật khẩu thất bại!'); history.back();</script>";
-            }
-        } catch (Exception $e) {
-            echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
-        }
-        exit;
     }
-}
 }

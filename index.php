@@ -1,5 +1,6 @@
 <?php
 session_start();
+define('ACCESS_HOPLE', true); 
 include "Model/Database/dbconnect.php";
 include "Model/DAO/CarDAO.php";
 //sd session

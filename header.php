@@ -195,13 +195,13 @@ if (isset($_SESSION['idtaikhoan'])) {
                 <div class="modal_body">
                     <div class="input_infor">
                         <label for="oldpass">Mật khẩu cũ<span style="color: red">*</span></label>
-                        <input type="password" name="oldpass" placeholder="Nhập mật khẩu cũ" required />
+                        <input type="password" name="oldpass" id="oldpass" placeholder="Nhập mật khẩu cũ" required />
 
                         <label for="newpass">Mật khẩu mới<span style="color: red">*</span></label>
-                        <input type="password" name="newpass" placeholder="Nhập mật khẩu mới" required />
+                        <input type="password" name="newpass" id="newpass" placeholder="Nhập mật khẩu mới" required />
 
                         <label for="confnewpass">Xác nhận mật khẩu mới<span style="color: red">*</span></label>
-                        <input type="password" name="confnewpass" placeholder="Nhập lại mật khẩu mới" required />
+                        <input type="password" name="confnewpass" id="confnewpass" placeholder="Nhập lại mật khẩu mới" required />
                     </div>
                 </div>
 
