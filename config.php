@@ -9,7 +9,7 @@
 //     </script>');
 // }
 // dịnh check session nhưng thôi
-if (!defined('ACCESSED_FROM_CONTROLLER')) {
+if (!defined('ACCESS_HOPLE')) {
     die('<script>
         alert("Truy cập không hợp lệ!");
         window.location="/web_project/index.php";

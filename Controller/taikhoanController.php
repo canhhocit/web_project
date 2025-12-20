@@ -1,10 +1,11 @@
 <?php
-if (!defined('ACCESS_HOPLE')) {
-    die('<script>
-        alert("Truy cập không hợp lệ!");
-        window.location="/web_project/index.php";
-    </script>');
-}
+// if (!defined('ACCESS_HOPLE')) {
+//     die('<script>
+//         alert("Truy cập không hợp lệ!");
+//         window.location="/web_project/index.php";
+//     </script>');
+// }
+require_once __DIR__ . "/../config.php";
 require_once __DIR__ . "/../Model/Database/dbconnect.php";
 require_once __DIR__ . "/../Model/DAO/taikhoanDAO.php";
 require_once __DIR__ . "/../Model/Object/taikhoan.php";
@@ -240,5 +241,13 @@ class taikhoanController
             }
             exit;
         }
+    }
+      public function personal(){
+        if (!isset($_SESSION['idtaikhoan'])) {
+            echo "<script>alert('Vui lòng đăng nhập!'); 
+            window.location='/web_project/View/taikhoan/login.php';</script>";
+            exit;
+        }
+        include_once __DIR__ . "/../View/taikhoan/personal.php";
     }
 }

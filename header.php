@@ -82,25 +82,14 @@ if (isset($_SESSION['idtaikhoan'])) {
                             <?php else: ?>
                                 <!-- Đã đăng nhập -->
                                 <li>
-                                    <h6 class="dropdown-header">Cá nhân hóa</h6>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item open-modal-btn" href="#" data-modal="modal-info">
-                                        <i class="fa-solid fa-gear"></i> Thông tin cá nhân
+                                    
+                                    <a class="dropdown-item" href="/web_project/index.php?controller=taikhoan&action=personal">
+                                        <i class="fa-solid fa-gear"></i> Cá nhân hóa
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item open-modal-btn" href="#" data-modal="modal-changepass">
-                                        <i class="fa-solid fa-key"></i> Đổi mật khẩu
-                                    </a>
-                                </li>
+                                
                                 <li>
                                     <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="index.php?controller=car&action=mycars">
-                                        <i class="fa-solid fa-car"></i> Xe Của Tôi
-                                    </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">

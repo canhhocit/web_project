@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Register</title>
   </head>
-  <link rel="stylesheet" href="../CSS/register.css" />
+  <link rel="stylesheet" href="../CSS/taikhoan/register.css" />
 
   <body>
     <div class="header">
@@ -28,5 +28,5 @@
       </div>
     </form>
   </body>
-  <script src="../JS/register.js"></script>
+  <script src="../JS/taikhoan/register.js"></script>
 </html>
