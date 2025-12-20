@@ -46,7 +46,6 @@
                          alt="Avatar" id="avatar-preview">
                 <?php else: ?>
                     <div class="avatar-placeholder">
-                        <i class="fa-solid fa-user"></i>
                     </div>
                 <?php endif; ?>
             </div>
