@@ -16,7 +16,7 @@
 
             $xe = $this->vehicleDAO->getChiTietXe($id);
             if ($xe){
-                include "/View/Home/carDetail.php";
+                include "./View/Home/carDetail.php";
             }else{
                 header("Location: index.php");
             }

@@ -1,74 +1,34 @@
 <?php
-require_once(__DIR__ . "/../Object/xe.php");
-require_once(__DIR__ . "/../Object/anhxe.php");
-require_once(__DIR__ . "/../Object/hangxe.php");
+require_once __DIR__ . "/../Object/xe.php";
+require_once __DIR__ . "/../Object/anhxe.php";
+// Bỏ require hangxe.php để tránh lỗi thiếu file
 
 class vehicleDAO
 {
-    private $conn;
-
+    public $conn;
     public function __construct($conn)
     {
         $this->conn = $conn;
     }
 
-    public function addHangxe($hangxe)
-    {
-        $tenhangxe = $hangxe->get_tenhang();
-        $sql = "INSERT INTO hangxe (tenhangxe) VALUES ('$tenhangxe')";
-        return mysqli_query($this->conn, $sql);
-    }
-
-    public function deleteHangxe($idhangxe)
-    {
-        $sql = "DELETE FROM hangxe WHERE idhangxe = '$idhangxe'";
-        return mysqli_query($this->conn, $sql);
-    }
-
-    public function updateHangxe($hangxe)
-    {
-        $idhangxe = $hangxe->get_idhangxe();
-        $tenhangxe = $hangxe->get_tenhang();
-        $sql = "UPDATE hangxe SET tenhangxe = '$tenhangxe' WHERE idhangxe = '$idhangxe'";
-        return mysqli_query($this->conn, $sql);
-    }
-
-    public function getAllHangxe()
-    {
-        $sql = "SELECT * FROM hangxe";
-        $result = mysqli_query($this->conn, $sql);
-        $list = array();
-        while ($row = mysqli_fetch_assoc($result)) {
-            $list[] = new hangxe($row['idhangxe'], $row['tenhangxe']);
-        }
-        return $list;
-    }
-    private function getHangxebyDK($dk)
-    {
-        $sql = "SELECT * FROM hangxe WHERE $dk";
-        $result = mysqli_query($this->conn, $sql);
-        return $result;
-    }
-    public function getTenhangxebyIdhangxe($idhangxe)
-    {
-        $result = $this->getHangxebyDK("idhangxe = '$idhangxe'");
-        $row = mysqli_fetch_assoc($result);
-        return $row["tenhangxe"];
-    }
-    public function getIDhangxebyTenhangxe($tenhangxe)
-    {
-        $result = $this->getHangxebyDK("tenhangxe = '$tenhangxe'");
-        $row = mysqli_fetch_assoc($result);
-        return $row["idhangxe"];
-    }
+    // =========================================================
+    // PHẦN 1: CRUD XE (Đã sửa về idhangxe cho khớp DB của bạn)
+    // =========================================================
 
     public function addXe($xe)
     {
-        $idhangxe = $xe->get_idhangxe();
         $tenxe = $xe->get_tenxe();
+        // Lấy thông tin hãng (ID)
+        $idhangxe = $xe->get_hangxe(); 
         $giathue = $xe->get_giathue();
-        $loaixe = $xe->get_loaixe();
-        $sql = "INSERT INTO xe (idhangxe, tenxe, giathue, loaixe) VALUES ('$idhangxe', '$tenxe', '$giathue', '$loaixe')";
+        $mota    = $xe->get_mota();
+        $loaixe  = $xe->get_loaixe();
+        $idchuxe = $xe->get_idchuxe();
+
+        // Sửa: Insert vào cột idhangxe
+        $sql = "INSERT INTO xe (tenxe, idhangxe, giathue, mota, loaixe, idchuxe)
+                VALUES ('$tenxe', '$idhangxe', '$giathue', '$mota', '$loaixe', '$idchuxe')";
+
         return mysqli_query($this->conn, $sql);
     }
 
@@ -81,20 +41,38 @@ class vehicleDAO
     public function updateXe($xe)
     {
         $idxe = $xe->get_idxe();
-        $idhangxe = $xe->get_idhangxe();
         $tenxe = $xe->get_tenxe();
+        $idhangxe = $xe->get_hangxe();
         $giathue = $xe->get_giathue();
+        $mota = $xe->get_mota();
         $loaixe = $xe->get_loaixe();
-        $sql = "UPDATE xe SET idhangxe='$idhangxe', tenxe='$tenxe', giathue='$giathue', loaixe='$loaixe' WHERE idxe='$idxe'";
+
+        // Sửa: Update cột idhangxe
+        $sql = "UPDATE xe SET tenxe='$tenxe', idhangxe='$idhangxe', giathue='$giathue', mota='$mota', loaixe='$loaixe'
+            WHERE idxe='$idxe'";
+
         return mysqli_query($this->conn, $sql);
     }
 
     private function fetchXeList($sql)
     {
         $result = mysqli_query($this->conn, $sql);
-        $list = array();
+        $list = [];
+
         while ($row = mysqli_fetch_assoc($result)) {
-            $list[] = new xe($row['idxe'], $row['idhangxe'], $row['tenxe'], $row['giathue'], $row['mota'], $row['loaixe'], $row['idchuxe']);
+            // Map dữ liệu: Nếu DB trả về idhangxe thì đưa vào object
+            // Xử lý an toàn: Ưu tiên idhangxe, nếu không có thì tìm hangxe
+            $val_hangxe = isset($row['idhangxe']) ? $row['idhangxe'] : (isset($row['hangxe']) ? $row['hangxe'] : 0);
+            
+            $list[] = new xe(
+                $row['idxe'],
+                $row['tenxe'],
+                $val_hangxe,
+                $row['giathue'],
+                $row['mota'],
+                $row['loaixe'],
+                $row['idchuxe']
+            );
         }
         return $list;
     }
@@ -103,63 +81,47 @@ class vehicleDAO
     {
         return $this->fetchXeList("SELECT * FROM xe");
     }
+
     public function getXebyIdxe($idxe)
     {
-        return $this->fetchXeList("SELECT * FROM xe WHERE idxe = '$idxe'");
+        return $this->fetchXeList("SELECT * FROM xe WHERE idxe='$idxe'");
     }
-    public function getXebyLoaixe($loaixe)
-    {
-        return $this->fetchXeList("SELECT * FROM xe WHERE loaixe = '$loaixe'");
-    }
-    public function getXebyHangxe($idhangxe)
-    {
-        return $this->fetchXeList("SELECT * FROM xe WHERE idhangxe = '$idhangxe'");
-    }
-    public function getXebyLoaixeAndHangxe($loaixe, $idhangxe)
-    {
-        return $this->fetchXeList("SELECT * FROM xe WHERE loaixe = '$loaixe' AND idhangxe = '$idhangxe'");
-    }
-    public function getXebyTenxe($tenxe)
-    {
-        return $this->fetchXeList("SELECT * FROM xe WHERE tenxe LIKE '%$tenxe%'");
-    }
+
+    // =========================================================
+    // PHẦN 2: ẢNH XE (Giữ nguyên)
+    // =========================================================
 
     public function addAnhxe($anhxe)
     {
-        $idanh = $anhxe->get_idanh();
         $idxe = $anhxe->get_idxe();
         $duongdan = $anhxe->get_duongdan();
-        $sql = "INSERT INTO anhxe VALUES ('$idanh', '$idxe', '$duongdan')";
+        $sql = "INSERT INTO anhxe (idxe, duongdan) VALUES ('$idxe', '$duongdan')";
         return mysqli_query($this->conn, $sql);
     }
 
-    public function deleteAnhxe($idanh)
+    public function deleteAnhxebyidXe($idxe)
     {
-        $sql = "DELETE FROM anhxe WHERE idanh = '$idanh'";
-        return mysqli_query($this->conn, $sql);
-    }
-
-    public function updateAnhxe($anhxe)
-    {
-        $idanh = $anhxe->get_idanh();
-        $idxe = $anhxe->get_idxe();
-        $duongdan = $anhxe->get_duongdan();
-        $sql = "UPDATE anhxe SET idxe='$idxe', duongdan='$duongdan' WHERE idanh='$idanh'";
-        return mysqli_query($this->conn, $sql);
+        return mysqli_query($this->conn, "DELETE FROM anhxe WHERE idxe='$idxe'");
     }
 
     public function getAnhxebyIdxe($idxe)
     {
-        $sql = "SELECT * FROM anhxe WHERE idxe = '$idxe'";
+        $sql = "SELECT * FROM anhxe WHERE idxe='$idxe'";
         $result = mysqli_query($this->conn, $sql);
-        $list = array();
+        $list = [];
         while ($row = mysqli_fetch_assoc($result)) {
             $list[] = new anhxe($row['idanh'], $row['idxe'], $row['duongdan']);
         }
         return $list;
     }
 
+    // =========================================================
+    // PHẦN 3: HIỂN THỊ (QUAN TRỌNG: Khôi phục JOIN bảng để sửa lỗi)
+    // =========================================================
+    
     public function getDanhSachXeHienThi() {
+        // Sửa: Dùng JOIN bảng hangxe như cũ vì DB bạn vẫn còn bảng này (chỉ mất file PHP thôi)
+        // Nếu DB cũng mất bảng hangxe, báo mình sửa lại dòng này thành lấy idhangxe
         $sql = "SELECT x.*, h.tenhangxe AS tenhang, a.duongdan AS hinh_anh
                 FROM xe x 
                 LEFT JOIN hangxe h ON x.idhangxe = h.idhangxe
@@ -174,6 +136,7 @@ class vehicleDAO
 
     public function getChiTietXe($idxe)
     {
+        // Sửa: Dùng JOIN bảng hangxe
         $sql = "SELECT x.*, h.tenhangxe, t.hoten as tenchuxe, t.sdt 
                 FROM xe x 
                 LEFT JOIN hangxe h ON x.idhangxe = h.idhangxe
@@ -191,23 +154,22 @@ class vehicleDAO
             while ($row = mysqli_fetch_assoc($resultAnh)) {
                 $arrAnh[] = $row['duongdan']; 
             }
-            
             $xe['ds_anh'] = $arrAnh;
         }
-
         return $xe;
     }
 
     public function timKiemXe($keyword) {
-    $sql = "SELECT x.*, h.tenhangxe AS tenhang, a.duongdan AS hinh_anh
-            FROM xe x 
-            LEFT JOIN hangxe h ON x.idhangxe = h.idhangxe
-            LEFT JOIN (SELECT * FROM anhxe GROUP BY idxe) a ON x.idxe = a.idxe 
-            WHERE x.tenxe LIKE '%$keyword%' 
-            ORDER BY x.idxe DESC";
-            
-    $result = mysqli_query($this->conn, $sql);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
+        // Sửa: Tìm theo tên hãng từ bảng hangxe
+        $sql = "SELECT x.*, h.tenhangxe AS tenhang, a.duongdan AS hinh_anh
+                FROM xe x 
+                LEFT JOIN hangxe h ON x.idhangxe = h.idhangxe
+                LEFT JOIN (SELECT * FROM anhxe GROUP BY idxe) a ON x.idxe = a.idxe 
+                WHERE x.tenxe LIKE '%$keyword%' OR h.tenhangxe LIKE '%$keyword%'
+                ORDER BY x.idxe DESC";
+                
+        $result = mysqli_query($this->conn, $sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }
 ?>

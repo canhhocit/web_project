@@ -3,11 +3,11 @@ session_start();
 define('ACCESS_HOPLE', true); 
 include "Model/Database/dbconnect.php";
 
-
-include "Model/DAO/vehicleDAO.php";
+require_once "Model/DAO/vehicleDAO.php";
 
 $controller = $_GET['controller'] ?? 'home';
 $action = $_GET['action'] ?? 'index';
+
 if ($controller === 'taikhoan') {
     require_once "Controller/taikhoanController.php";
     require_once "Model/Object/taikhoan.php";
@@ -19,33 +19,39 @@ if ($controller === 'taikhoan') {
         exit();
     }
 }
+
 include "header.php";
-echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
-echo "<h1>Chợ Thuê Xe</h1>";
-echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
-echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nhưng bị vợ phát hiện, bạn không biết phải thuê xe hay đi xe của người khác để trốn tránh</p>";
-echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho thuê xe nhanh hơn độ ghen của vợ bạn >v<</h3>";
 
 
+if ($controller == 'home') {
+    echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
+    echo "<h1>Chợ Thuê Xe</h1>";
+    echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
+    echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nhưng bị vợ phát hiện...</p>";
+    echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho thuê xe nhanh hơn độ ghen của vợ bạn >v<</h3>";
+} else {
+    echo '<div class="container" style="padding-top: 20px;">';
+}
 
 echo '<div class="container">';
+
 switch ($controller) {
     case 'home':
         include_once "./Controller/HomeController.php";
         break;
+
     case 'car':
         require_once "Controller/CarController.php";
         $carCtrl = new CarController();
-        // Kiểm tra xem hành động (action) có tồn tại trong Controller không
         if (method_exists($carCtrl, $action)) {
             $carCtrl->$action();
         } else {
-            // Nếu action vớ vẩn , quay về trang chủ
             header("Location: index.php");
         }
         break;
+
     case 'vehicle':
-        require_once "Controller/VehicleController.php";
+        require_once "Controller/vehicleController.php"; 
         require_once "Model/Object/xe.php";
         require_once "Model/Object/anhxe.php";
         $vehicle = new vehicleController();
@@ -55,19 +61,22 @@ switch ($controller) {
             $vehicle->index();
         }
         break;
-    case 'taikhoan':
 
+    case 'taikhoan':
         if (method_exists($taikhoan, $action)) {
             $taikhoan->$action();
         } else {
             $taikhoan->index();
         }
         break;
+
     default:
-        echo "<h1>Làm gì có trang này</h1>";
+        echo "<h1>404 - Không tìm thấy trang</h1>";
         break;
 }
 
-echo '</div>';
+echo '</div>'; 
+echo '</div>'; 
 
 include "footer.php";
+?>
