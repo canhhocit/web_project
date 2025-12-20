@@ -17,6 +17,9 @@ if ($controller === 'taikhoan') {
         exit();
     }
 }
+
+
+
 include "header.php";
 echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
 echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
@@ -30,6 +33,14 @@ switch ($controller) {
     case 'home':
         include_once "./Controller/HomeController.php";
 
+        break;
+
+    case 'admin':
+        if (method_exists($admin, $action)) {
+            $admin->$action();
+        } else {
+            echo "Action không tồn tại";
+        }
         break;
     case 'car':
         include_once "Controller/CarController.php";
