@@ -1,15 +1,22 @@
-const togglePassword = document.getElementById("togglePassword");
-const passwordInput = document.getElementById("password");
+const loginForm = document.getElementById("loginForm");
+const btnLogin = document.getElementById("btnLogin");
 
-let isShow = false;
+loginForm.addEventListener("submit", (e) => {
+    e.preventDefault(); 
 
-togglePassword.addEventListener("click", function () {
-  isShow = !isShow;
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
 
-  passwordInput.type = isShow ? "text" : "password";
+    if (user === "" || pass === "") {
+        alert("Vui lòng nhập tài khoản và mật khẩu");
+        return;
+    }
 
-  togglePassword.src = isShow
-    ? "https://cdn-icons-png.flaticon.com/128/8395/8395688.png" // mở
-    : "https://cdn-icons-png.flaticon.com/128/7794/7794218.png"; // nhắm 
+    // const originalText = btnLogin.innerHTML;
+    btnLogin.disabled = true;
+    btnLogin.innerHTML = '<span class="spinner"></span> Đang xác thực...';
+
+    setTimeout(() => {
+        loginForm.submit(); 
+    }, 1000);
 });
-

@@ -3,11 +3,12 @@ website tương tác giữa người dùng với người dùng
 
 1. PHẠM HỮU CẢNH
 
-- Phần tài khoản
-  - Đăng ký, đăng nhập, đăng xuất, đổi mật khẩu
++ Phần tài khoản
+  - Đăng ký, đăng nhập, đăng xuất
   - Thêm/Cập nhật thông tin cá nhân
   - Xóa tài khoản
-  - Upload ảnh đại diện
-- Phần Đăng xe:
++ Phần xe:
   - Kiểm tra đăng nhập + thông tin trước khi đăng
   - Thêm xe + upload nhiều ảnh
+  - Lịch sử xe đã đăng
+  
