@@ -1,19 +1,29 @@
 <?php
+session_start();
+define('ACCESS_HOPLE', true); 
 include "Model/Database/dbconnect.php";
 include "Model/DAO/CarDAO.php";
-include "header.php";
-
-
+//sd session
 $controller = $_GET['controller'] ?? 'home';
 $action = $_GET['action'] ?? 'index';
+if ($controller === 'taikhoan') {
+    require_once "Controller/taikhoanController.php";
+    require_once "Model/Object/taikhoan.php";
+    require_once "Model/Object/thongtintaikhoan.php";
+    $taikhoan = new taikhoanController();
 
+    if ($action === 'checklogin' || $action === 'add' || $action === 'logout') {
+        $taikhoan->$action();
+        exit();
+    }
+}
+include "header.php";
 echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
 echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
 echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nhưng bị vợ phát hiện, bạn không biết phải thuê xe hay đi xe của người khác để trốn tránh</p>";
 echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho thuê xe nhanh hơn độ ghen của vợ bạn >v<</h3>";
 
 
-// echo "<p>ở góc trên bên phải để xem menu xổ</p>";
 
 echo '<div class="container">';
 switch ($controller) {
@@ -28,7 +38,6 @@ switch ($controller) {
     case 'vehicle':
         require_once "Controller/VehicleController.php";
         require_once "Model/Object/xe.php";
-        require_once "Model/Object/hangxe.php";
         require_once "Model/Object/anhxe.php";
         $vehicle = new vehicleController();
         if (method_exists($vehicle, $action)) {
@@ -38,10 +47,7 @@ switch ($controller) {
         }
         break;
     case 'taikhoan':
-        require_once "Controller/taikhoanController.php";
-        require_once "Model/Object/taikhoan.php";
-        require_once "Model/Object/thongtintaikhoan.php";
-        $taikhoan = new taikhoanController();
+
         if (method_exists($taikhoan, $action)) {
             $taikhoan->$action();
         } else {
@@ -55,4 +61,3 @@ switch ($controller) {
 echo '</div>';
 
 include "footer.php";
-?>

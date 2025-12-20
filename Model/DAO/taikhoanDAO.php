@@ -1,6 +1,7 @@
 <?php
-require_once("../Object/taikhoan.php");
-require_once("../Object/thongtintaikhoan.php");
+require_once __DIR__ . "/../Object/taikhoan.php";
+require_once __DIR__ . "/../Object/thongtintaikhoan.php";
+
 class taikhoanDAO
 {
     private $conn;
@@ -16,6 +17,22 @@ class taikhoanDAO
         $sql = "INSERT INTO taikhoan (username, pass, lachuxe, languoithue) VALUES ('$username', '$pass', '0', '0')";
         $result = mysqli_query($this->conn, $sql);
         return $result;
+    }
+    public function checkExist($username)
+    {
+        $rs = mysqli_query($this->conn, "select * from taikhoan where username = '$username'");
+        return mysqli_num_rows($rs) > 0;
+    }
+    public function checkLogin($username, $pass)
+    {
+        $result = mysqli_query($this->conn, "select * from taikhoan where username = '$username' and pass = '$pass'");
+        return mysqli_num_rows($result) > 0;
+    }
+    public function getId($username)
+    {
+        $rs = mysqli_query($this->conn, "select idtaikhoan from taikhoan where username = '$username'");
+        $row = mysqli_fetch_array($rs);
+        return $row["idtaikhoan"];
     }
     private function delTK($idtaikhoan)
     {
@@ -33,48 +50,65 @@ class taikhoanDAO
         $email = $thongtin->get_email();
         $cccd = $thongtin->get_cccd();
         $anhdaidien = $thongtin->get_anhdaidien();
-        $sql = "INSERT INTO thongtin (idtaikhoan, hoten, sdt, email, cccd, anhdaidien) VALUES ('$idtaikhoan', '$hoten', '$sdt', '$email', '$cccd', '$anhdaidien')";
+        $sql = "INSERT INTO thongtintaikhoan (idtaikhoan, hoten, sdt, email, cccd, anhdaidien) VALUES ('$idtaikhoan', '$hoten', '$sdt', '$email', '$cccd', '$anhdaidien')";
         $result = mysqli_query($this->conn, $sql);
         return $result;
     }
     private function delTTTK($idtaikhoan)
     {
-        $sql = "DELETE FROM thongtin WHERE idtaikhoan = '$idtaikhoan'";
+        $sql = "DELETE FROM thongtintaikhoan WHERE idtaikhoan = '$idtaikhoan'";
         $result = mysqli_query($this->conn, $sql);
         return $result;
     }
     public function updateThongTinTaiKhoan($thongtin)
     {
-        $idthongtin = $thongtin->get_idthongtin();
+        $idtaikhoan = $thongtin->get_idtaikhoan();
         $hoten = $thongtin->get_hoten();
         $sdt = $thongtin->get_sdt();
         $email = $thongtin->get_email();
         $cccd = $thongtin->get_cccd();
         $anhdaidien = $thongtin->get_anhdaidien();
-        $sql = "UPDATE thongtin SET hoten = '$hoten', sdt = '$sdt', email = '$email', cccd = '$cccd', anhdaidien = '$anhdaidien' WHERE idthongtin = '$idthongtin'";
+        $sql = "UPDATE thongtintaikhoan SET hoten = '$hoten', sdt = '$sdt', email = '$email', cccd = '$cccd', anhdaidien = '$anhdaidien' WHERE idtaikhoan = '$idtaikhoan'";
         $result = mysqli_query($this->conn, $sql);
         return $result;
     }
-    public function getThongTinTaiKhoan($idtaikhoan)
+    public function getThongTinTaiKhoanbyID($idtaikhoan)
     {
-        $sql = "SELECT * FROM thongtin WHERE idtaikhoan = '$idtaikhoan'";
+        $sql = "SELECT * FROM thongtintaikhoan WHERE idtaikhoan = '$idtaikhoan'";
         $result = mysqli_query($this->conn, $sql);
         $row = mysqli_fetch_assoc($result);
+        if (!$row) {
+            return null;
+        }
         $thongtin = new thongtintaikhoan($row['idthongtin'], $row['idtaikhoan'], $row['hoten'], $row['sdt'], $row['email'], $row['cccd'], $row['anhdaidien']);
         return $thongtin;
     }
+    //====== pass
+    public function checkOldPassword($idtaikhoan, $oldpass)
+    {
+        $sql = "SELECT * FROM taikhoan WHERE idtaikhoan = '$idtaikhoan' AND pass = '$oldpass'";
+        $result = mysqli_query($this->conn, $sql);
+        return mysqli_num_rows($result) > 0;
+    }
+
+    public function updatePassword($idtaikhoan, $newpass)
+    {
+        $sql = "UPDATE taikhoan SET pass = '$newpass' WHERE idtaikhoan = '$idtaikhoan'";
+        return mysqli_query($this->conn, $sql);
+    }
+
     //-----------------
     public function deleteTaikhoan($idtaikhoan)
     {
         return $this->delTTTK($idtaikhoan) && $this->delTK($idtaikhoan);
     }
     //-----------------
-    public function updateisChuxe($idtaikhoan){
-        return mysqli_query($this->conn,"UPDATE taikhoan SET lachuxe = '1' WHERE idtaikhoan = '$idtaikhoan'");
+    public function updateisChuxe($idtaikhoan)
+    {
+        return mysqli_query($this->conn, "UPDATE taikhoan SET lachuxe = '1' WHERE idtaikhoan = '$idtaikhoan'");
     }
-    public function updateisNguoithue($idtaikhoan){
-        return mysqli_query($this->conn,"UPDATE taikhoan SET languoithue = '1' WHERE idtaikhoan = '$idtaikhoan'");
+    public function updateisNguoithue($idtaikhoan)
+    {
+        return mysqli_query($this->conn, "UPDATE taikhoan SET languoithue = '1' WHERE idtaikhoan = '$idtaikhoan'");
     }
-
 }
-?>

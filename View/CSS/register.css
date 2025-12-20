@@ -83,17 +83,29 @@ button {
     cursor: pointer;
 }
 
-/* BACK */
+/* BACK BUTTON (a giả button) */
 #btnBack {
+    width: 48%;
+    height: 40px;
+
     background: #bdc3c7;
+    color: #333;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-#btnBack a {
-    color: #333;
-    text-decoration: none;
-    display: block;
-    line-height: 40px;
+#btnBack:hover {
+    background: #0d1e1f;
 }
+
 
 /* REGISTER */
 #btnRegister {
@@ -102,5 +114,5 @@ button {
 }
 
 #btnRegister:hover {
-    background: #27ae60;
+    background: #105a2f;
 }
