@@ -152,36 +152,88 @@ class taikhoanController
             exit;
         }
     }
-    public function deleteAccount(){
-    if (!isset($_SESSION['idtaikhoan'])) {
-        echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
+    public function deleteAccount()
+    {
+        if (!isset($_SESSION['idtaikhoan'])) {
+            echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
+            exit;
+        }
+
+        $idtaikhoan = $_SESSION['idtaikhoan'];
+
+        $thongtin = $this->dao->getThongTinTaiKhoanbyID($idtaikhoan);
+        if ($thongtin) {
+            $anhdaidien = $thongtin->get_anhdaidien();
+            if ($anhdaidien != "") {
+                $imagePath = __DIR__ . "/../View/image/" . $anhdaidien;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        }
+
+        try {
+            if ($this->dao->deleteTaikhoan($idtaikhoan)) {
+                session_unset();
+                session_destroy();
+                echo "<script>alert('Xóa tài khoản thành công!'); window.location='/web_project/index.php';</script>";
+            } else {
+                echo "<script>alert('Xóa tài khoản thất bại!'); history.back();</script>";
+            }
+        } catch (Exception $e) {
+            echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
+        }
         exit;
     }
 
-    $idtaikhoan = $_SESSION['idtaikhoan'];
-    
-    $thongtin = $this->dao->getThongTinTaiKhoanbyID($idtaikhoan);
-    if ($thongtin) {
-        $anhdaidien = $thongtin->get_anhdaidien();
-        if ($anhdaidien != "") {
-            $imagePath = __DIR__ . "/../View/image/" . $anhdaidien;
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
+    public function changePassword()
+{
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if (!isset($_SESSION['idtaikhoan'])) {
+            echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
+            exit;
+        }
+
+        $idtaikhoan = $_SESSION['idtaikhoan'];
+        $oldpass = trim($_POST["oldpass"] ?? "");
+        $newpass = trim($_POST["newpass"] ?? "");
+        $confnewpass = trim($_POST["confnewpass"] ?? "");
+
+        // Validate
+        if ($oldpass === "" || $newpass === "" || $confnewpass === "") {
+            echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); history.back();</script>";
+            exit;
+        }
+
+        if ($newpass !== $confnewpass) {
+            echo "<script>alert('Mật khẩu mới không khớp!'); history.back();</script>";
+            exit;
+        }
+        if ($newpass ===$oldpass) {
+            echo "<script>alert('Mật khẩu mới và cũ phải khác nhau!'); history.back();</script>";
+            exit;
+        }
+        
+        // if (strlen($newpass) < 6) {
+            //     echo "<script>alert('Mật khẩu mới phải có ít nhất 6 ký tự!'); history.back();</script>";
+            //     exit;
+            // }
+
+        if (!$this->dao->checkOldPassword($idtaikhoan, $oldpass)) {
+            echo "<script>alert('Mật khẩu cũ không đúng!'); history.back();</script>";
+            exit;
+        }
+
+        try {
+            if ($this->dao->updatePassword($idtaikhoan, $newpass)) {
+                echo "<script>alert('Đổi mật khẩu thành công!'); window.location='/web_project/index.php';</script>";
+            } else {
+                echo "<script>alert('Đổi mật khẩu thất bại!'); history.back();</script>";
             }
+        } catch (Exception $e) {
+            echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
         }
+        exit;
     }
-    
-    try {
-        if ($this->dao->deleteTaikhoan($idtaikhoan)) {
-            session_unset();
-            session_destroy();
-            echo "<script>alert('Xóa tài khoản thành công!'); window.location='/web_project/index.php';</script>";
-        } else {
-            echo "<script>alert('Xóa tài khoản thất bại!'); history.back();</script>";
-        }
-    } catch (Exception $e) {
-        echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
-    }
-    exit;
 }
 }

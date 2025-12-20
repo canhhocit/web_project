@@ -83,6 +83,19 @@ class taikhoanDAO
         $thongtin = new thongtintaikhoan($row['idthongtin'], $row['idtaikhoan'], $row['hoten'], $row['sdt'], $row['email'], $row['cccd'], $row['anhdaidien']);
         return $thongtin;
     }
+    //====== pass
+    public function checkOldPassword($idtaikhoan, $oldpass)
+    {
+        $sql = "SELECT * FROM taikhoan WHERE idtaikhoan = '$idtaikhoan' AND pass = '$oldpass'";
+        $result = mysqli_query($this->conn, $sql);
+        return mysqli_num_rows($result) > 0;
+    }
+
+    public function updatePassword($idtaikhoan, $newpass)
+    {
+        $sql = "UPDATE taikhoan SET pass = '$newpass' WHERE idtaikhoan = '$idtaikhoan'";
+        return mysqli_query($this->conn, $sql);
+    }
 
     //-----------------
     public function deleteTaikhoan($idtaikhoan)
@@ -98,6 +111,4 @@ class taikhoanDAO
     {
         return mysqli_query($this->conn, "UPDATE taikhoan SET languoithue = '1' WHERE idtaikhoan = '$idtaikhoan'");
     }
-
 }
-?>

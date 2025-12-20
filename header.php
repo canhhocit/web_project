@@ -1,6 +1,6 @@
 <?php
 $anhdaidien = "";
-$hoten = "Tài Khoản";
+$hoten = "User";
 $sdt = "";
 $email = "";
 $cccd = "";
@@ -67,7 +67,7 @@ if (isset($_SESSION['idtaikhoan'])) {
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <?php if (isset($_SESSION['idtaikhoan']) && $anhdaidien): ?>
                                 <img src="View/image/<?php echo $anhdaidien ?>" alt="Avatar"
-                                    style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 3px;">
+                                    style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 3px;">
                                 <?php echo $hoten ?>
                             <?php else: ?>
                                 <i class="fa-solid fa-user fa-user-circle"></i>
@@ -82,12 +82,20 @@ if (isset($_SESSION['idtaikhoan'])) {
                             <?php else: ?>
                                 <!-- Đã đăng nhập -->
                                 <li>
-                                    <h6 class="dropdown-header">Quản Lý</h6>
+                                    <h6 class="dropdown-header">Cá nhân hóa</h6>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item open-modal-btn">
+                                    <a class="dropdown-item open-modal-btn" href="#" data-modal="modal-info">
                                         <i class="fa-solid fa-gear"></i> Thông tin cá nhân
                                     </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item open-modal-btn" href="#" data-modal="modal-changepass">
+                                        <i class="fa-solid fa-key"></i> Đổi mật khẩu
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="index.php?controller=car&action=mycars">
@@ -129,8 +137,8 @@ if (isset($_SESSION['idtaikhoan'])) {
             </div>
         </div>
     </nav>
-    <!-- MODAL  của CẢnh-->
-    <div class="modal">
+    <!-- MODAL  của CẢnh -- cá nhân -->
+    <div class="modal" id="modal-info">
         <form action="/web_project/index.php?controller=taikhoan&action=updateinforUser" method="post"
             enctype="multipart/form-data">
             <input type="hidden" name="idthongtin" value="<?php echo $idthongtin ?>">
@@ -175,4 +183,32 @@ if (isset($_SESSION['idtaikhoan'])) {
         </form>
     </div>
 
- 
+    <!-- MODAL Đổi mật khẩu -->
+    <div class="modal" id="modal-changepass">
+        <form action="/web_project/index.php?controller=taikhoan&action=changePassword" method="post">
+            <div class="modal_inner">
+                <div class="modal_header">
+                    <h3>Đổi mật khẩu</h3>
+                    <span class="close">x</span>
+                </div>
+
+                <div class="modal_body">
+                    <div class="input_infor">
+                        <label for="oldpass">Mật khẩu cũ<span style="color: red">*</span></label>
+                        <input type="password" name="oldpass" placeholder="Nhập mật khẩu cũ" required />
+
+                        <label for="newpass">Mật khẩu mới<span style="color: red">*</span></label>
+                        <input type="password" name="newpass" placeholder="Nhập mật khẩu mới" required />
+
+                        <label for="confnewpass">Xác nhận mật khẩu mới<span style="color: red">*</span></label>
+                        <input type="password" name="confnewpass" placeholder="Nhập lại mật khẩu mới" required />
+                    </div>
+                </div>
+
+                <div class="modal_footer">
+                    <button class="acp-btn" type="submit">Xác nhận</button>
+                    <button class="close-btn" type="button">Đóng</button>
+                </div>
+            </div>
+        </form>
+    </div>
