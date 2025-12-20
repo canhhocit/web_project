@@ -28,7 +28,7 @@ if (isset($_SESSION['idtaikhoan'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Chủ</title>
+    <title>Thuê Xe Giá Rẻ Nhất Việt Nam</title>
 
     <link rel="stylesheet" href="./web_project/View/CSS/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -42,7 +42,7 @@ if (isset($_SESSION['idtaikhoan'])) {
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php?controller=home"><i class="fa-solid fa-car-side"></i>Thuê Xe
-                Đi Chốn</a>
+                Đi Bro</a>
             <button class="navbar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>

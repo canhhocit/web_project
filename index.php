@@ -1,6 +1,7 @@
 <?php
 session_start();
-define('ACCESS_HOPLE', true); 
+define('ACCESSED_FROM_CONTROLLER', true); 
+define('ACCESS_HOPLE', true);
 include "Model/Database/dbconnect.php";
 
 require_once "Model/DAO/vehicleDAO.php";
@@ -25,10 +26,7 @@ include "header.php";
 
 if ($controller == 'home') {
     echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
-    echo "<h1>Chợ Thuê Xe</h1>";
     echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
-    echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nhưng bị vợ phát hiện...</p>";
-    echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho thuê xe nhanh hơn độ ghen của vợ bạn >v<</h3>";
 } else {
     echo '<div class="container" style="padding-top: 20px;">';
 }

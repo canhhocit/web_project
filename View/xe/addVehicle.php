@@ -1,4 +1,6 @@
-<?php require_once __DIR__ . "/../../config.php"; ?>
+<?php
+define('ACCESSED_FROM_CONTROLLER', true);
+require_once __DIR__ . "/../../config.php"; ?>
 
 <!DOCTYPE html>
 <html lang="vi">
