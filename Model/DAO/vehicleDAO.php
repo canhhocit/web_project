@@ -13,14 +13,12 @@ class vehicleDAO
     public function addXe($xe)
     {
         $tenxe = $xe->get_tenxe();
-        // SỬA: Lấy tên hãng (string) thay vì ID, vì DB lưu tên
         $hangxe = $xe->get_hangxe(); 
         $giathue = $xe->get_giathue();
         $mota    = $xe->get_mota();
         $loaixe  = $xe->get_loaixe();
         $idchuxe = $xe->get_idchuxe();
 
-        // SỬA: Thay idhangxe bằng hangxe, thêm ngaydang
         $sql = "INSERT INTO xe (tenxe, hangxe, giathue, mota, loaixe, idchuxe, ngaydang)
                 VALUES ('$tenxe', '$hangxe', '$giathue', '$mota', '$loaixe', '$idchuxe', NOW())";
 
@@ -37,12 +35,11 @@ class vehicleDAO
     {
         $idxe = $xe->get_idxe();
         $tenxe = $xe->get_tenxe();
-        $hangxe = $xe->get_hangxe(); // SỬA: Lấy tên hãng
+        $hangxe = $xe->get_hangxe();
         $giathue = $xe->get_giathue();
         $mota = $xe->get_mota();
         $loaixe = $xe->get_loaixe();
 
-        // SỬA: Update cột hangxe (thay vì idhangxe)
         $sql = "UPDATE xe SET tenxe='$tenxe', hangxe='$hangxe', giathue='$giathue', mota='$mota', loaixe='$loaixe'
             WHERE idxe='$idxe'";
 
@@ -55,7 +52,6 @@ class vehicleDAO
         $list = [];
 
         while ($row = mysqli_fetch_assoc($result)) {
-            // SỬA: DB chỉ có cột hangxe, lấy trực tiếp
             $val_hangxe = isset($row['hangxe']) ? $row['hangxe'] : "Chưa rõ";
             
             $list[] = new xe(
@@ -81,9 +77,6 @@ class vehicleDAO
         return $this->fetchXeList("SELECT * FROM xe WHERE idxe='$idxe'");
     }
 
-    // =========================================================
-    // PHẦN 2: ẢNH XE (Giữ nguyên - Không lỗi)
-    // =========================================================
 
     public function addAnhxe($anhxe)
     {
@@ -109,13 +102,9 @@ class vehicleDAO
         return $list;
     }
 
-    // =========================================================
-    // PHẦN 3: HIỂN THỊ (QUAN TRỌNG: Đã sửa bỏ JOIN bảng hangxe)
-    // =========================================================
-    
+   
     public function getDanhSachXeHienThi() {
-        // SỬA: Bỏ JOIN hangxe vì bảng này không tồn tại.
-        // Lấy trực tiếp x.hangxe đặt alias là tenhang để khớp với View home.php
+
         $sql = "SELECT x.*, x.hangxe AS tenhang, a.duongdan AS hinh_anh
                 FROM xe x 
                 LEFT JOIN (
@@ -129,8 +118,7 @@ class vehicleDAO
 
     public function getChiTietXe($idxe)
     {
-        // SỬA: Bỏ JOIN hangxe.
-        // Lấy trực tiếp x.hangxe đặt alias là tenhangxe để khớp với View carDetail.php
+
         $sql = "SELECT x.*, x.hangxe AS tenhangxe, t.hoten as tenchuxe, t.sdt 
                 FROM xe x 
                 LEFT JOIN thongtintaikhoan t ON x.idchuxe = t.idtaikhoan
@@ -153,7 +141,6 @@ class vehicleDAO
     }
 
     public function timKiemXe($keyword) {
-        // SỬA: Tìm kiếm trực tiếp trên cột hangxe của bảng xe
         $sql = "SELECT x.*, x.hangxe AS tenhang, a.duongdan AS hinh_anh
                 FROM xe x 
                 LEFT JOIN (SELECT * FROM anhxe GROUP BY idxe) a ON x.idxe = a.idxe 
