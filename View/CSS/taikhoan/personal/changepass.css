@@ -1,0 +1,132 @@
+.page-header {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 15px;
+}
+
+.page-header h3 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+/* Layout: 2 cột */
+.password-container {
+    display: flex;
+    gap: 30px;
+}
+
+/* Cột trái: Form */
+.password-form {
+    flex: 1;
+}
+
+/* Mỗi ô input */
+.field {
+    margin-bottom: 20px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.required {
+    color: red;
+}
+
+.field input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.field input:focus {
+    border-color: #0d6efd;
+    outline: none;
+}
+
+/* Thông báo lưu ý */
+.notice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #856404;
+}
+
+.notice i {
+    font-size: 1.2rem;
+}
+
+/* Nút bấm */
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-submit,
+.btn-reset {
+    flex: 1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-submit {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn-submit:hover {
+    background: #0b5ed7;
+}
+
+.btn-reset {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-reset:hover {
+    background: #5a6268;
+}
+
+/* Cột phải: Hướng dẫn */
+.security-tips {
+    flex: 1;
+}
+
+.tips-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.tips-box h4 {
+    margin: 0 0 15px 0;
+    color: #0369a1;
+}
+
+.tips-box h4 i {
+    margin-right: 8px;
+}
+
+.tips-box ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #555;
+}
+
+.tips-box li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+

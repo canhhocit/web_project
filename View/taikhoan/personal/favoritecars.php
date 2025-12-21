@@ -1,8 +1,8 @@
 <?php require_once __DIR__ . "/../../../config.php"; ?>
 
 <link rel="stylesheet" href="/web_project/View/CSS/personal/favorite-cars.css">
-
-<div class="page-title">
+<h1>Xem cái đéo gì</h1>
+<!-- <div class="page-title">
     <h2>Xe yêu thích</h2>
     <p>Danh sách xe bạn đã lưu để tham khảo</p>
 </div>
@@ -10,17 +10,17 @@
 <div class="info-box">
     <i class="fa-solid fa-heart"></i>
     <span>Những chiếc xe bạn yêu thích sẽ được lưu tại đây</span>
-</div>
+</div> -->
 
 <!-- Empty state -->
-<div class="empty">
+<!-- <div class="empty">
     <i class="fa-solid fa-heart-crack"></i>
     <h3>Chưa có xe yêu thích</h3>
     <p>Hãy khám phá và lưu những chiếc xe bạn thích!</p>
     <a href="/web_project/index.php" class="btn-explore">
         <i class="fa-solid fa-search"></i> Khám phá xe ngay
     </a>
-</div>
+</div> -->
 
 <!-- Danh sách yêu thích - uncomment khi có dữ liệu -->
 <!--

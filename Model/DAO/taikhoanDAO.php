@@ -31,7 +31,7 @@ class taikhoanDAO
     public function getId($username)
     {
         $rs = mysqli_query($this->conn, "select idtaikhoan from taikhoan where username = '$username'");
-        $row = mysqli_fetch_array($rs);
+        $row = mysqli_fetch_assoc($rs);
         return $row["idtaikhoan"];
     }
     private function delTK($idtaikhoan)

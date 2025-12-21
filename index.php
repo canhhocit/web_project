@@ -1,6 +1,6 @@
 <?php
 session_start();
-define('ACCESS_HOPLE', true); 
+define('ACCESS_HOPLE', true);
 include "Model/Database/dbconnect.php";
 include "Model/DAO/CarDAO.php";
 //sd session
@@ -40,8 +40,18 @@ switch ($controller) {
         require_once "Model/Object/xe.php";
         require_once "Model/Object/anhxe.php";
         $vehicle = new vehicleController();
+
         if (method_exists($vehicle, $action)) {
-            $vehicle->$action();
+            if ($action === 'editV' && $_SERVER["REQUEST_METHOD"] === "GET") {
+                $data = $vehicle->editV();
+            
+            $xe = $data['xe'];
+            $anhxe = $data['anhxe'];
+            
+            include_once "View/xe/editVehicle.php"; 
+            } else {
+                $vehicle->$action(); // Các action khác
+            }
         } else {
             $vehicle->index();
         }

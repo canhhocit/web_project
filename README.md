@@ -10,5 +10,7 @@ website tương tác giữa người dùng với người dùng
 + Phần xe:
   - Kiểm tra đăng nhập + thông tin trước khi đăng
   - Thêm xe + upload nhiều ảnh
-  - Lịch sử xe đã đăng
+  - Lịch sử xe đã đăng, sửa xóa thông tin về bài đăng
+  NOTE: Chờ phản hồi từ bên Mượn trả để check đk sửa xóa,
+  - Thêm, xóa xe yêu thích: NOTE: chờ giao diện từ Minh
   

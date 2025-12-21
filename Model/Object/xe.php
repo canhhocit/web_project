@@ -8,18 +8,30 @@ class xe
     private $mota;
     private $loaixe;
     private $idchuxe;
-
-  public function __construct($idxe, $tenxe, $hangxe, $giathue, $mota, $loaixe, $idchuxe) {
-    $this->idxe = $idxe;
-    $this->tenxe = $tenxe;
-    $this->hangxe = $hangxe;
-    $this->giathue = $giathue;
-    $this->mota = $mota;
-    $this->loaixe = $loaixe;
-    $this->idchuxe = $idchuxe;
-}
+    private $ngaydang;
 
 
+    public function __construct($idxe, $tenxe, $hangxe, $giathue, $mota, $loaixe, $idchuxe, $ngaydang)
+    {
+        $this->idxe = $idxe;
+        $this->tenxe = $tenxe;
+        $this->hangxe = $hangxe;
+        $this->giathue = $giathue;
+        $this->mota = $mota;
+        $this->loaixe = $loaixe;
+        $this->idchuxe = $idchuxe;
+        $this->ngaydang = $ngaydang;
+    }
+
+    public function get_ngaydang()
+    {
+        return $this->ngaydang;
+    }
+
+    public function set_ngaydang($ngaydang)
+    {
+        $this->ngaydang = $ngaydang;
+    }
 
     public function get_idxe()
     {
