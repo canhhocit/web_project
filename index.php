@@ -17,12 +17,22 @@ if ($controller === 'taikhoan') {
         exit();
     }
 }
+
+if($controller === 'thanhtoan' && ($action === 'getChiTietHoaDon' || $action === 'xacNhanTraXe')) {
+    require_once "Controller/ThanhToanController.php";
+    $thanhtoan = new ThanhToanController($conn);
+    $thanhtoan->$action();
+    exit();
+}
+
 include "header.php";
 echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
-echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
-echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nhưng bị vợ phát hiện, bạn không biết phải thuê xe hay đi xe của người khác để trốn tránh</p>";
-echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho thuê xe nhanh hơn độ ghen của vợ bạn >v<</h3>";
 
+if($controller === 'home') { 
+    echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
+    echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nhưng bị vợ phát hiện, bạn không biết phải thuê xe hay đi xe của người khác để trốn tránh</p>";
+    echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho thuê xe nhanh hơn độ ghen của vợ bạn >v<</h3>";
+}
 
 
 echo '<div class="container">';
@@ -62,6 +72,24 @@ switch ($controller) {
             $taikhoan->$action();
         } else {
             $taikhoan->index();
+        }
+        break;
+    case 'thanhtoan':
+        require_once "Controller/ThanhToanController.php";
+        $thanhtoan = new ThanhToanController($conn);
+        if(method_exists($thanhtoan, $action)) {
+            $thanhtoan->$action();
+        } else {
+            $thanhtoan->index();
+        }
+        break;
+    case 'thongke':
+        require_once "Controller/ThongKeController.php";
+        $thongke = new ThongKeController($conn);
+        if(method_exists($thongke, $action)) {
+            $thongke->$action();
+        } else {
+            $thongke->index();
         }
         break;
     default:
