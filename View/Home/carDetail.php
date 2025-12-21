@@ -14,7 +14,7 @@
                         <div class="carousel-inner" style="border-radius: 5px; overflow: hidden;">
                             <?php foreach ($xe['ds_anh'] as $index => $anh): ?>
                                 <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
-                                    <img src="<?php echo $anh; ?>" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Ảnh xe">
+                                    <img src="View/image/<?php echo $anh; ?>" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Ảnh xe">
                                 </div>
                             <?php endforeach; ?>
                         </div>

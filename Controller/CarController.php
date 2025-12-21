@@ -13,7 +13,6 @@
     public function detail(){
         if(isset($_GET["id"])){
             $id = $_GET['id'];
-
             $xe = $this->vehicleDAO->getChiTietXe($id);
             if ($xe){
                 include "./View/Home/carDetail.php";

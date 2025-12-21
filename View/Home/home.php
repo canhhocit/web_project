@@ -1,6 +1,6 @@
 <div class="row">
     <link rel="stylesheet" href="./View/CSS/style.css">
-    <form action="index.php" method="GET" class="mb-4">
+<form action="index.php" method="GET" class="mb-4">
     <input type="hidden" name="controller" value="home">
     <div class="input-group">
         <input type="text" name="keyword" class="form-control" placeholder="Tìm tên xe bạn thích...">

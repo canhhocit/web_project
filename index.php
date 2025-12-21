@@ -3,7 +3,6 @@ session_start();
 define('ACCESSED_FROM_CONTROLLER', true); 
 define('ACCESS_HOPLE', true);
 include "Model/Database/dbconnect.php";
-
 require_once "Model/DAO/vehicleDAO.php";
 
 $controller = $_GET['controller'] ?? 'home';
