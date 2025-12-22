@@ -10,14 +10,14 @@
 - updateXe
 - getAllXe
 - getXebyIdxe
+- getXebyIdChuxe
 - getXebyLoaixe
 - getXebyHangxe
 - getXebyLoaixeAndHangxe
 - getXebyTenxe
 3.anhxe:
 - addAnhxe
-- deleteAnhxe
-- updateAnhxe
+- updateAnhxebyIdxe
 - getAnhxebyIdxe
 
 __DIR__ = thư mục chứa file hiện tại

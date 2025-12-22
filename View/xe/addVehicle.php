@@ -1,7 +1,9 @@
+
 <?php
 define('ACCESSED_FROM_CONTROLLER', true);
 define('ACCESS_HOPLE', true);
 require_once __DIR__ . "/../../config.php"; ?>
+
 
 <!DOCTYPE html>
 <html lang="vi">

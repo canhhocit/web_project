@@ -1,14 +1,6 @@
 <?php
-// require_once __DIR__ . "/../../config.php";
 
-require_once __DIR__ . "/../../Model/Database/dbconnect.php";
-require_once __DIR__ . "/../../Model/DAO/taikhoanDAO.php";
-
-global $conn;
-$dao = new taikhoanDAO($conn);
-$thongtin = $dao->getThongTinTaiKhoanbyID($_SESSION['idtaikhoan']);
-
-$section = $_GET['section'] ?? 'info';
+$selection = $_GET['selection'] ?? 'info';
 ?>
 
 <!DOCTYPE html>
@@ -27,23 +19,23 @@ $section = $_GET['section'] ?? 'info';
         <!--  Menu  -->
         <div class="sidebar">
             <nav class="menu">
-                <a href="?controller=taikhoan&action=personal&section=info"
-                    class="menu-item <?php echo $section === 'info' ? 'active' : ''; ?>">
+                <a href="?controller=taikhoan&action=personal&selection=info"
+                    class="menu-item <?php echo $selection === 'info' ? 'active' : ''; ?>">
                     <i class="fa-solid fa-id-card"></i>
                     <span>Thông tin tài khoản</span>
                 </a>
-                <a href="?controller=taikhoan&action=personal&section=password"
-                    class="menu-item <?php echo $section === 'password' ? 'active' : ''; ?>">
+                <a href="?controller=taikhoan&action=personal&selection=password"
+                    class="menu-item <?php echo $selection === 'password' ? 'active' : ''; ?>">
                     <i class="fa-solid fa-key"></i>
                     <span>Đổi mật khẩu</span>
                 </a>
-                <a href="?controller=taikhoan&action=personal&section=cars"
-                    class="menu-item <?php echo $section === 'cars' ? 'active' : ''; ?>">
+                <a href="/web_project/index.php?controller=taikhoan&action=personal&selection=cars"
+                    class="menu-item <?php echo $selection === 'cars' ? 'active' : ''; ?>">
                     <i class="fa-solid fa-car"></i>
                     <span>Xe của tôi</span>
                 </a>
-                <a href="?controller=taikhoan&action=personal&section=favorite"
-                    class="menu-item <?php echo $section === 'favorite' ? 'active' : ''; ?>">
+                <a href="?controller=taikhoan&action=personal&selection=favorite"
+                    class="menu-item <?php echo $selection === 'favorite' ? 'active' : ''; ?>">
                     <i class="fa-solid fa-heart"></i>
                     <span>Xe yêu thích</span>
                 </a>
@@ -53,8 +45,9 @@ $section = $_GET['section'] ?? 'info';
         <!-- Content -->
         <div class="content">
             <?php
-            switch ($section) {
+            switch ($selection) {
                 case 'info':
+                    //nhúng bên controller ->personal-> đến đây
                     include __DIR__ . "/personal/info.php";
                     break;
                 case 'password':

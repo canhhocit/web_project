@@ -20,7 +20,9 @@ class vehicleDAO
         $idchuxe = $xe->get_idchuxe();
 
         $sql = "INSERT INTO xe (tenxe, hangxe, giathue, mota, loaixe, idchuxe, ngaydang)
-                VALUES ('$tenxe', '$hangxe', '$giathue', '$mota', '$loaixe', '$idchuxe', NOW())";
+
+         VALUES ('$tenxe', '$hangxe', '$giathue', '$mota', '$loaixe', '$idchuxe', CURDATE())";
+
 
         return mysqli_query($this->conn, $sql);
     }
@@ -61,7 +63,8 @@ class vehicleDAO
                 $row['giathue'],
                 $row['mota'],
                 $row['loaixe'],
-                $row['idchuxe']
+                $row['idchuxe'],
+                $row['ngaydang']
             );
         }
         return $list;
@@ -76,6 +79,10 @@ class vehicleDAO
     {
         return $this->fetchXeList("SELECT * FROM xe WHERE idxe='$idxe'");
     }
+    public function getXebyIdChuxe($idchuxe)
+    {
+        return $this->fetchXeList("SELECT * FROM xe WHERE idchuxe='$idchuxe'");
+    }
 
 
     public function addAnhxe($anhxe)
@@ -86,10 +93,13 @@ class vehicleDAO
         return mysqli_query($this->conn, $sql);
     }
 
-    public function deleteAnhxebyidXe($idxe)
+    public function deleteAnhxebyIdXe($idxe)
     {
+
         return mysqli_query($this->conn, "DELETE FROM anhxe WHERE idxe='$idxe'");
     }
+
+
 
     public function getAnhxebyIdxe($idxe)
     {
