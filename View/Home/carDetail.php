@@ -37,7 +37,17 @@
 
         <div class="col-md-5">
             <div class="card border-0 shadow p-4">
-                <h2 class="text-primary fw-bold mb-1"><?php echo $xe['tenxe']; ?></h2>
+                <div class="d-flex justify-content-between align-items-center">
+    <h2 class="text-primary fw-bold mb-1">
+        <?php echo $xe['tenxe']; ?>
+    </h2>
+    <button 
+        class="btn btn-outline-danger btn-sm btn-yeu-thich"
+        data-id-xe= '<?php echo $xe['maxe']; ?>'
+        title='Yêu thích xe'><i class="fa-regular fa-heart"></i>
+    </button>
+</div>
+
                 <p class="text-muted"><i class="fa-solid fa-tag"></i> Hãng: <?php echo $xe['tenhangxe']; ?></p>
                 
                 <h3 class="text-danger fw-bold my-3">
@@ -66,7 +76,7 @@
 
                 <div class="d-grid gap-2">
                     <a href="#" class="btn btn-primary btn-lg fw-bold">
-                        <i class="fa-regular fa-calendar-check"></i> Đặt Xe Ngay
+                        <i class="fa-regular fa-calendar-check"></i> Thuê Xe
                     </a>
                     <a href="index.php" class="btn btn-outline-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Quay lại
