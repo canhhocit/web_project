@@ -46,3 +46,16 @@ function xacNhanTraXe() {
         }
     });
 }
+
+function huyTT() {
+    if (confirm("Xác nhận hủy thanh toán?")) {
+        var modalElement = document.getElementById('modalTraXe');
+        var modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+            modalInstance.hide();
+        }
+    }
+}
+
+
+

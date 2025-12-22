@@ -32,30 +32,40 @@
 </head>
 <body>
     <div class="tabs">
-        <div class="tab active">Đang thuê</div>
-        <div class="tab">Cho thuê</div>
-        <div class="tab">Đã thuê</div>
+        <div class="tab" onclick="switchTab(1,this)">Đang thuê</div>
+        <div class="tab" onclick="switchTab(2,this)">Cho thuê</div>
+        <div class="tab" onclick="switchTab(2,this)">Đã thuê</div>
     </div>
 
-    <div class="content" id="content">
-        <?php if (!empty($hoadon)): ?>
-            <?php foreach ($hoadon as $hd): ?>
-            <div class="row-item">
-                <div class="image-box">Ảnh xe</div>
-                <div class="info">
-                    <div class="name"><?= $hd['tenxe'] ?> (Mã HĐ: <?= $hd['idhoadon'] ?>)</div>
-                    <div class="price">Ngày mượn: <?= $hd['ngaymuon'] ?></div>
-                    <span class="status yellow">Đang thuê</span>
+    <div class="content">
+        <div id="tab-content-1" class="tab-pane">
+            <?php if (!empty($hoadon)): ?>
+                <?php foreach ($hoadon as $hd): ?>
+                <div class="row-item">
+                    <div class="image-box">Ảnh xe</div>
+                    <div class="info">
+                        <div class="name"><?= $hd['tenxe'] ?> (Mã HĐ: <?= $hd['idhoadon'] ?>)</div>
+                        <div class="price">Ngày mượn: <?= $hd['ngaymuon'] ?></div>
+                        <span class="status yellow">Đang thuê</span>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-view">Xem chi tiết</button>
+                        <button class="btn-return" onclick="showModal(<?= $hd['idhoadon'] ?>)">Trả xe</button>
+                    </div>
                 </div>
-                <div class="actions">
-                    <button class="btn-view">Xem chi tiết</button>
-                    <button class="btn-return" onclick="showModal(<?= $hd['idhoadon'] ?>)">Trả xe</button>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p class="text-center p-4">Không có hóa đơn nào đang thuê.</p>
-        <?php endif; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="text-center p-4">Không có hóa đơn nào đang thuê.</p>
+            <?php endif; ?>
+        </div>
+
+        <div id="tab-content-2" class="tab-pane" style="display:none;">
+            <p class="text-center p-4">Chưa có dữ liệu xe bạn đang cho thuê.</p>
+        </div>
+
+        <div id="tab-content-3" class="tab-pane" style="display:none;">
+            <p class="text-center p-4">Chưa có lịch sử xe đã thuê.</p>
+        </div>
     </div>
 
     <div class="modal fade" id="modalTraXe" tabindex="-1">
@@ -98,7 +108,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-secondary" onclick="huyTT()">Hủy</button>
                     <button type="button" class="btn btn-primary" onclick="xacNhanTraXe()">Thanh toán</button>
                 </div>
             </div>
