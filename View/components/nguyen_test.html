@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Mock giao diện thuê sản phẩm</title>
+        <link rel="stylesheet" href="../CSS/nguyen_css_thueXe.css" />
+        <style>
+            .product {
+                position: absolute;
+                top: 24%;
+                left: 34%;
+                width: 400px;
+                height: 300px;
+                display: flex;
+                justify-content: end;
+                align-items: end;
+                background-color: #5d5c5c;
+            }
+            .rent-btn {
+                background: #ff5722;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="padding: 50px" class="product" data-xe-id="1">
+            <button style="padding: 12px 24px" class="rent-btn">Thuê</button>
+        </div>
+
+        <script>
+            const rentBtn = document.querySelector(".rent-btn");
+            const product = document.querySelector(".product");
+
+            rentBtn.addEventListener("click", () => {
+                const xeId = product.dataset.xeId;
+
+                if (!document.getElementById("modalOverlay")) {
+                    fetch("nguyen_modal_thueXe.html")
+                        .then((res) => res.text())
+                        .then((html) => {
+                            // html là data
+                            document.body.insertAdjacentHTML("beforeend", html);
+
+                            initModal(xeId);
+
+                            requestAnimationFrame(() => {
+                                initThueXeEvents();
+                            });
+                        });
+                } else {
+                    openModal(xeId);
+                }
+            });
+
+            function initModal(xeId) {
+                const modal = document.getElementById("modalOverlay");
+                const btnClose = document.getElementById("closeModal");
+
+                modal.dataset.xeId = xeId;
+                openModal(xeId);
+                btnClose.onclick = () => closeModal();
+                // btnClose.addEventListener("click", () => {
+                //     closeModal();
+                // });
+
+                // modal.click = (e) => {
+                //     if (e.target === modal) closeModal();
+                // };
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) closeModal();
+                });
+            }
+
+            function openModal(xeId) {
+                const modal = document.getElementById("modalOverlay");
+
+                modal.classList.add("active");
+                document.body.style.overflow = "hidden"; // chặn cuộn trang chính
+
+                loadProductData(xeId);
+            }
+            function closeModal() {
+                const modal = document.getElementById("modalOverlay");
+                modal.classList.remove("active");
+                document.body.style.overflow = "auto";
+            }
+            function loadProductData(xeId) {
+                fetch("../../Controller/nguyen_thueXe_Controller.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        action: "openModal",
+                        id: xeId,
+                    }),
+                })
+                    .then((res) => {
+                        if (!res.ok) throw new Error("HTTP " + res.status);
+                        return res.json();
+                    })
+                    .then((data) => {
+                        // console.log("DATA:", data);
+                        document.getElementById("title_xe_thuexe").innerText =
+                            data.xe.name + " - " + xeId;
+
+                        document.getElementById("price_thuexe").innerText =
+                            data.xe.price + "đ";
+
+                        let baohiem = 0;
+                        let baotri = 0;
+                        let tongchiphi = 0;
+                        if (data.xe.type === "car") {
+                            baohiem = 100000;
+                            baotri = 100000;
+                        } else {
+                            baohiem = 50000;
+                            baotri = 50000;
+                        }
+                        tongchiphi = data.xe.price + baohiem + baotri;
+                        document.getElementById("feeBaoHiem_thuexe").innerText =
+                            baohiem + "đ";
+                        document.getElementById(
+                            "feeMaintain_thuexe"
+                        ).innerText = baotri + "đ";
+                        document.getElementById("sumprice_thuexe").innerText =
+                            tongchiphi + "đ";
+                    })
+                    .catch((err) => console.error("Fetch lỗi:", err));
+            }
+        </script>
+        <script src="../JS/nguyen_js_thuexe.js"></script>
+        <script src="../JS/nguyen_js_xacNhan.js"></script>
+    </body>
+</html>
