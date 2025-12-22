@@ -107,14 +107,9 @@ if (isset($_SESSION['idtaikhoan'])) {
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item text-danger" href="#"
-                                        onclick="if(confirm('Bạn có chắc chắn muốn xóa tài khoản? Hành động này cần cân nhắc!')) { window.location='/web_project/index.php?controller=taikhoan&action=deleteAccount'; }">
-                                        <i class="fa-solid fa-trash"></i> Xóa tài khoản
-                                    </a>
-                                </li>
-                                <li>
                                     <a class="dropdown-item text-danger"
                                         href="/web_project/index.php?controller=taikhoan&action=logout">
+                                         <i class="fa-solid fa-right-from-bracket me-2"></i>
                                         Đăng xuất
                                     </a>
                                 </li>
