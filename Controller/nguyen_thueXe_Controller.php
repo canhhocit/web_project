@@ -31,6 +31,17 @@ class nguyen_thueXe_Controller
                 $xe = $this->layxe($data_post['id'] ?? 0);
                 $xe_arr = [];
 
+                // lấy ảnh để trả về bên kia
+                // $anhxe = $this->layanhxe($data_post['id'] ?? 0);
+                // $anhxe_arr = [];
+                // foreach ($anhxe as $item) {
+                //     $anhxe_arr[] = [
+                //         "id"     => $item->get_idanh(),
+                //         "idxe"   => $item->get_idxe(),
+                //         "link"   => $item->get_duongdan()
+                //     ];
+                // }
+
                 foreach ($xe as $item) {
                     $xe_arr[] = [
                         "id"     => $item->get_idxe(),
@@ -42,9 +53,11 @@ class nguyen_thueXe_Controller
                         "owner"  => $item->get_idchuxe()
                     ];
                 }
+
                 echo json_encode([
                     "status" => "success",
                     "xe" => $xe_arr[0] // chỉ 1 mà thôi
+                    // "anhxe" => $anhxe_arr[0]
                 ]);
                 exit;
             case 'confirmRent': 
@@ -89,6 +102,16 @@ class nguyen_thueXe_Controller
         }
         $xe = $this->vehicle_dao->getXebyIdxe($idxe);
         return $xe;
+    }
+
+    function layanhxe($idxe){
+        if ($idxe <= 0) {
+            http_response_code(400);
+            echo json_encode(["error" => "ID xe không hợp lệ"]);
+            exit;
+        }
+        $anhxe = $this->vehicle_dao->getAnhxebyIdxe($idxe);
+        return $anhxe;
     }
 
     function layhoadon(){
