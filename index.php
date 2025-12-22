@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-define('ACCESSED_FROM_CONTROLLER', true); 
+define('ACCESSED_FROM_CONTROLLER', true);
 define('ACCESS_HOPLE', true);
 
 
@@ -24,7 +24,7 @@ if ($controller === 'taikhoan') {
     }
 }
 
-if($controller === 'thanhtoan' && ($action === 'getChiTietHoaDon' || $action === 'xacNhanTraXe')) {
+if ($controller === 'thanhtoan' && ($action === 'getChiTietHoaDon' || $action === 'xacNhanTraXe')) {
     require_once "Controller/ThanhToanController.php";
     if (file_exists("Controller/ThanhToanController.php")) {
         $thanhtoan = new ThanhToanController($conn);
@@ -36,10 +36,61 @@ if($controller === 'thanhtoan' && ($action === 'getChiTietHoaDon' || $action ===
 include "header.php";
 
 if ($controller == 'home') {
-    echo '<div class="container" style="min-height: 500px; padding-top: 20px;">';
-    echo "<h1>Chào mừng đến với Chợ Thuê Xe</h1>";
-    echo "<p>Hãy tưởng tượng một ngày bạn và người yêu đi chơi nhưng bị vợ phát hiện, bạn không biết phải thuê xe hay đi xe của người khác để trốn tránh</p>";
-    echo "<h3>Ôi đừng lo vì đã có chợ thuê xe - nơi mà tốc độ cho thuê xe nhanh hơn độ ghen của vợ bạn >v<</h3>";
+    //cảnh sửa
+    echo '<style>
+    @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
+    
+    .home-welcome {
+        min-height: 400px;
+        padding: 60px 20px;
+        text-align: center;
+        background: linear-gradient(135deg, #88a398ff, #3f2c2cff);
+        color: #f7ec9bff;
+        border-radius: 0;
+        margin-bottom: 40px;
+        position: relative;
+        font-family: "Quicksand", sans-serif;
+    }
+    .home-welcome h1 {
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+        font-family: "Quicksand", sans-serif;
+    }
+    .home-welcome p {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        line-height: 1.6;
+        font-weight: 500;
+    }
+    .home-welcome h4 {
+        margin: 30px 0;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+    .home-badge {
+        display: inline-block;
+        padding: 12px 30px;
+        background: #ffc107;
+        color: #000;
+        font-weight: 700;
+        border-radius: 50px;
+        font-size: 1rem;
+        margin-top: 20px;
+    }
+</style>';
+
+    echo '<div class="home-welcome">';
+    echo '<div class="container">';
+    echo '<h1 style ="color:red;">WELCOME</h1>';
+    echo '<p>Không phải chuyến đi nào cũng nên để lại dấu vết.</p>';
+    echo '<p>Không phải chiếc xe nào cũng phù hợp cho mọi cuộc hẹn.</p>';
+    echo '<h4>👉 <strong>Chợ Thuê Xe</strong> – nơi bạn chọn xe phù hợp cho từng tình huống <em>"nhạy cảm"</em>.</h4>';
+    echo '<span class="home-badge">🚗 Xe đúng – chuyện êm</span>';
+    echo '</div>';
+    echo '</div>';
+    //end
 } else {
     echo '<div class="container" style="padding-top: 20px;">';
 }
@@ -58,12 +109,12 @@ switch ($controller) {
         if (method_exists($carCtrl, $action)) {
             $carCtrl->$action();
         } else {
-             echo "<script>window.location.href='index.php';</script>";
+            echo "<script>window.location.href='index.php';</script>";
         }
         break;
 
     case 'vehicle':
-        require_once "Controller/vehicleController.php"; 
+        require_once "Controller/vehicleController.php";
         require_once "Model/Object/xe.php";
         require_once "Model/Object/anhxe.php";
         $vehicle = new vehicleController();
@@ -71,11 +122,11 @@ switch ($controller) {
         if (method_exists($vehicle, $action)) {
             if ($action === 'editV' && $_SERVER["REQUEST_METHOD"] === "GET") {
                 $data = $vehicle->editV();
-            
-            $xe = $data['xe'];
-            $anhxe = $data['anhxe'];
-            
-            include_once "View/xe/editVehicle.php"; 
+
+                $xe = $data['xe'];
+                $anhxe = $data['anhxe'];
+
+                include_once "View/xe/editVehicle.php";
             } else {
                 $vehicle->$action(); // Các action khác
             }
@@ -95,7 +146,7 @@ switch ($controller) {
     case 'thanhtoan':
         require_once "Controller/ThanhToanController.php";
         $thanhtoan = new ThanhToanController($conn);
-        if(method_exists($thanhtoan, $action)) {
+        if (method_exists($thanhtoan, $action)) {
             $thanhtoan->$action();
         } else {
             $thanhtoan->index();
@@ -105,7 +156,7 @@ switch ($controller) {
     case 'thongke':
         require_once "Controller/ThongKeController.php";
         $thongke = new ThongKeController($conn);
-        if(method_exists($thongke, $action)) {
+        if (method_exists($thongke, $action)) {
             $thongke->$action();
         } else {
             $thongke->index();
@@ -117,6 +168,5 @@ switch ($controller) {
         break;
 }
 
-echo '</div>'; 
+echo '</div>';
 include "footer.php";
-?>

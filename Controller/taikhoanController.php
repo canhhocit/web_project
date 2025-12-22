@@ -150,7 +150,7 @@ class taikhoanController
                 if (move_uploaded_file($tmpname, $path)) {
                     $anhdaidien = $filename;
                 } else {
-                    echo "<script>alert('Upload ảnh thất bại!'); history.back();</script>";
+                    echo "<script>alert('Upload ảnh thất bại vào thư mục!'); history.back();</script>";
                     exit;
                 }
             }
@@ -165,8 +165,7 @@ class taikhoanController
 
                 if ($daCoThongTin) {
                     if ($this->Adao->updateThongTinTaiKhoan($thongtin)) {
-                        header("Location: /web_project/index.php");
-                        exit;
+                        echo "<script>alert('Cập nhật thành công!'); window.location='/web_project/index.php';</script>";
                     } else {
                         echo "<script>alert('Cập nhật thất bại!'); history.back();</script>";
                     }
