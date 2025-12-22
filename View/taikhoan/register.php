@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Register</title>
   </head>
-  <link rel="stylesheet" href="../CSS/register.css" />
+  <link rel="stylesheet" href="../CSS/taikhoan/register.css" />
 
   <body>
     <div class="header">
@@ -18,14 +18,15 @@
       <input type="password" id="password" name="password" required/><br />
 
       <label>Confirm Password:</label><br />
-      <input type="password" id="confpassword" name="confpassword" required
-      /><br />
-
+      <input type="password" id="confpassword" name="confpassword" required/><br>
+      <div class="message">
+        <i><span id="msg"></span></i>
+      </div>
       <div class="btn">
         <a href="login.php" id="btnBack">Back</a>
         <button type="submit" id="btnRegister">Register</button>
       </div>
     </form>
   </body>
-  <script src="../JS/register.js"></script>
+  <script src="../JS/taikhoan/register.js"></script>
 </html>

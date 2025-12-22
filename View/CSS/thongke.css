@@ -1,0 +1,47 @@
+/* View/CSS/thongke.css */
+
+/* Tùy chỉnh chung cho các thẻ Card */
+.card { 
+    border: none; 
+    border-radius: 10px; 
+    transition: transform 0.3s; 
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover { 
+    transform: translateY(-5px); 
+}
+
+/* Hiệu ứng cho các Icon phía sau thẻ */
+.stats-icon { 
+    opacity: 0.2; 
+    position: absolute; 
+    right: 15px; 
+    bottom: 10px; 
+}
+
+/* Tùy chỉnh tiêu đề báo cáo */
+h2.text-primary {
+    letter-spacing: 1px;
+}
+
+/* Làm đẹp bảng xếp hạng */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: #f8f9fa;
+}
+
+/* Đảm bảo canvas biểu đồ không quá lớn */
+#barChart {
+    max-height: 300px;
+}
+
+/* Nền xám nhẹ cho toàn trang */
+body.bg-light {
+    background-color: #f4f7f6 !important;
+}

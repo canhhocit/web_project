@@ -1,5 +1,6 @@
 <?php
 define('ACCESSED_FROM_CONTROLLER', true);
+define('ACCESS_HOPLE', true);
 require_once __DIR__ . "/../../config.php"; ?>
 
 <!DOCTYPE html>
@@ -7,7 +8,7 @@ require_once __DIR__ . "/../../config.php"; ?>
 <head>
     <meta charset="UTF-8">
     <title>Bạn muốn cho thuê xe?</title>
-    <link rel="stylesheet" href="../CSS/addVehicle.css">
+    <link rel="stylesheet" href="../CSS/vehicle/addVehicle.css">
 </head>
 <body>
 
@@ -44,6 +45,6 @@ require_once __DIR__ . "/../../config.php"; ?>
     </form>
 </div>
 
-<script src="../JS/addVehicle.js"></script>
+<script src="../JS/vehicle/addVehicle.js"></script>
 </body>
 </html>

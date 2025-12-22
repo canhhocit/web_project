@@ -1,0 +1,197 @@
+/* favorite-cars.css */
+
+/* Empty state */
+.empty {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty i {
+    font-size: 5rem;
+    color: #ffc0cb;
+    margin-bottom: 20px;
+}
+
+.empty h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.empty p {
+    color: #999;
+    margin-bottom: 25px;
+}
+
+.btn-explore {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 25px;
+    background: #ec4899;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-explore:hover {
+    background: #db2777;
+}
+
+/* Favorites header */
+.favorites-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #fdf2f8;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.favorites-count {
+    color: #831843;
+}
+
+.favorites-count strong {
+    color: #ec4899;
+    font-size: 1.1rem;
+}
+
+.btn-clear {
+    padding: 10px 20px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-clear:hover {
+    background: #c82333;
+}
+
+/* Favorites list */
+.favorites-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.favorite-item {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.favorite-item:hover {
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+    transform: translateY(-2px);
+}
+
+.heart-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: #ec4899;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    z-index: 10;
+}
+
+.favorite-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.favorite-info {
+    padding: 15px;
+}
+
+.favorite-info h4 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.favorite-info p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.favorite-info i {
+    margin-right: 5px;
+    color: #999;
+}
+
+.favorite-price {
+    font-weight: 600;
+    color: #f59e0b;
+    margin-top: 10px;
+}
+
+.favorite-actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-view,
+.btn-remove {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-view {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn-view:hover {
+    background: #0b5ed7;
+}
+
+.btn-remove {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-remove:hover {
+    background: #c82333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .favorites-list {
+        grid-template-columns: 1fr;
+    }
+
+    .favorites-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-clear {
+        width: 100%;
+    }
+}

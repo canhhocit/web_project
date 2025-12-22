@@ -15,8 +15,7 @@
             echo '</div>';
         }else{
             foreach($listCar as $car){
-                $hinhAnh = !empty('View/image/' . $car['hinh_anh']) ? 'View/image/' . $car['hinh_anh'] : 'https://via.placeholder.com/300x200?text=No+Image';
-                $giaThue = number_format($car['giathue'],0,',','.');
+                $hinhAnh = !empty($car['hinh_anh']) ? 'View/image/' . $car['hinh_anh'] : 'https://via.placeholder.com/300x200?text=No+Image';                $giaThue = number_format($car['giathue'],0,',','.');
                 $hangXe = isset($car['tenhang']) ? $car['tenhang'] : 'Chưa rõ hãng';
                 $loaiXe = isset($car['loaixe']) ? $car['loaixe'] : 'Chưa rõ loại';
 

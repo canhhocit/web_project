@@ -1,8 +1,7 @@
 const openBtns = document.querySelectorAll(".open-modal-btn");
-const closeIcons = document.querySelectorAll(".close");
 const closeBtns = document.querySelectorAll(".close-btn");
 
-// Mở modal
+// open
 openBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -14,40 +13,46 @@ openBtns.forEach((btn) => {
   });
 });
 
-// Đóng modal khi click nút X
-closeIcons.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    const modal = icon.closest(".modal");
-    if (modal) {
-      modal.classList.remove("active");
-    }
-  });
-});
 
-// Đóng modal khi click nút Đóng
 closeBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     const modal = btn.closest(".modal");
     if (modal) {
+      let oldpass = document.getElementById("oldpass").value.trim();
+      let newpass = document.getElementById("newpass").value.trim();
+      let confpass = document.getElementById("confnewpass").value.trim();
+      let hoten = document.getElementById("hoten").value.trim();
+      let sdt = document.getElementById("sdt").value.trim();
+      let cccd = document.getElementById("cccd").value.trim();
+      let email = document.getElementById("email").value.trim();
+
+      if (oldpass !== "" || newpass !== "" || confpass !== ""||hoten!==""||sdt!==""||cccd!==""||email!=="") {
+        if (confirm("Dữ liệu sẽ mất khi bạn chưa lưu. Bạn có chắc muốn đóng?")) {
+          modal.classList.remove("active");
+        }
+        return; 
+      }
       modal.classList.remove("active");
     }
   });
 });
-
-// Đóng modal khi click ra ngoài
+//  click  ngoài
 document.querySelectorAll(".modal").forEach((modal) => {
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
       let oldpass = document.getElementById("oldpass").value.trim();
       let newpass = document.getElementById("newpass").value.trim();
       let confpass = document.getElementById("confnewpass").value.trim();
-      if (oldpass !== "" || newpass !== "" || confpass !== "") {
-        if (
-          confirm("Dữ liệu sẽ mất khi bạn chưa lưu. Bạn có chắc muốn đóng?")
-        ) {
+      let hoten = document.getElementById("hoten").value.trim();
+      let sdt = document.getElementById("sdt").value.trim();
+      let cccd = document.getElementById("cccd").value.trim();
+      let email = document.getElementById("email").value.trim();
+
+      if (oldpass !== "" || newpass !== "" || confpass !== ""||hoten!==""||sdt!==""||cccd!==""||email!=="") {
+        if (confirm("Dữ liệu sẽ mất khi bạn chưa lưu. Bạn có chắc muốn đóng?")) {
           modal.classList.remove("active");
         }
-        return; // Không đóng nếu user chọn Cancel
+        return; 
       }
       modal.classList.remove("active");
     }
