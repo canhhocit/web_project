@@ -1,0 +1,120 @@
+<?php
+
+header('Content-Type: application/json; charset=utf-8');
+$raw = file_get_contents("php://input");
+$data_post = json_decode($raw, true);
+$action = $data_post['action'] ?? '';
+
+require_once __DIR__ . "/../Model/DAO/nguyen_hoadonDAO.php";
+require_once __DIR__ . "/../Model/DAO/vehicleDAO.php";
+require_once __DIR__ . "/../Model/Object/xe.php";
+require_once __DIR__ . "/../Model/Object/nguyen_hoadon.php";
+require_once __DIR__ . "/../Model/DAO/taikhoanDAO.php";
+    
+class nguyen_thueXe_Controller
+{
+    private $vehicle_dao;
+    private $hoadon_dao;
+    private $user_dao;
+
+    public function __construct()
+    {
+        global $conn;
+        $this->vehicle_dao = new vehicleDAO($conn);
+        $this->hoadon_dao = new nguyen_hoadonDAO($conn);
+        $this->user_dao = new taikhoanDAO($conn);
+    }
+    public function handleRequest($action, $data_post)
+    {
+        switch ($action) {
+            case 'openModal':
+                $xe = $this->layxe($data_post['id'] ?? 0);
+                $xe_arr = [];
+
+                foreach ($xe as $item) {
+                    $xe_arr[] = [
+                        "id"     => $item->get_idxe(),
+                        "name"   => $item->get_tenxe(),
+                        "brand"  => $item->get_hangxe(),
+                        "price"  => (int)$item->get_giathue(),
+                        "desc"   => $item->get_mota(),
+                        "type"   => $item->get_loaixe(),
+                        "owner"  => $item->get_idchuxe()
+                    ];
+                }
+                echo json_encode([
+                    "status" => "success",
+                    "xe" => $xe_arr[0] // chỉ 1 mà thôi
+                ]);
+                exit;
+            case 'confirmRent': 
+                echo json_encode([
+                    "success" => true,
+                    "received" => $data_post['data']
+                ]);
+                exit;
+            case 'layhoadon':
+                return $this->layhoadon($data_post);
+
+                exit;
+            case 'laythongtinnguoidung':
+                // $user = $this->laythongtinnguoidung($data_post['idtaikhoan'] ?? 0);
+
+                //$user_info = [];
+                // foreach ($user as $item) {
+                //     $user_info[] = [
+                //         "idtaikhoan"     => $item->get_idtaikhoan(),
+                //         "username"   => $item->get_username(),
+                //         "pass"  => $item->get_pass()
+                //     ];
+                // }
+                // echo json_encode([
+                //     "status" => "success",
+                //     "user_info" => $user_info[0]
+                // ]);
+                exit;
+            
+            default:
+                http_response_code(400);
+                echo json_encode(["error" => "Hành động không hợp lệ"]);
+                exit;
+        }
+    }
+
+    function layxe($idxe){
+        if ($idxe <= 0) {
+            http_response_code(400);
+            echo json_encode(["error" => "ID xe không hợp lệ"]);
+            exit;
+        }
+        $xe = $this->vehicle_dao->getXebyIdxe($idxe);
+        return $xe;
+    }
+
+    function layhoadon(){
+        $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0;
+        if ($idtaikhoan <= 0) {
+            http_response_code(400);
+            echo json_encode(["error" => "ID tài khoản không hợp lệ"]);
+            exit;
+        }
+        // $hoadon = $this->hoadon_dao->getHoaDonbyIdtaikhoan($idtaikhoan);
+        // return $hoadon;
+    }
+
+    function laythongtinnguoidung($idtaikhoan){
+        // $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0; cho sang bên kia đê
+        if ($idtaikhoan <= 0) {
+            http_response_code(400);
+            echo json_encode(["error" => "ID tài khoản không hợp lệ"]);
+            exit;
+        }
+        // getThongTinTaiKhoanbyID
+        // $user_info = $this->user_dao->getThongTinTaiKhoanbyID($idtaikhoan);
+        // return $user_info;
+    }
+}
+
+$controller = new nguyen_thueXe_Controller();
+$controller->handleRequest($action, $data_post);
+?>
