@@ -83,6 +83,12 @@ class vehicleDAO
     {
         return $this->fetchXeList("SELECT * FROM xe WHERE idchuxe='$idchuxe'");
     }
+    public function getFavoritebyIdChuxe($idchuxe)
+    {
+        $sql = "SELECT xe.* FROM yeuthich JOIN xe ON yeuthich.idxe = xe.idxe WHERE yeuthich.idtaikhoan = $idchuxe";
+        return $this->fetchXeList($sql);
+    }
+
 
 
     public function addAnhxe($anhxe)

@@ -41,11 +41,16 @@
                     <h2 class="text-primary fw-bold mb-1">
                         <?php echo $xe['tenxe']; ?>
                     </h2>
-                    <button
-                        class="btn btn-outline-danger btn-sm btn-yeu-thich"
-                        data-id-xe='<?php echo $xe['maxe']; ?>'
-                        title='Yêu thích xe'><i class="fa-regular fa-heart"></i>
-                    </button>
+
+                    <!-- CANH'S FAVORITE -->
+                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" style="text-decoration: none; border: 1px solid gray;"
+                        title="Yêu thích xe">
+                        <span style="font-size:30px; color:red; cursor:pointer;">
+                            <?php echo $exists ? "🫀" : "🤍" ?>
+                        </span>
+                    </a>
+                    <!-- END -->
+
                 </div>
 
                 <p class="text-muted"><i class="fa-solid fa-tag"></i> Hãng: <?php echo $xe['tenhangxe']; ?></p>
