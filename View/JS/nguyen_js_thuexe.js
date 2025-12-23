@@ -39,44 +39,31 @@ function initModalXacNhan() {
 
     btnClose.onclick = closeModalXacNhan;
 
-    btnConfirm.onclick = async () => {
+    btnConfirm.onclick = () => {
         const data = collectFormData();
 
-        try {
-            const res = await fetch(
-                "../../Controller/nguyen_thueXe_Controller.php",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        action: "confirmRent",
-                        data,
-                    }),
+        fetch("../../Controller/nguyen_thueXe_Controller.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                action: "taohoadon",
+                data, // khi key và value trùng tên thì chỉ thế thôi
+            }),
+        })
+            .then((res) => res.json())
+            .then((result) => {
+                if (result.success) {
+                    alert("✅ Thuê xe thành công!");
+                    closeModalXacNhan();
+                    closeModal();
+                } else {
+                    alert("❌ Thuê xe thất bại!");
                 }
-            )
-                .then((res) => res.json)
-                .then((data) => {
-                    if (data.success) {
-                        alert("✅ Thuê xe thành công!");
-                        closeModalXacNhan();
-                        closeModal();
-                    } else {
-                        alert("❌ Thuê xe thất bại!");
-                    }
-                });
-            // const result = await res.json();
-
-            // if (result.success) {
-            //     alert("✅ Thuê xe thành công!");
-            //     closeModalXacNhan();
-            //     closeModal();
-            // } else {
-            //     alert("❌ Thuê xe thất bại!");
-            // }
-        } catch (err) {
-            console.error(err);
-            alert("❌ Lỗi kết nối server!");
-        }
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("❌ Lỗi kết nối server!");
+            });
     };
 
     modal.onclick = (e) => {
@@ -149,12 +136,13 @@ function canRent() {
 
 function collectFormData() {
     return {
-        idtaikhoan: 1,
+        idtaikhoan: 1, // nữa phải thay cái này
         xeId: document.getElementById("modalOverlay").dataset.xeId,
-
+        // thiếu dữ liệu địa điểm lấy và trả
+        pickupLocation: document.getElementById("pickup_thuexe").value,
+        dropoffLocation: document.getElementById("dropoff_thuexe").value,
         pickupDate: document.getElementById("pickup_date_thuexe").value,
         returnDate: document.getElementById("return_date_thuexe").value,
-        rentDays: document.getElementById("songaythue_thuexe").innerText,
 
         fullName: document.getElementById("fullname_modalThuexe").value,
         email: document.getElementById("email_modalThuexe").value,
@@ -162,6 +150,7 @@ function collectFormData() {
         cccd: document.getElementById("cccd_modalThuexe").value,
         comment: document.getElementById("note_modalThuexe").value,
 
+        rentDays: document.getElementById("songaythue_thuexe").innerText,
         totalCost: document.getElementById("sumprice_thuexe").innerText,
     };
 }

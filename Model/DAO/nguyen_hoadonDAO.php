@@ -10,6 +10,7 @@ class nguyen_hoadonDAO {
         $this->conn = $conn;
     }
 
+    /* ================= GET ALL ================= */
     public function getAll() {
         $sql = "SELECT * FROM hoadon";
         $result = $this->conn->query($sql);
@@ -25,6 +26,10 @@ class nguyen_hoadonDAO {
                 $row['diemtra'],
                 $row['ngaymuon'],
                 $row['ngaytra'],
+                $row['hoten'],
+                $row['email'],
+                $row['sdt'],
+                $row['cccd'],
                 $row['trangthai'],
                 $row['ghichu'],
                 $row['tongtien']
@@ -34,6 +39,7 @@ class nguyen_hoadonDAO {
         return $list;
     }
 
+    /* ================= GET BY ID ================= */
     public function getById($idhoadon) {
         $sql = "SELECT * FROM hoadon WHERE idhoadon = ?";
         $stmt = $this->conn->prepare($sql);
@@ -52,6 +58,10 @@ class nguyen_hoadonDAO {
                 $row['diemtra'],
                 $row['ngaymuon'],
                 $row['ngaytra'],
+                $row['hoten'],
+                $row['email'],
+                $row['sdt'],
+                $row['cccd'],
                 $row['trangthai'],
                 $row['ghichu'],
                 $row['tongtien']
@@ -61,22 +71,43 @@ class nguyen_hoadonDAO {
         return null;
     }
 
+    /* ================= INSERT ================= */
     public function insert(nguyen_hoadon $hd) {
-        $sql = "INSERT INTO hoadon
-                (idtaikhoan, idxe, diemlay, diemtra, ngaymuon, ngaytra, trangthai, ghichu, tongtien)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $sql = "INSERT INTO hoadon (
+                    idtaikhoan,
+                    idxe,
+                    diemlay,
+                    diemtra,
+                    ngaymuon,
+                    ngaytra,
+                    hoten,
+                    email,
+                    sdt,
+                    cccd,
+                    trangthai,
+                    ghichu,
+                    tongtien
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($sql);
 
+        // trangthai mặc định = 0 (chưa thanh toán / đang thuê)
+        $trangthai = 0;
+
         $stmt->bind_param(
-            "iissssisd",
+            "iissssssssisd",
             $hd->get_idtaikhoan(),
             $hd->get_idxe(),
             $hd->get_diemlay(),
             $hd->get_diemtra(),
             $hd->get_ngaymuon(),
             $hd->get_ngaytra(),
-            $hd->get_trangthai(),
+            $hd->get_hoten(),
+            $hd->get_email(),
+            $hd->get_sdt(),
+            $hd->get_cccd(),
+            $trangthai,
             $hd->get_ghichu(),
             $hd->get_tongtien()
         );
@@ -84,7 +115,9 @@ class nguyen_hoadonDAO {
         return $stmt->execute();
     }
 
+    /* ================= UPDATE ================= */
     public function update(nguyen_hoadon $hd) {
+
         $sql = "UPDATE hoadon SET
                     idtaikhoan = ?,
                     idxe = ?,
@@ -92,6 +125,10 @@ class nguyen_hoadonDAO {
                     diemtra = ?,
                     ngaymuon = ?,
                     ngaytra = ?,
+                    hoten = ?,
+                    email = ?,
+                    sdt = ?,
+                    cccd = ?,
                     trangthai = ?,
                     ghichu = ?,
                     tongtien = ?
@@ -100,13 +137,17 @@ class nguyen_hoadonDAO {
         $stmt = $this->conn->prepare($sql);
 
         $stmt->bind_param(
-            "iissssidsi",
+            "iissssssssisdi",
             $hd->get_idtaikhoan(),
             $hd->get_idxe(),
             $hd->get_diemlay(),
             $hd->get_diemtra(),
             $hd->get_ngaymuon(),
             $hd->get_ngaytra(),
+            $hd->get_hoten(),
+            $hd->get_email(),
+            $hd->get_sdt(),
+            $hd->get_cccd(),
             $hd->get_trangthai(),
             $hd->get_ghichu(),
             $hd->get_tongtien(),
@@ -116,6 +157,7 @@ class nguyen_hoadonDAO {
         return $stmt->execute();
     }
 
+    /* ================= DELETE ================= */
     public function delete($idhoadon) {
         $sql = "DELETE FROM hoadon WHERE idhoadon = ?";
         $stmt = $this->conn->prepare($sql);

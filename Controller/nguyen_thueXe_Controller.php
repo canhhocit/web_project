@@ -6,9 +6,9 @@ $data_post = json_decode($raw, true);
 $action = $data_post['action'] ?? '';
 
 require_once __DIR__ . "/../Model/DAO/nguyen_hoadonDAO.php";
+require_once __DIR__ . "/../Model/Object/nguyen_hoadon.php";
 require_once __DIR__ . "/../Model/DAO/vehicleDAO.php";
 require_once __DIR__ . "/../Model/Object/xe.php";
-require_once __DIR__ . "/../Model/Object/nguyen_hoadon.php";
 require_once __DIR__ . "/../Model/DAO/taikhoanDAO.php";
     
 class nguyen_thueXe_Controller
@@ -60,10 +60,30 @@ class nguyen_thueXe_Controller
                     // "anhxe" => $anhxe_arr[0]
                 ]);
                 exit;
-            case 'confirmRent': 
+            case 'taohoadon': 
+                $data = $data_post['data'] ?? [];
+
+                $hoadon = new nguyen_hoadon(
+                    null,
+                    $data['idtaikhoan'] ?? 0,
+                    $data['xeId'] ?? 0,
+                    $data['pickupLocation'] ?? '',
+                    $data['dropoffLocation'] ?? '',
+                    $data['pickupDate'] ?? '',
+                    $data['returnDate'] ?? '',
+                    $data['fullName'] ?? '',
+                    $data['email'] ?? '',
+                    $data['phone'] ?? '',
+                    $data['cccd'] ?? '',
+                    0,
+                    $data['comment'] ?? '',
+                    $data['totalCost'] ?? 0
+                );
+                $result = $this->hoadon_dao->insert($hoadon);
+
                 echo json_encode([
                     "success" => true,
-                    "received" => $data_post['data']
+                    "received" => $result
                 ]);
                 exit;
             case 'layhoadon':
