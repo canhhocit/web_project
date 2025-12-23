@@ -1,3 +1,5 @@
+window.isModalOpen = false;
+
 function showModal(idhoadon) {
     $.ajax({
         url: 'index.php?controller=thanhtoan&action=getChiTietHoaDon&idhoadon=' + idhoadon,
@@ -16,6 +18,7 @@ function showModal(idhoadon) {
                 var myModal = new bootstrap.Modal(document.getElementById('modalTraXe'));
               
                 myModal.show();
+                window.isModalOpen = true;
             } catch (e) {
                 alert("Lỗi xử lý dữ liệu từ server!");
             }
@@ -23,7 +26,17 @@ function showModal(idhoadon) {
     });
 }
 
+window.addEventListener('beforeunload', function (e) {
+    if (isModalOpen) {
+        // Thông báo mặc định của trình duyệt 
+        e.preventDefault();
+        e.returnValue = ''; 
+    }
+});
+
 function xacNhanTraXe() {
+    window.isModalOpen = false; 
+
     let formData = {
         idhoadon: $('#idhoadon').val(),
         ngay_qua_han: $('#ngay_qua_han').val(),
@@ -42,6 +55,7 @@ function xacNhanTraXe() {
                 alert('Thanh toán thành công!');
                 location.reload(); 
             } else {
+                isModalOpen = true;
                 alert('Có lỗi xảy ra khi lưu dữ liệu!');
             }
         }
@@ -49,7 +63,8 @@ function xacNhanTraXe() {
 }
 
 function huyTT() {
-    if (confirm("Xác nhận hủy thanh toán?")) {
+    if (confirm("Xác nhận hủy thanh toán ?")) {
+        window.isModalOpen = false;
         var modalElement = document.getElementById('modalTraXe');
         var modalInstance = bootstrap.Modal.getInstance(modalElement);
         if (modalInstance) {

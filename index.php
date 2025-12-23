@@ -33,6 +33,7 @@ if ($controller === 'thanhtoan' && ($action === 'getChiTietHoaDon' || $action ==
     exit();
 }
 
+
 include "header.php";
 
 if ($controller == 'home') {
@@ -164,6 +165,11 @@ switch ($controller) {
         } else {
             $thongke->index();
         }
+        break;
+    case 'lichsutt':
+        require_once "Controller/LichSuTTController.php";
+        $lichsuCtrl = new LichSuTTController($conn);
+        $lichsuCtrl->index();
         break;
 
         case 'about':

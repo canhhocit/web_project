@@ -76,6 +76,7 @@ $jsonData = json_encode($data_from_db);
     <title>Quản lý thuê xe</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="View/CSS/nguyen_css_quanly.css" />
+    <link rel="stylesheet" href="View/CSS/thanhtoan.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
@@ -93,12 +94,11 @@ $jsonData = json_encode($data_from_db);
         </div>
     </div>
 
-    <div class="modal fade" id="modalTraXe" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modalTraXe" data-bs-keyboard="false" data-bs-backdrop="static"  tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">XÁC NHẬN THANH TOÁN</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="formTraXe">
@@ -113,26 +113,26 @@ $jsonData = json_encode($data_from_db);
                                 <input type="text" class="form-control bg-light" id="ngay_thue_du_kien" readonly>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="fw-bold">Quá hạn (ngày):</label>
+                                <label class="fw-bold">Số ngày quá hạn:</label>
                                 <input type="text" class="form-control bg-light" id="ngay_qua_han" readonly>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="fw-bold">Phương thức:</label>
+                            <label class="fw-bold">Phương thức thanh toán:</label>
                             <select class="form-select" id="phuongthuc">
                                 <option value="Tiền mặt">Tiền mặt</option>
                                 <option value="Chuyển khoản">Chuyển khoản</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="fw-bold text-danger">Tổng tiền thanh toán:</label>
+                            <label class="fw-bold text-danger">Tổng tiền:</label>
                             <input type="text" class="form-control fw-bold text-danger" id="tong_tien" readonly>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="huyTT()">Hủy</button>
-                    <button type="button" class="btn btn-primary" onclick="xacNhanTraXe()">Xác nhận thanh toán</button>
+                    <button type="button" class="btn btn-primary" onclick="xacNhanTraXe()">Xác nhận & Hoàn tất</button>
                 </div>
             </div>
         </div>

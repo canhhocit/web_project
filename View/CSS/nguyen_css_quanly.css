@@ -7,8 +7,6 @@
     align-items: start;
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #f5f5f5;
-    position: relative;
-    z-index: 1;
 }
 
 .container_table_quanly {
@@ -126,8 +124,3 @@
 
 .yellow { background: #f1c40f; }
 .green { background: #2ecc71; }
-
-.navbar {
-    position: relative;
-    z-index: 1100;
-}

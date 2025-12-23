@@ -48,4 +48,19 @@ class HoaDonModel {
 
         return ($res1 && $res2);
     }
+
+    public function getLichSuThanhToan($idtaikhoan) {
+        $query = "SELECT tt.*, x.tenxe, hd.ngaymuon, hd.ngaytra 
+                FROM thanhtoan tt JOIN hoadon hd ON tt.idhoadon = hd.idhoadon 
+                JOIN xe x ON hd.idxe = x.idxe 
+                WHERE tt.idtaikhoan = ? 
+                ORDER BY tt.ngaythanhtoan DESC";
+        
+        $stmt = mysqli_prepare($this->conn, $query);
+        mysqli_stmt_bind_param($stmt, "i", $idtaikhoan);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
 }
