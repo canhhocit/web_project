@@ -107,7 +107,7 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
                                         <span><i class="fa-solid fa-wallet me-2"></i> Tài chính</span>
                                         <i class="fa-solid fa-chevron-down fa-xs"></i>
                                     </a>
-                                    
+
                                     <div class="collapse <?php echo $is_finance_active ? 'show' : ''; ?>" id="submenuTaiChinh">
                                         <ul class="list-unstyled mb-0">
                                             <li>
@@ -120,37 +120,11 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
                                                     <i class="fa-solid fa-chart-line me-2"></i> Thống kê
                                                 </a>
                                             </li>
-
-                               <!-- <li>
-                                <a class="dropdown-item d-flex justify-content-between align-items-center" 
-                                data-bs-toggle="collapse" 
-                                href="#submenuTaiChinh" 
-                                role="button" 
-                                aria-expanded="false">
-                                    <span><i class="fa-solid fa-wallet me-2"></i> Tài chính</span>
-                                    <i class="fa-solid fa-chevron-down fa-xs"></i>
-                                </a>
-                                
-                                <div class="collapse" id="submenuTaiChinh">
-                                    <ul class="list-unstyled mb-0">
-                                        <li>
-                                            <a class="dropdown-item ps-5" href="index.php?controller=thanhtoan&action=index">
-                                                <i class=" fa-solid fa-credit-card me-2"></i> Quản lý thuê xe
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a class="dropdown-item ps-5" href="index.php?controller=thongke&action=index">
-                                                <i class="fa-solid fa-chart-line me-2"></i> Thống kê
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a class="dropdown-item ps-5" href="index.php?controller=lichsutt&action=index">
-                                                <i class="fa-solid fa-clock-rotate-left me-2"></i> Lịch sử giao dịch
-                                            </a>
-                                        </li> -->
-
+                                            <li>
+                                                <a class="dropdown-item ps-5" href="index.php?controller=lichsutt&action=index">
+                                                    <i class="fa-solid fa-clock-rotate-left me-2"></i> Lịch sử giao dịch
+                                                </a>
+                                             </li>
 
                                         </ul>
                                     </div>

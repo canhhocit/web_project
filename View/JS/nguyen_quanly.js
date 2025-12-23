@@ -19,7 +19,7 @@ async function renderTab1And2(tabIndex) {
 // Hàm fetch dữ liệu từ server cho tab
 async function fetchDataTab(tabIndex) {
     const response = await fetch(
-        "../../Controller/nguyen_quanly_Controller.php",
+        "Controller/nguyen_quanly_Controller.php",
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -95,7 +95,7 @@ document.getElementById("content").addEventListener("click", (e) => {
 function xemChiTietHoaDon(idhoadon) {
     console.log("Xem chi tiết hoá đơn:", idhoadon);
 
-    fetch("../../Controller/nguyen_thuexe_Controller.php", {
+    fetch("Controller/nguyen_thuexe_Controller.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -150,7 +150,7 @@ function closeModal() {
     document.body.style.overflow = "auto";
 }
 function loadProductData(xeId) {
-    fetch("../../Controller/nguyen_thueXe_Controller.php", {
+    fetch("Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -172,7 +172,7 @@ switch ($controller) {
         $lichsuCtrl->index();
         break;
 
-        case 'about':
+    case 'about':
         require_once "Controller/AboutController.php";
         $about = new AboutController();
         if ($action === 'addWork') {

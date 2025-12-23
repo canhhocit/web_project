@@ -139,7 +139,7 @@ $jsonData = json_encode($data_from_db);
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JS/nguyen_quanly.js"></script>
+    <script src="View/JS/nguyen_quanly.js"></script>
     <script src="View/JS/thanhtoan.js"></script> <script>
         // Đổ dữ liệu thật từ PHP vào biến JS
         const data = <?php echo $jsonData; ?>;

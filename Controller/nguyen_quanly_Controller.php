@@ -1,6 +1,8 @@
 <?php
 session_start();
-require_once "../config/db.php";
+//require_once "../config/db.php";
+require_once "Model/Database/dbconnect.php";
+
 
 header("Content-Type: application/json; charset=utf-8");
 
