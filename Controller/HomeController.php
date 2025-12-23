@@ -21,7 +21,7 @@
             $listCar = [];
             if (!empty($searchList)) {
                 foreach ($searchList as $car){
-                    if ($car->get_idchuxe() == $curentUserID) {
+                    if ($car->get_idchuxe() != $curentUserID) {
                         $listCar[] = $car;
                     }
                 }

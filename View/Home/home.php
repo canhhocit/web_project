@@ -1,16 +1,20 @@
 <div class="row">
-    <form action="index.php" method="GET" class="mb-4">
-        <input type="hidden" name="controller" value="home">
-        <div class="input-group">
-            <input type="text" name="keyword" class="form-control" placeholder="Tìm tên xe bạn thích...">
-            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-        </div>
-    </form>
+    <div class="col-12">
+        <form action="index.php" method="GET" class="mb-4">
+            <input type="hidden" name="controller" value="home">
+            <div class="input-group">
+                <input type="text" name="keyword" class="form-control" placeholder="Tìm tên xe bạn thích...">
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </div>
+        </form>
+    </div>
 
     <?php
     if (empty($listCar)) {
-        echo '<div class="alert alert-warning w-100 text-center p-5">';
-        echo '<h4>Chưa có xe nào phù hợp!</h4>';
+        echo '<div class="col-12">';
+        echo '<div class="alert alert-warning text-center p-5">';
+        echo '<h4 class="mb-0">Chưa có xe nào phù hợp!</h4>';
+        echo '</div>';
         echo '</div>';
     } else {
         global $conn;

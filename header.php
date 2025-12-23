@@ -41,9 +41,8 @@ if (isset($_SESSION['idtaikhoan'])) {
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php?controller=home"><i class="fa-solid fa-car-side"></i>Thuê Xe
-                Đi Bro</a>
-            <button class="navbar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+            <a class="navbar-brand fw-bold" href="index.php?controller=home"><i class="fa-solid fa-car-side me-2"></i>Thuê Xe</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainMenu">
@@ -57,10 +56,9 @@ if (isset($_SESSION['idtaikhoan'])) {
                 </ul>
 
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="btn btn-dark text-bg-light fw-bold me-2" href="/web_project/index.php?controller=vehicle&action=checkLogin">
-                            <i class="fa-solid fa-plus">
-                            </i>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="btn btn-light fw-bold me-2" href="/web_project/index.php?controller=vehicle&action=checkLogin">
+                            <i class="fa-solid fa-plus me-1"></i>
                             Đăng bài thuê xe
                         </a>
                     </li>
@@ -72,7 +70,7 @@ if (isset($_SESSION['idtaikhoan'])) {
                                     style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 3px;">
                                 <?php echo $hoten ?>
                             <?php else: ?>
-                                <i class="fa-solid fa-user fa-user-circle"></i>
+                                <i class="fa-solid fa-circle-user me-1"></i>
                                 <?php echo isset($_SESSION['idtaikhoan']) ? $hoten : 'Tài Khoản' ?>
                             <?php endif; ?>
                         </a>
@@ -115,9 +113,6 @@ if (isset($_SESSION['idtaikhoan'])) {
                             <?php endif; ?>
                         </ul>
                     </li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
                 </ul>
             </div>
         </div>

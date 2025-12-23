@@ -20,8 +20,9 @@
             $idxe = $_GET['id'];
             $xe = $this->vehicleDAO->getChiTietXe($idxe);
             //canh: ktra tontai trong DB
-            $exists =false;
-            if($this->Fdao->checkExistsVehicle($_SESSION['idtaikhoan'], $idxe)){
+            $exists = false;
+            // Kiểm tra session trước khi truy cập
+            if(isset($_SESSION['idtaikhoan']) && $this->Fdao->checkExistsVehicle($_SESSION['idtaikhoan'], $idxe)){
                 $exists = true;
             }
             //het canh

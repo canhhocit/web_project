@@ -91,6 +91,7 @@ if ($controller == 'home') {
     echo '</div>';
     echo '</div>';
     //end
+    echo '<div class="container" style="padding-top: 20px;">';
 } else {
     echo '<div class="container" style="padding-top: 20px;">';
 }

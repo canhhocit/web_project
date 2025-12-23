@@ -42,14 +42,13 @@
                         <?php echo $xe['tenxe']; ?>
                     </h2>
 
-                    <!-- CANH'S FAVORITE -->
-                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" style="text-decoration: none; border: 1px solid gray;"
-                        title="Yêu thích xe">
-                        <span style="font-size:30px; color:red; cursor:pointer;">
-                            <?php echo $exists ? "🫀" : "🤍" ?>
+                    <!-- Nút Yêu thích -->
+                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" 
+                        class="btn btn-outline-secondary rounded-circle p-2" title="Yêu thích xe">
+                        <span style="font-size: 24px;">
+                            <?php echo $exists ? "❤️" : "🤍" ?>
                         </span>
                     </a>
-                    <!-- END -->
 
                 </div>
 
