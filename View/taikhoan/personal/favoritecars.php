@@ -52,9 +52,11 @@
                     <div class="btn_tim">
                         <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $xe->get_idxe() ?>" 
                             class="heart-btn"
-                            title="Yêu thích xe">
+                            title="Bỏ yêu thích xe">
                             <span class="heart-icon">
-                                <?= $exists ? "🫀" : "🤍" ?>
+                                <?php
+                                echo "❤️";
+                                 ?>
                             </span>
                         </a>
                     </div>

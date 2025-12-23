@@ -70,6 +70,7 @@ class vehicleDAO
         return $list;
     }
 
+
     public function getAllXe()
     {
         return $this->fetchXeList("SELECT * FROM xe");
@@ -118,7 +119,7 @@ class vehicleDAO
         return $list;
     }
 
-
+    //Minh
     public function getDanhSachXeHienThi()
     {
 
@@ -132,7 +133,7 @@ class vehicleDAO
         $result = mysqli_query($this->conn, $sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
-
+    //Minh
     public function getChiTietXe($idxe)
     {
 
@@ -156,7 +157,7 @@ class vehicleDAO
         }
         return $xe;
     }
-
+    //Minh
     public function timKiemXe($keyword)
     {
         $sql = "SELECT x.*, x.hangxe AS tenhang, a.duongdan AS hinh_anh
@@ -167,5 +168,14 @@ class vehicleDAO
 
         $result = mysqli_query($this->conn, $sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
+    //check trangthai thue
+    public function checktrangthaithue($idxe){
+        $rs = mysqli_query($this->conn,"select * from hoadon where idxe=$idxe");
+        if(mysqli_num_rows($rs) > 0){
+            return true;
+        }
+        return false;
     }
 }

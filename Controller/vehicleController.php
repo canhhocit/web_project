@@ -103,10 +103,7 @@ class vehicleController
             exit;
         }
     }
-    // CHECK SAU
-    // private function checkVthue(){
-
-    // }
+    
 
     public function editV()
     {
@@ -118,11 +115,16 @@ class vehicleController
             exit;
         }
 
+
         $xeList = $this->Vdao->getXebyIdxe($idxe); // do tận dụng getAll, but now chỉ có 1
         if (empty($xeList) || $xeList[0]->get_idchuxe() != $idchuxe) {
             echo "<script>alert('Không có quyền sửa xe này!'); history.back();</script>";
             exit;
         }
+        // if($this->Vdao->checktrangthaithue($idxe)){
+        //     echo "<script>alert('Xe đang được thuê rồi!'); history.back();</script>";
+        //     exit;
+        // }
 
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return [

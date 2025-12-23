@@ -14,6 +14,8 @@
             <?php
             $xe = $item['xe'];
             $images = $item['images'];
+            $trangthai = $item['trangthai'];
+            $status = $item['status'];
             ?>
             <div class="vehicle-card">
                 <div class="image-section">
@@ -36,20 +38,20 @@
                 </div>
 
                 <div class="vehicle-info">
-                    <h4><?php echo $xe->get_tenxe(); ?></h4>
+                    <h4><b><i><?php echo $xe->get_tenxe(); ?></i></b></h4>
                     <p>
                         <strong>Hãng:</strong> <?php echo $xe->get_hangxe(); ?><br>
                         <strong>Loại:</strong> <?php echo $xe->get_loaixe(); ?><br>
-                        <strong>Giá thuê:</strong> <?php echo number_format($xe->get_giathue()); ?> VND/ngày
+                        <strong>Giá thuê:</strong> <?php echo number_format($xe->get_giathue()); ?> VND/ngày <br>
                         <strong>Ngày đăng:</strong> 
-                        <?php echo date('d/m/Y', strtotime($xe->get_ngaydang())); ?>
-
+                        <?php echo date('d/m/Y', strtotime($xe->get_ngaydang())); ?><br>
+                        <strong>Trạng thái: </strong><?php echo $trangthai ?>
                     </p>
                     <small>
                         <i class="fa-solid fa-images"></i>
                         <?php echo count($images); ?> ảnh
                     </small>
-
+                    <?php if(!$status) :?>
                     <div class="button-group">
                         <a href="/web_project/index.php?controller=vehicle&action=editV&id=<?php echo $xe->get_idxe(); ?>"
                             class="btn btn-edit">
@@ -61,6 +63,7 @@
                             <i class="fa-solid fa-trash"></i> Xóa
                         </a>
                     </div>
+                  <?php endif;?>
                 </div>
             </div>
         <?php endforeach; ?>

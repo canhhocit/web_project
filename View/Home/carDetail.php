@@ -45,7 +45,8 @@
                     <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" style="text-decoration: none; border: 1px solid gray;"
                         title="Yêu thích xe">
                         <span style="font-size:30px; color:red; cursor:pointer;">
-                            <?php echo $exists ? "🫀" : "🤍" ?>
+                            <?php echo $exists ? "🫀" : "🤍" //ben carController
+                            ?>
                         </span>
                     </a>
                     <!-- END -->

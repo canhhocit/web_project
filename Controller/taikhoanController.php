@@ -243,18 +243,19 @@ class taikhoanController
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             if (!isset($_GET['id'])) {
                 echo "<script>alert('Không lấy được idxe ồi!'); 
-                history.back();;</script>";
+                history.back();</script>";
                 exit;
             }
 
             $idtaikhoan = $_SESSION['idtaikhoan'];
             $idxe = $_GET['id'];
-           
+            $option = $_GET['option'];
+
             if ($this->Fdao->checkExistsVehicle($idtaikhoan, $idxe)) {
                 if ($this->Fdao->delFavorite($idtaikhoan, $idxe)) {
                     echo "<script>
                     alert('Đã xóa khỏi yêu thích!');
-                    window.location='/web_project/index.php?controller=car&action=detail&id=$idxe';
+                    history.back();
                     </script>";
                 } else {
                     echo "<script>alert('Lỗi delF!'); 
@@ -265,7 +266,7 @@ class taikhoanController
                 if ($this->Fdao->addFavorite($idtaikhoan, $idxe)) {
                     echo "<script>
                     alert('Đã thêm vào mục yêu thích!');
-                    window.location='/web_project/index.php?controller=car&action=detail&id=$idxe';
+                     history.back();
                     </script>";
                 } else {
                     echo "<script>alert('Lỗi addF!'); 
@@ -275,6 +276,7 @@ class taikhoanController
             }
         }
     }
+
     public function personal()
     {
         if (!isset($_SESSION['idtaikhoan'])) {
@@ -294,33 +296,35 @@ class taikhoanController
             foreach ($danhsachxe as $xe) {
                 $idxe = $xe->get_idxe();
                 $anhxe = $this->Vdao->getAnhxebyIdxe($idxe);
-
+                $trangthai = 'Chưa có người thuê';
+                $status = false;
+                if ($this->Vdao->checktrangthaithue($idxe)) {
+                    $trangthai = 'Đã được thuê';
+                    $status = true;
+                }
                 $xeWithImages[] = [
                     'xe' => $xe,
-                    'images' => $anhxe
+                    'images' => $anhxe,
+                    'trangthai' => $trangthai,
+                    'status' => $status
                 ];
             }
         }
         //selection = favorite
         $favotiteCars = [];
         if (isset($_GET['selection']) && $_GET['selection'] === 'favorite') {
-            $listFavorite=$this->Vdao->getFavoritebyIdChuxe($idtaikhoan);
-             foreach ($listFavorite as $xe) {
+            $listFavorite = $this->Vdao->getFavoritebyIdChuxe($idtaikhoan);
+
+            foreach ($listFavorite as $xe) {
                 $idxe = $xe->get_idxe();
                 $imgs = $this->Vdao->getAnhxebyIdxe($idxe);
-
                 $favotiteCars[] = [
                     'xe' => $xe,
                     'images' => $imgs
                 ];
             }
-            //nut tim
-            $exists =false;
-            if($this->Fdao->checkExistsVehicle($idtaikhoan, $idxe)){
-                $exists = true;
-            }
         }
-        
+
 
 
         include_once __DIR__ . "/../View/taikhoan/personal.php";
