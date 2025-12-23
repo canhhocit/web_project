@@ -52,7 +52,7 @@ if (isset($_SESSION['idtaikhoan'])) {
                         <a class="nav-link" href="index.php?controller=home">Trang Chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Về Chúng Tôi</a>
+                        <a class="nav-link" href="index.php?controller=about">Về Chúng Tôi</a>
                     </li>
                 </ul>
 

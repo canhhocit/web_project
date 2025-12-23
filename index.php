@@ -165,6 +165,16 @@ switch ($controller) {
         }
         break;
 
+        case 'about':
+        require_once "Controller/AboutController.php";
+        $about = new AboutController();
+        if ($action === 'addWork') {
+            $about->addWork();
+        } else {
+            $about->index();
+        }
+        break;
+
     default:
         echo "<h1>404 - Không tìm thấy trang</h1>";
         break;
