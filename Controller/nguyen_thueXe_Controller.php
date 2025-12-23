@@ -169,8 +169,8 @@ class nguyen_thueXe_Controller
 
         
         // $hoadon = $this->hoadon_dao->getHoaDonbyIdtaikhoan($idtaikhoan);
-        $hoadon = new nguyen_hoadon();
-        return $hoadon;
+        // $hoadon = new nguyen_hoadon();
+        // return $hoadon;
     }
     function laythongtinnguoidung($data_post){
         // $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0; cho sang bên kia đê
