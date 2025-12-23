@@ -76,8 +76,19 @@ class taikhoanController
             $password = $_POST["password"];
 
             if ($this->Adao->checkLogin($username, $password)) {
-                $id = $this->Adao->getId($username);
-                $_SESSION["idtaikhoan"] = $id;
+                $idtaikhoan = $this->Adao->getIdtaikhoan($username);
+                $_SESSION["idtaikhoan"] = $idtaikhoan;
+                //insert dulieu mau
+                if (!$this->Adao->checkIDtaikhoaninThongtin($idtaikhoan)) {
+                    $anhdaidien = "default-avt.jpg";
+                    $kq = $this->Adao->addThongTinTaiKhoan($idtaikhoan, $anhdaidien);
+                    if (!$kq) {
+                        echo "<script>alert('Lỗi tkController dòng 86!'); 
+        window.location='/web_project/View/taikhoan/login.php';</script>";
+                        exit;
+                    }
+                }
+                //
                 header("Location: /web_project/index.php?status=1");
                 exit;
             } else {
@@ -99,7 +110,7 @@ class taikhoanController
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (!isset($_SESSION['idtaikhoan'])) {
                 echo "<script>alert('Vui lòng đăng nhập!'); 
-            window.location='/web_project/View/taikhoan/login.php';</script>";
+        window.location='/web_project/View/taikhoan/login.php';</script>";
                 exit;
             }
 
@@ -109,55 +120,62 @@ class taikhoanController
             $sdt = trim($_POST["sdt"] ?? "");
             $email = trim($_POST["email"] ?? "");
             $cccd = trim($_POST["cccd"] ?? "");
+
             if ($hoten === "" || $sdt === "" || $email === "" || $cccd === "") {
                 echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); history.back();</script>";
                 exit;
             }
 
-            $anhdaidien = "";
+            $anhdaidien = "default-avt.png";
+
             $thongtinCu = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
-            if ($thongtinCu) {
+            if ($thongtinCu && $thongtinCu->get_anhdaidien() != "") {
+                // if k co anh ->default-img
                 $anhdaidien = $thongtinCu->get_anhdaidien();
             }
 
-            if (isset($_FILES['anhdaidien']) && $_FILES['anhdaidien']['error'] === 0) {
-                // Xóa ảnh cũ nếu có
-                if ($anhdaidien != "") {
+            if (isset($_FILES['anhdaidien']) && $_FILES['anhdaidien']['error'] === UPLOAD_ERR_OK) {
+                //xoa anh cu tru mac dinh
+                if ($anhdaidien != "default-avatar.png") {
                     $oldImagePath = __DIR__ . "/../View/image/" . $anhdaidien;
                     if (file_exists($oldImagePath)) {
                         unlink($oldImagePath);
                     }
                 }
 
-                $filename = time() . "_" . $_FILES["anhdaidien"]["name"]; // Thêm timestamp tránh trùng tên
+                $filename = time() . "_" . basename($_FILES["anhdaidien"]["name"]);
                 $tmpname = $_FILES["anhdaidien"]["tmp_name"];
                 $path = __DIR__ . "/../View/image/" . $filename;
 
                 if (move_uploaded_file($tmpname, $path)) {
                     $anhdaidien = $filename;
                 } else {
-                    echo "<script>alert('Upload ảnh thất bại!'); history.back();</script>";
+                    echo "<script>alert('Upload ảnh thất bại vào thư mục!'); history.back();</script>";
                     exit;
                 }
             }
 
             $thongtin = new thongtintaikhoan($idthongtin, $idtaikhoan, $hoten, $sdt, $email, $cccd, $anhdaidien);
-
+            //var_dump($thongtin);
+            // echo '<pre>';
+            // print_r($thongtin);
+            // echo '</pre>';
             try {
                 $daCoThongTin = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
 
                 if ($daCoThongTin) {
                     if ($this->Adao->updateThongTinTaiKhoan($thongtin)) {
-                        echo "<script>alert('Cập nhật thành công!'); window.location='/web_project/index.php?controller=taikhoan&action=personal';</script>";
+                        echo "<script>alert('Cập nhật thành công!'); window.location='/web_project/index.php';</script>";
                     } else {
                         echo "<script>alert('Cập nhật thất bại!'); history.back();</script>";
                     }
                 } else {
-                    if ($this->Adao->addThongTinTaiKhoan($thongtin)) {
-                        echo "<script>alert('Thêm thông tin thành công!'); window.location='/web_project/index.php?controller=taikhoan&action=personal';</script>";
-                    } else {
-                        echo "<script>alert('Thêm thất bại! Lỗi'); history.back();</script>";
-                    }
+                    // if ($this->Adao->addThongTinTaiKhoan($thongtin)) {
+                    //     header("Location: /web_project/index.php");
+                    //     exit;
+                    // } else {
+                    echo "<script>alert('Update thất bại!'); history.back();</script>";
+                    //}
                 }
             } catch (Exception $e) {
                 echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
@@ -165,39 +183,7 @@ class taikhoanController
             exit;
         }
     }
-    public function deleteAccount()
-    {
-        if (!isset($_SESSION['idtaikhoan'])) {
-            echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
-            exit;
-        }
 
-        $idtaikhoan = $_SESSION['idtaikhoan'];
-
-        $thongtin = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
-        if ($thongtin) {
-            $anhdaidien = $thongtin->get_anhdaidien();
-            if ($anhdaidien != "") {
-                $imagePath = __DIR__ . "/../View/image/" . $anhdaidien;
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                }
-            }
-        }
-
-        try {
-            if ($this->Adao->deleteTaikhoan($idtaikhoan)) {
-                session_unset();
-                session_destroy();
-                echo "<script>alert('Xóa tài khoản thành công!'); window.location='/web_project/index.php';</script>";
-            } else {
-                echo "<script>alert('Xóa tài khoản thất bại!'); history.back();</script>";
-            }
-        } catch (Exception $e) {
-            echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
-        }
-        exit;
-    }
 
     public function changePassword()
     {

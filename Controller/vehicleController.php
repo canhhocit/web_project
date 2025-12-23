@@ -37,19 +37,19 @@ class vehicleController
 
         // check infor
         $idtaikhoan = $_SESSION['idtaikhoan'];
-        $thongtin = $this->Acdao->getThongTinTaiKhoanbyID($idtaikhoan);
-
-        if (!$thongtin || $thongtin === null) {
+        if ($this->Acdao->checkThongtinTK_isNULL($idtaikhoan)) {
             echo "<script>
             alert('Vui lòng cập nhật thông tin cá nhân trước khi đăng xe!');
             window.location='/web_project/index.php?controller=taikhoan&action=personal';
             </script>";
             exit;
         }
+
         echo "<script>
             window.location='/web_project/View/xe/addVehicle.php';
         </script>";
     }
+
     public function add()
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -58,6 +58,7 @@ class vehicleController
                 exit;
             }
             $idchuxe = $_SESSION['idtaikhoan'];
+
             $tenxe = trim($_POST["tenxe"] ?? "");
             $hangxe = trim($_POST["hangxe"] ?? "");
             $loaixe = $_POST["loaixe"] ?? "";
@@ -124,8 +125,10 @@ class vehicleController
         }
 
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
-            return ['xe' => $xeList[0],
-            'anhxe' => $this->Vdao->getAnhxebyIdxe($idxe)];
+            return [
+                'xe' => $xeList[0],
+                'anhxe' => $this->Vdao->getAnhxebyIdxe($idxe)
+            ];
         }
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {

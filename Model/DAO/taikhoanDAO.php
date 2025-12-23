@@ -28,38 +28,55 @@ class taikhoanDAO
         $result = mysqli_query($this->conn, "select * from taikhoan where username = '$username' and pass = '$pass'");
         return mysqli_num_rows($result) > 0;
     }
-    public function getId($username)
+    public function getIdtaikhoan($username)
     {
         $rs = mysqli_query($this->conn, "select idtaikhoan from taikhoan where username = '$username'");
         $row = mysqli_fetch_assoc($rs);
         return $row["idtaikhoan"];
     }
-    private function delTK($idtaikhoan)
+    public function checkIDtaikhoaninThongtin($idtaikhoan)
     {
-        $sql = "DELETE FROM taikhoan WHERE idtaikhoan = '$idtaikhoan'";
-        $result = mysqli_query($this->conn, $sql);
-        return $result;
+        $rs = mysqli_query($this->conn, "select * from thongtintaikhoan where idtaikhoan = '$idtaikhoan'");
+        return mysqli_num_rows($rs) > 0;
     }
+    public function checkThongtinTK_isNULL($idtaikhoan)
+    {
+        $rs = mysqli_query($this->conn, "SELECT hoten, email,sdt,cccd FROM thongtintaikhoan where idtaikhoan = '$idtaikhoan'");
+        $row = mysqli_fetch_assoc($rs);
+        if (empty($row['hoten']) || empty($row['email']) || empty($row['sdt']) || empty($row['cccd'])) {
+            return true;
+        }
+
+        return false; 
+    }
+
+    
     //THÔNG TIN TÀI KHOẢN
     //$idthongtin, $idtaikhoan, $hoten, $sdt, $email, $cccd, $anhdaidien
-    public function addThongTinTaiKhoan($thongtin)
+    // public function addThongTinTaiKhoan($thongtin)
+    // {
+    //     $idtaikhoan = $thongtin->get_idtaikhoan();
+    //     $hoten = $thongtin->get_hoten();
+    //     $sdt = $thongtin->get_sdt();
+    //     $email = $thongtin->get_email();
+    //     $cccd = $thongtin->get_cccd();
+    //     $anhdaidien = $thongtin->get_anhdaidien();
+    //     $sql = "INSERT INTO thongtintaikhoan (idtaikhoan, hoten, sdt, email, cccd, anhdaidien) VALUES ('$idtaikhoan', '$hoten', '$sdt', '$email', '$cccd', '$anhdaidien')";
+    //     $result = mysqli_query($this->conn, $sql);
+    //     return $result;
+    // }
+    public function addThongTinTaiKhoan($idtaikhoan, $anhdaidien)
     {
-        $idtaikhoan = $thongtin->get_idtaikhoan();
-        $hoten = $thongtin->get_hoten();
-        $sdt = $thongtin->get_sdt();
-        $email = $thongtin->get_email();
-        $cccd = $thongtin->get_cccd();
-        $anhdaidien = $thongtin->get_anhdaidien();
-        $sql = "INSERT INTO thongtintaikhoan (idtaikhoan, hoten, sdt, email, cccd, anhdaidien) VALUES ('$idtaikhoan', '$hoten', '$sdt', '$email', '$cccd', '$anhdaidien')";
+        $sql = "INSERT INTO thongtintaikhoan (idtaikhoan, anhdaidien) VALUES ('$idtaikhoan', '$anhdaidien')";
         $result = mysqli_query($this->conn, $sql);
         return $result;
     }
-    private function delTTTK($idtaikhoan)
-    {
-        $sql = "DELETE FROM thongtintaikhoan WHERE idtaikhoan = '$idtaikhoan'";
-        $result = mysqli_query($this->conn, $sql);
-        return $result;
-    }
+    // private function delTTTK($idtaikhoan)
+    // {
+    //     $sql = "DELETE FROM thongtintaikhoan WHERE idtaikhoan = '$idtaikhoan'";
+    //     $result = mysqli_query($this->conn, $sql);
+    //     return $result;
+    // }
     public function updateThongTinTaiKhoan($thongtin)
     {
         $idtaikhoan = $thongtin->get_idtaikhoan();
@@ -98,10 +115,7 @@ class taikhoanDAO
     }
 
     //-----------------
-    public function deleteTaikhoan($idtaikhoan)
-    {
-        return $this->delTTTK($idtaikhoan) && $this->delTK($idtaikhoan);
-    }
+    
     //-----------------
     public function updateisChuxe($idtaikhoan)
     {

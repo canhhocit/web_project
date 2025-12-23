@@ -97,33 +97,13 @@ function calculateRent() {
         return;
     }
 
-    document.getElementById("rent_date_thuexe").innerText =
-        formatDate(pickupVal);
-    document.getElementById("unrent_date_thuexe").innerText =
-        formatDate(returnVal);
-
     const days = Math.ceil((returnDate - pickupDate) / (1000 * 60 * 60 * 24));
-
     document.getElementById("songaythue_thuexe").innerText = days;
 
-    const price = Number(
-        document.getElementById("price_thuexe").innerText.replace(/\D/g, "")
-    );
-    const maintain = Number(
-        document
-            .getElementById("feeMaintain_thuexe")
-            .innerText.replace(/\D/g, "")
-    );
-    const insurance = Number(
-        document
-            .getElementById("feeBaoHiem_thuexe")
-            .innerText.replace(/\D/g, "")
-    );
-
-    const total = days * price + maintain + insurance;
+    const TOTAL_COST = days * RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
 
     document.getElementById("sumprice_thuexe").innerText =
-        total.toLocaleString("vi-VN") + "đ";
+        formatVND(TOTAL_COST);
 }
 
 //2 checkbox
@@ -137,12 +117,13 @@ function canRent() {
 function collectFormData() {
     return {
         idtaikhoan: 1, // nữa phải thay cái này
-        xeId: document.getElementById("modalOverlay").dataset.xeId,
-        // thiếu dữ liệu địa điểm lấy và trả
-        pickupLocation: document.getElementById("pickup_thuexe").value,
-        dropoffLocation: document.getElementById("dropoff_thuexe").value,
-        pickupDate: document.getElementById("pickup_date_thuexe").value,
-        returnDate: document.getElementById("return_date_thuexe").value,
+        idxe: document.getElementById("modalOverlay").dataset.xeId,
+
+        diemlay: document.getElementById("pickup_thuexe").value,
+        diemtra: document.getElementById("dropoff_thuexe").value,
+        ngaymuon: document.getElementById("pickup_date_thuexe").value,
+        ngaytra: document.getElementById("return_date_thuexe").value,
+        // rentDays: document.getElementById("songaythue_thuexe").innerText,
 
         fullName: document.getElementById("fullname_modalThuexe").value,
         email: document.getElementById("email_modalThuexe").value,
@@ -150,10 +131,11 @@ function collectFormData() {
         cccd: document.getElementById("cccd_modalThuexe").value,
         comment: document.getElementById("note_modalThuexe").value,
 
-        rentDays: document.getElementById("songaythue_thuexe").innerText,
-        totalCost: document.getElementById("sumprice_thuexe").innerText,
+        totalCost: TOTAL_COST,
     };
 }
+
+function displayRentConfirmation(data) {}
 
 function validateRequiredFields() {
     const REQUIRED_FIELDS = [
@@ -187,4 +169,8 @@ function validateTerms() {
 function formatDate(dateStr) {
     const d = new Date(dateStr);
     return d.toLocaleDateString("vi-VN");
+}
+
+function formatVND(number) {
+    return number.toLocaleString("vi-VN") + " đ";
 }

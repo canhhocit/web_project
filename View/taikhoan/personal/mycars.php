@@ -15,7 +15,6 @@
                 $xe = $item['xe'];
                 $images = $item['images'];
             ?>
-            
             <div class="vehicle-card">
                 <div class="image-section">
                     <?php if (!empty($images)): ?>

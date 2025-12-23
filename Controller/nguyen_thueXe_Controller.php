@@ -90,6 +90,11 @@ class nguyen_thueXe_Controller
                 return $this->layhoadon($data_post);
 
                 exit;
+            case 'taohoadon':
+
+                return $this->taohoadon($data_post);
+
+                exit;
             case 'laythongtinnguoidung':
                 // $user = $this->laythongtinnguoidung($data_post['idtaikhoan'] ?? 0);
 
@@ -145,9 +150,31 @@ class nguyen_thueXe_Controller
         // return $hoadon;
     }
 
-    function laythongtinnguoidung($idtaikhoan){
+    function taohoadon($data_post){
+        // $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0;
+        if ($data_post['idtaikhoan'] <= 0) {
+            http_response_code(400);
+            echo json_encode(["error" => "ID tài khoản không hợp lệ"]);
+            exit;
+        }
+        $idtaikhoan = $data_post['idtaikhoan'];
+        $idxe = $data_post['idxe'];
+        $diemlay = $data_post['diemlay'];
+        $diemtra = $data_post['diemtra'];
+        $ngaymuon = $data_post['ngaymuon'];
+        $ngaytra = $data_post['ngaytra'];
+        $trangthai = $data_post['trangthai'];
+        $ghichu = $data_post['ghichu'];
+        $tongtien = $data_post['tongtien'];
+
+        
+        // $hoadon = $this->hoadon_dao->getHoaDonbyIdtaikhoan($idtaikhoan);
+        $hoadon = new nguyen_hoadon();
+        return $hoadon;
+    }
+    function laythongtinnguoidung($data_post){
         // $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0; cho sang bên kia đê
-        if ($idtaikhoan <= 0) {
+        if ($data_post['idtaikhoan'] <= 0) {
             http_response_code(400);
             echo json_encode(["error" => "ID tài khoản không hợp lệ"]);
             exit;

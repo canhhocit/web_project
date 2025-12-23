@@ -28,6 +28,11 @@
         </div>
 
         <script>
+            let RENT_PRICE = 0;
+            let MAINTAIN_FEE = 0;
+            let INSURANCE_FEE = 0;
+            let TOTAL_COST = 0;
+
             const rentBtn = document.querySelector(".rent-btn");
             const product = document.querySelector(".product");
 
@@ -105,28 +110,30 @@
                             data.xe.name + " - " + xeId;
 
                         document.getElementById("price_thuexe").innerText =
-                            data.xe.price + "đ";
+                            formatVND(data.xe.price);
 
-                        let baohiem = 0;
-                        let baotri = 0;
-                        let tongchiphi = 0;
+                        RENT_PRICE = data.xe.price;
+
                         if (data.xe.type === "car") {
-                            baohiem = 100000;
-                            baotri = 100000;
+                            MAINTAIN_FEE = 100000;
+                            INSURANCE_FEE = 100000;
                         } else {
-                            baohiem = 50000;
-                            baotri = 50000;
+                            MAINTAIN_FEE = 50000;
+                            INSURANCE_FEE = 50000;
                         }
-                        tongchiphi = data.xe.price + baohiem + baotri;
+                        TOTAL_COST = RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
                         document.getElementById("feeBaoHiem_thuexe").innerText =
-                            baohiem + "đ";
+                            formatVND(INSURANCE_FEE);
                         document.getElementById(
                             "feeMaintain_thuexe"
-                        ).innerText = baotri + "đ";
+                        ).innerText = formatVND(MAINTAIN_FEE);
                         document.getElementById("sumprice_thuexe").innerText =
-                            tongchiphi + "đ";
+                            formatVND(TOTAL_COST);
                     })
                     .catch((err) => console.error("Fetch lỗi:", err));
+            }
+            function formatVND(number) {
+                return number.toLocaleString("vi-VN") + " đ";
             }
         </script>
         <script src="../JS/nguyen_js_thuexe.js"></script>
