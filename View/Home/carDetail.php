@@ -41,15 +41,15 @@
                     <h2 class="text-primary fw-bold mb-1">
                         <?php echo $xe['tenxe']; ?>
                     </h2>
-                    <!-- CANH'S FAVORITE -->
-                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" style="text-decoration: none; border: 1px solid gray;"
-                        title="Yêu thích xe">
-                        <span style="font-size:30px; color:red; cursor:pointer;">
-                            <?php echo $exists ? "🫀" : "🤍" //ben carController
-                            ?>
+                    <!-- Nút Yêu thích -->
+                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" 
+                        class="btn btn-outline-secondary rounded-circle p-2" title="Yêu thích xe">
+                        <span style="font-size: 24px;">
+                            <?php echo $exists ? "❤️" : "🤍" ?>
+
                         </span>
                     </a>
-                    <!-- END -->
+
                 </div>
 
                 <p class="text-muted"><i class="fa-solid fa-tag"></i> Hãng: <?php echo $xe['tenhangxe']; ?></p>
@@ -79,9 +79,16 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                    <a href="#" class="btn btn-primary btn-lg fw-bold">
-                        <i class="fa-regular fa-calendar-check"></i> Thuê Xe
-                    </a>
+                    <?php if (isset($isOwner) && $isOwner): ?>
+                        <button class="btn btn-secondary btn-lg fw-bold" disabled style="cursor: not-allowed;">
+                            <i class="fa-solid fa-user-check"></i> Đây là xe của bạn
+                        </button>
+                    <?php else: ?>
+                        <button onclick="openRentalModal(<?php echo $xe['idxe']; ?>)" class="btn btn-primary btn-lg fw-bold">
+                            <i class="fa-regular fa-calendar-check"></i> Thuê Xe Ngay
+                        </button>
+                    <?php endif; ?>
+
                     <a href="index.php" class="btn btn-outline-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Quay lại
                     </a>

@@ -15,4 +15,3 @@ if (!defined('ACCESS_HOPLE')) {
         window.location="/web_project/index.php";
     </script>');
 }
-?>

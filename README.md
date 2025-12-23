@@ -13,6 +13,12 @@ website tương tác giữa người dùng với người dùng
     -   Lịch sử xe đã đăng, sửa xóa thông tin về bài đăng
     -   Thêm, xóa xe yêu thích
 
+2. ĐẶNG VĂN MINH 
+    - Giao diện trang chủ:
+    - Các chức năng sẵn chỉ chờ team add sự kiện vào :))
+    - Về chúng tôi
+    - Chi tiết, tình trạng xe 
+
 3. LÒ VĂN ĐIỆP
 
 -   Phần thanh toán & trả xe

@@ -160,14 +160,17 @@ class vehicleDAO
     //Minh
     public function timKiemXe($keyword)
     {
+        // Escape keyword để tránh SQL Injection
+        $keyword = mysqli_real_escape_string($this->conn, $keyword);
+        
         $sql = "SELECT x.*, x.hangxe AS tenhang, a.duongdan AS hinh_anh
                 FROM xe x 
                 LEFT JOIN (SELECT * FROM anhxe GROUP BY idxe) a ON x.idxe = a.idxe 
                 WHERE x.tenxe LIKE '%$keyword%' OR x.hangxe LIKE '%$keyword%'
                 ORDER BY x.idxe DESC";
 
-        $result = mysqli_query($this->conn, $sql);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+        // Trả về danh sách xe dạng object (giống getAllXe) thay vì associative array
+        return $this->fetchXeList($sql);
     }
 
     //check trangthai thue

@@ -91,6 +91,7 @@ if ($controller == 'home') {
     echo '</div>';
     echo '</div>';
     //end
+    echo '<div class="container" style="padding-top: 20px;">';
 } else {
     echo '<div class="container" style="padding-top: 20px;">';
 }
@@ -99,7 +100,9 @@ if ($controller == 'home') {
 switch ($controller) {
     case 'home':
         if (file_exists("./Controller/HomeController.php")) {
-            include_once "./Controller/HomeController.php";
+            require_once "./Controller/HomeController.php";
+            $home = new HomeController();
+            $home->index();
         }
         break;
 
@@ -160,6 +163,16 @@ switch ($controller) {
             $thongke->$action();
         } else {
             $thongke->index();
+        }
+        break;
+
+        case 'about':
+        require_once "Controller/AboutController.php";
+        $about = new AboutController();
+        if ($action === 'addWork') {
+            $about->addWork();
+        } else {
+            $about->index();
         }
         break;
 

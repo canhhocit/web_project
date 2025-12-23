@@ -42,7 +42,7 @@
             <label>Ảnh đại diện</label>
             <div class="avatar-box">
                 <?php if ($thongtin && $thongtin->get_anhdaidien()): ?>
-                    <img src="View/image/<?php echo $thongtin->get_anhdaidien(); ?>" 
+                    <img src="/web_project/View/image/<?php echo $thongtin->get_anhdaidien(); ?>" 
                          alt="Avatar" id="avatar-preview">
                 <?php else: ?>
                     <div class="avatar-placeholder">
