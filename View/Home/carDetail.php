@@ -38,18 +38,21 @@
         <div class="col-md-5">
             <div class="card border-0 shadow p-4">
                 <div class="d-flex justify-content-between align-items-center">
-    <h2 class="text-primary fw-bold mb-1">
-        <?php echo $xe['tenxe']; ?>
-    </h2>
-    <button 
-        class="btn btn-outline-danger btn-sm btn-yeu-thich"
-        data-id-xe= '<?php echo $xe['maxe']; ?>'
-        title='Yêu thích xe'><i class="fa-regular fa-heart"></i>
-    </button>
-</div>
+                    <h2 class="text-primary fw-bold mb-1">
+                        <?php echo $xe['tenxe']; ?>
+                    </h2>
+                    <!-- CANH'S FAVORITE -->
+                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" style="text-decoration: none; border: 1px solid gray;"
+                        title="Yêu thích xe">
+                        <span style="font-size:30px; color:red; cursor:pointer;">
+                            <?php echo $exists ? "🫀" : "🤍" ?>
+                        </span>
+                    </a>
+                    <!-- END -->
+                </div>
 
                 <p class="text-muted"><i class="fa-solid fa-tag"></i> Hãng: <?php echo $xe['tenhangxe']; ?></p>
-                
+
                 <h3 class="text-danger fw-bold my-3">
                     <?php echo number_format($xe['giathue'], 0, ',', '.'); ?> đ/ngày
                 </h3>
