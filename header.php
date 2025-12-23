@@ -21,6 +21,10 @@ if (isset($_SESSION['idtaikhoan'])) {
         $cccd = $thongtin->get_cccd();
     }
 }
+
+$current_controller = $_GET['controller'] ?? 'home';
+$is_finance_active = ($current_controller === 'thanhtoan' || $current_controller === 'thongke');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,11 +89,41 @@ if (isset($_SESSION['idtaikhoan'])) {
                                 <!-- Đã đăng nhập -->
                                 <li>
                                     
-                                    <a class="dropdown-item" href="/web_project/index.php?controller=taikhoan&action=personal">
+                                    <a class="dropdown-item" href="index.php?controller=taikhoan&action=personal">
                                         <i class="fa-solid fa-gear"></i> Cá nhân hóa
                                     </a>
                                 </li>
                                 
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                               <li>
+                                <a class="dropdown-item d-flex justify-content-between align-items-center" 
+                                data-bs-toggle="collapse" 
+                                href="#submenuTaiChinh" 
+                                role="button" 
+                                aria-expanded="false">
+                                    <span><i class="fa-solid fa-wallet me-2"></i> Tài chính</span>
+                                    <i class="fa-solid fa-chevron-down fa-xs"></i>
+                                </a>
+                                
+                                <div class="collapse" id="submenuTaiChinh">
+                                    <ul class="list-unstyled mb-0">
+                                        <li>
+                                            <a class="dropdown-item ps-5" href="index.php?controller=thanhtoan&action=index">
+                                                <i class=" fa-solid fa-credit-card me-2"></i> Thanh toán 
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item ps-5" href="index.php?controller=thongke&action=index">
+                                                <i class="fa-solid fa-chart-line me-2"></i> Thống kê
+                                            </a>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </li> 
+
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -123,4 +157,34 @@ if (isset($_SESSION['idtaikhoan'])) {
             </div>
         </div>
     </nav>
-   
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const btnTaiChinh = document.querySelector('[href="#submenuTaiChinh"]');
+    const submenu = document.getElementById('submenuTaiChinh');
+
+    if (btnTaiChinh && submenu) {
+        btnTaiChinh.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); 
+            
+            const isShown = submenu.classList.contains('show');
+            if (isShown) {
+                submenu.classList.remove('show');
+                this.setAttribute('aria-expanded', 'false');
+            } else {
+                submenu.classList.add('show');
+                this.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        submenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+});
+</script>
+
+</body>
+</html>
