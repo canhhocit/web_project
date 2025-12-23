@@ -99,7 +99,9 @@ if ($controller == 'home') {
 switch ($controller) {
     case 'home':
         if (file_exists("./Controller/HomeController.php")) {
-            include_once "./Controller/HomeController.php";
+            require_once "./Controller/HomeController.php";
+            $home = new HomeController();
+            $home->index();
         }
         break;
 

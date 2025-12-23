@@ -78,39 +78,38 @@ if (isset($_SESSION['idtaikhoan'])) {
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <?php if (!isset($_SESSION['idtaikhoan'])): ?>
-                                <!-- Chưa đăng nhập -->
-                                <li><a class="dropdown-item" href="View/taikhoan/login.php">Đăng Nhập</a></li>
-                                <li><a class="dropdown-item" href="View/taikhoan/register.php">Đăng Ký</a></li>
+                                <li><a class="dropdown-item" href="View/taikhoan/login.php"><i class="fa-solid fa-right-to-bracket me-2"></i> Đăng Nhập</a></li>
+                                <li><a class="dropdown-item" href="View/taikhoan/register.php"><i class="fa-solid fa-user-plus me-2"></i> Đăng Ký</a></li>
                             <?php else: ?>
-                                <!-- Đã đăng nhập -->
                                 <li>
-                                    
-                                    <a class="dropdown-item" href="/web_project/index.php?controller=taikhoan&action=personal">
-                                        <i class="fa-solid fa-gear"></i> Cá nhân hóa
-                                    </a>
-                                </li>
-                                
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-list-check"></i> Đơn khách thuê xe tôi
+                                    <a class="dropdown-item" href="index.php?controller=taikhoan&action=personal">
+                                        <i class="fa-solid fa-user me-2"></i> Thông tin cá nhân
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-clock-rotate-left"></i> Lịch sử tôi đi thuê
+                                    <a class="dropdown-item" href="index.php?controller=taikhoan&action=personal&selection=cars">
+                                        <i class="fa-solid fa-car me-2"></i> Quản lý xe của tôi
                                     </a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item text-danger"
-                                        href="/web_project/index.php?controller=taikhoan&action=logout">
-                                         <i class="fa-solid fa-right-from-bracket me-2"></i>
-                                        Đăng xuất
+                                    <a class="dropdown-item" href="index.php?controller=thanhtoan&action=index">
+                                        <i class="fa-solid fa-file-invoice-dollar me-2"></i> Hóa đơn / Lịch sử
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="index.php?controller=taikhoan&action=changePassword">
+                                        <i class="fa-solid fa-key me-2"></i> Đổi mật khẩu
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="index.php?controller=taikhoan&action=logout">
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
                                     </a>
                                 </li>
                             <?php endif; ?>
@@ -123,4 +122,3 @@ if (isset($_SESSION['idtaikhoan'])) {
             </div>
         </div>
     </nav>
-   
