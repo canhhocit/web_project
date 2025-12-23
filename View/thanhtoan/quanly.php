@@ -15,9 +15,9 @@ $data_from_db = [
 
 if ($conn) {
     $sql1 = "SELECT hd.idhoadon, x.tenxe, x.giathue 
-             FROM hoadon hd 
-             JOIN xe x ON hd.idxe = x.idxe 
-             WHERE hd.idtaikhoan = $idtaikhoan AND hd.trangthai = 0";
+            FROM hoadon hd 
+            JOIN xe x ON hd.idxe = x.idxe 
+            WHERE hd.idtaikhoan = $idtaikhoan AND hd.trangthai = 0";
     $res1 = mysqli_query($conn, $sql1);
     while ($row = mysqli_fetch_assoc($res1)) {
         $data_from_db[1][] = [
@@ -49,9 +49,9 @@ if ($conn) {
     }
 
     $sql3 = "SELECT hd.idhoadon, x.tenxe, hd.tongtien 
-             FROM hoadon hd 
-             JOIN xe x ON hd.idxe = x.idxe 
-             WHERE hd.idtaikhoan = $idtaikhoan AND hd.trangthai = 1";
+            FROM hoadon hd 
+            JOIN xe x ON hd.idxe = x.idxe 
+            WHERE hd.idtaikhoan = $idtaikhoan AND hd.trangthai = 1";
     $res3 = mysqli_query($conn, $sql3);
     while ($res3 && $row = mysqli_fetch_assoc($res3)) {
         $data_from_db[3][] = [
@@ -139,6 +139,7 @@ $jsonData = json_encode($data_from_db);
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/nguyen_quanly.js"></script>
     <script src="View/JS/thanhtoan.js"></script> <script>
         // Đổ dữ liệu thật từ PHP vào biến JS
         const data = <?php echo $jsonData; ?>;
@@ -148,6 +149,11 @@ $jsonData = json_encode($data_from_db);
             const tabs = document.querySelectorAll(".tab");
             if(tabs[tabIndex-1]) tabs[tabIndex-1].classList.add("active");
 
+            if (tabIndex === 1 || tabIndex === 2) {
+                renderTab1And2(tabIndex);
+                return;
+            }
+            
             const content = document.getElementById("content");
             content.innerHTML = "";
 

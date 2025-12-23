@@ -31,16 +31,15 @@ class nguyen_thueXe_Controller
                 $xe = $this->layxe($data_post['id'] ?? 0);
                 $xe_arr = [];
 
-                // lấy ảnh để trả về bên kia
-                // $anhxe = $this->layanhxe($data_post['id'] ?? 0);
-                // $anhxe_arr = [];
-                // foreach ($anhxe as $item) {
-                //     $anhxe_arr[] = [
-                //         "id"     => $item->get_idanh(),
-                //         "idxe"   => $item->get_idxe(),
-                //         "link"   => $item->get_duongdan()
-                //     ];
-                // }
+                $anhxe = $this->layanhxe($data_post['id'] ?? 0);
+                $anhxe_arr = [];
+                foreach ($anhxe as $item) {
+                    $anhxe_arr[] = [
+                        "id"     => $item->get_idanh(),
+                        "idxe"   => $item->get_idxe(),
+                        "duongdan"   => "../image/" . $item->get_duongdan() 
+                    ];
+                }
 
                 foreach ($xe as $item) {
                     $xe_arr[] = [
@@ -56,8 +55,8 @@ class nguyen_thueXe_Controller
 
                 echo json_encode([
                     "status" => "success",
-                    "xe" => $xe_arr[0] // chỉ 1 mà thôi
-                    // "anhxe" => $anhxe_arr[0]
+                    "xe" => $xe_arr[0], // chỉ 1 mà thôi
+                    "anhxe" => $anhxe_arr[0]
                 ]);
                 exit;
             case 'taohoadon': 
@@ -66,16 +65,18 @@ class nguyen_thueXe_Controller
                 $hoadon = new nguyen_hoadon(
                     null,
                     $data['idtaikhoan'] ?? 0,
-                    $data['xeId'] ?? 0,
-                    $data['pickupLocation'] ?? '',
-                    $data['dropoffLocation'] ?? '',
-                    $data['pickupDate'] ?? '',
-                    $data['returnDate'] ?? '',
+                    $data['idxe'] ?? 0,
+
+                    $data['diemlay'] ?? '',
+                    $data['diemtra'] ?? '',
+                    $data['ngaymuon'] ?? '',
+                    $data['ngaytra'] ?? '',
+
                     $data['fullName'] ?? '',
                     $data['email'] ?? '',
                     $data['phone'] ?? '',
                     $data['cccd'] ?? '',
-                    0,
+
                     $data['comment'] ?? '',
                     $data['totalCost'] ?? 0
                 );
@@ -87,13 +88,36 @@ class nguyen_thueXe_Controller
                 ]);
                 exit;
             case 'layhoadon':
-                return $this->layhoadon($data_post);
+                // cta cần lấy thoogn tin hóa đơn từ idhoadon nhập vào
+                // cả ảnh thông qua idxe
+                $hoadon = $this->layhoadon($data_post['idhoadon']);
+                $item = $hoadon[0];
+                $hoadon_arr = [];
 
-                exit;
-            case 'taohoadon':
+                    $hoadon_arr = [
+                        "idhoadon"     => $item->get_idhoadon(),
+                        "idtaikhoan"   => $item->get_idtaikhoan(),
+                        "idxe"         => $item->get_idxe(),
+                        "diemlay"      => $item->get_diemlay(),
+                        "diemtra"      => $item->get_diemtra(),
+                        "ngaymuon"     => $item->get_ngaymuon(),
+                        "ngaytra"      => $item->get_ngaytra(),
+                        "hoten"        => $item->get_hoten(),
+                        "email"        => $item->get_email(),
+                        "sdt"          => $item->get_sdt(),
+                        "cccd"         => $item->get_cccd(),
+                        "trangthai"    => $item->get_trangthai(),
+                        "ghichu"       => $item->get_ghichu(),
+                        "tongtien"     => $item->get_tongtien()
+                    ];
 
-                return $this->taohoadon($data_post);
+                $anhxe = $this->vehicle_dao->getAnhxebyIdxe($item->get_idxe());
 
+                echo json_encode([
+                    "success" => true,
+                    "hoadon" => $hoadon_arr,
+                    "anhxe" => $anhxe
+                ]);
                 exit;
             case 'laythongtinnguoidung':
                 // $user = $this->laythongtinnguoidung($data_post['idtaikhoan'] ?? 0);
@@ -146,32 +170,10 @@ class nguyen_thueXe_Controller
             echo json_encode(["error" => "ID tài khoản không hợp lệ"]);
             exit;
         }
-        // $hoadon = $this->hoadon_dao->getHoaDonbyIdtaikhoan($idtaikhoan);
-        // return $hoadon;
+        $hoadon = $this->hoadon_dao->gethoadonById($idtaikhoan);
+        return $hoadon;
     }
 
-    function taohoadon($data_post){
-        // $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0;
-        if ($data_post['idtaikhoan'] <= 0) {
-            http_response_code(400);
-            echo json_encode(["error" => "ID tài khoản không hợp lệ"]);
-            exit;
-        }
-        $idtaikhoan = $data_post['idtaikhoan'];
-        $idxe = $data_post['idxe'];
-        $diemlay = $data_post['diemlay'];
-        $diemtra = $data_post['diemtra'];
-        $ngaymuon = $data_post['ngaymuon'];
-        $ngaytra = $data_post['ngaytra'];
-        $trangthai = $data_post['trangthai'];
-        $ghichu = $data_post['ghichu'];
-        $tongtien = $data_post['tongtien'];
-
-        
-        // $hoadon = $this->hoadon_dao->getHoaDonbyIdtaikhoan($idtaikhoan);
-        // $hoadon = new nguyen_hoadon();
-        // return $hoadon;
-    }
     function laythongtinnguoidung($data_post){
         // $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0; cho sang bên kia đê
         if ($data_post['idtaikhoan'] <= 0) {

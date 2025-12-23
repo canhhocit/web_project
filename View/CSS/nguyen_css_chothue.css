@@ -1,0 +1,130 @@
+.part_overlay_quanly {
+    width: 100%;
+    min-height: 80vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container_table_quanly {
+    width: 80%;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content_container_quanly {
+    width: 100%;
+    padding: 0;
+}
+
+.tabs {
+    display: flex;
+    background: #fafafa;
+    border-bottom: 1px solid #eee;
+    border-radius: 12px 12px 0 0;
+}
+
+.tab {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s;
+}
+
+.tab.active {
+    border-bottom: 3px solid #007bff;
+    color: #007bff;
+    background: #fff;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    margin: 0 !important;
+}
+
+.image {
+    width: 100px;
+    height: 70px;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    flex-shrink: 0;
+    background: #fdfdfd;
+}
+
+.info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.price {
+    color: #555;
+    margin: 4px 0;
+}
+
+.actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-view {
+    background: #3498db;
+    color: #fff;
+}
+
+.btn-return {
+    background: #e74c3c;
+    color: #fff;
+}
+
+/* ===== TRẠNG THÁI ===== */
+.status {
+    width: fit-content;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.yellow {
+    background: #f1c40f;
+}
+.green {
+    background: #2ecc71;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Quản lý thuê xe</title>
+        <link rel="stylesheet" href="../CSS/nguyen_css_chothue.css" />
+    </head>
+    <body>
+        <div class="part_overlay_quanly">
+            <div class="container_table_quanly">
+                <div class="tabs">
+                    <div class="tab active" data-tab="1">Theo dõi thuê xe</div>
+                    <div class="tab" data-tab="2">Danh sách xe trống</div>
+                </div>
+
+                <div class="content_container_quanly">
+                    <div class="content" id="content"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const data = {
+                1: [
+                    {
+                        name: "Honda Vision",
+                        price: "120.000đ / ngày",
+                        status: "Đang thuê",
+                        statusClass: "yellow",
+                        showReturn: true,
+                    },
+                ],
+                2: [
+                    {
+                        name: "Yamaha Sirius",
+                        price: "100.000đ / ngày",
+                        status: "Đang được thuê",
+                        statusClass: "yellow",
+                    },
+                    {
+                        name: "Wave Alpha",
+                        price: "90.000đ / ngày",
+                        status: "Đã trả xe",
+                        statusClass: "green",
+                    },
+                ],
+            };
+
+            document.addEventListener("DOMContentLoaded", () => {
+                document.querySelectorAll(".tab").forEach((tab) => {
+                    tab.addEventListener("click", () => {
+                        switchTab(tab.dataset.tab);
+                    });
+                });
+
+                // tab mặc định
+                switchTab(1);
+            });
+
+            async function switchTab(tabIndex) {
+                setActiveTab(tabIndex);
+
+                const list = await fetchCarsByTab(tabIndex);
+
+                renderContent(list);
+            }
+
+            function setActiveTab(tabIndex) {
+                document
+                    .querySelectorAll(".tab")
+                    .forEach((t) => t.classList.remove("active"));
+
+                document
+                    .querySelector(`.tab[data-tab="${tabIndex}"]`)
+                    .classList.add("active");
+            }
+
+            function renderContent(list) {
+                const content = document.getElementById("content");
+                content.innerHTML = "";
+
+                list.forEach((item) => {
+                    content.innerHTML += `
+                    <div class="row">
+                        <div class="image">Ảnh xe</div>
+                        <div class="info">
+                            <div class="name">${item.name}</div>
+                            <div class="price">${item.price}</div>
+                            <span class="status ${item.statusClass}">
+                                ${item.status}
+                            </span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-view" data-id="${item.id ?? ""}">
+                                Xem chi tiết
+                            </button>
+                        </div>
+                    </div>
+                    `;
+                });
+            }
+        </script>
+        <script src="../JS/nguyen_js_chothue.js"></script>
+    </body>
+</html>

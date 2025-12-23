@@ -108,9 +108,12 @@
                         // console.log("DATA:", data);
                         document.getElementById("title_xe_thuexe").innerText =
                             data.xe.name + " - " + xeId;
+                        // console.log("Ảnh xe:", data.anhxe.duongdan);
 
                         document.getElementById("price_thuexe").innerText =
                             formatVND(data.xe.price);
+                        document.getElementById("anhxe_thuexe").src =
+                            data.anhxe.duongdan;
 
                         RENT_PRICE = data.xe.price;
 
