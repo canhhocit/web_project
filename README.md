@@ -21,7 +21,7 @@ website tương tác giữa người dùng với người dùng
 
 3. LÒ VĂN ĐIỆP
 
--   Phần thanh toán & trả xe
+-   Phần thanh toán & trả xe:
 
     -   Tính toán tiền thuê tự động: Khi ấn nút "Trả xe", hệ thống tự động tính toán dữ liệu dựa trên thời gian thực:Số ngày thuê dự kiến: Tính từ ngày mượn đến ngày trả dự kiến trong hợp đồng.Số ngày quá hạn: So sánh ngày trả dự kiến với ngày hiện tại.
     -   Tổng tiền: Được tính theo công thức: $TongTien = (NgayThueDuKien + NgayQuaHan) \times GiaThue$.
