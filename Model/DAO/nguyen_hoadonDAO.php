@@ -10,11 +10,9 @@ class nguyen_hoadonDAO {
         $this->conn = $conn;
     }
 
-    /* ================= GET ALL ================= */
     public function getAll() {
         $sql = "SELECT * FROM hoadon";
         $result = $this->conn->query($sql);
-
         $list = [];
 
         while ($row = $result->fetch_assoc()) {
@@ -35,17 +33,14 @@ class nguyen_hoadonDAO {
                 $row['tongtien']
             );
         }
-
         return $list;
     }
 
-    /* ================= GET BY ID ================= */
-    public function getById($idhoadon) {
+    public function gethoadonById($idhoadon) {
         $sql = "SELECT * FROM hoadon WHERE idhoadon = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $idhoadon);
         $stmt->execute();
-
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
 
@@ -67,57 +62,64 @@ class nguyen_hoadonDAO {
                 $row['tongtien']
             );
         }
-
         return null;
     }
 
-    /* ================= INSERT ================= */
-    public function insert(nguyen_hoadon $hd) {
+    public function insert(nguyen_hoadon $hd)
+{
+    $sql = "INSERT INTO hoadon (
+                idtaikhoan,
+                idxe,
+                diemlay,
+                diemtra,
+                ngaymuon,
+                ngaytra,
+                hoten,
+                email,
+                sdt,
+                cccd,
+                trangthai,
+                ghichu,
+                tongtien
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $sql = "INSERT INTO hoadon (
-                    idtaikhoan,
-                    idxe,
-                    diemlay,
-                    diemtra,
-                    ngaymuon,
-                    ngaytra,
-                    hoten,
-                    email,
-                    sdt,
-                    cccd,
-                    trangthai,
-                    ghichu,
-                    tongtien
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $this->conn->prepare($sql);
 
-        $stmt = $this->conn->prepare($sql);
+    // lấy dữ liệu ra biến
+    $idtaikhoan = $hd->get_idtaikhoan();
+    $idxe       = $hd->get_idxe();
+    $diemlay    = $hd->get_diemlay();
+    $diemtra    = $hd->get_diemtra();
+    $ngaymuon   = $hd->get_ngaymuon();
+    $ngaytra    = $hd->get_ngaytra();
+    $hoten      = $hd->get_hoten();
+    $email      = $hd->get_email();
+    $sdt        = $hd->get_sdt();
+    $cccd       = $hd->get_cccd();
+    $trangthai  = 0;
+    $ghichu     = $hd->get_ghichu();
+    $tongtien   = $hd->get_tongtien();
 
-        // trangthai mặc định = 0 (chưa thanh toán / đang thuê)
-        $trangthai = 0;
+    $stmt->bind_param(
+        "iissssssssisd",
+        $idtaikhoan,
+        $idxe,
+        $diemlay,
+        $diemtra,
+        $ngaymuon,
+        $ngaytra,
+        $hoten,
+        $email,
+        $sdt,
+        $cccd,
+        $trangthai,
+        $ghichu,
+        $tongtien
+    );
+    return $stmt->execute();
+}
 
-        $stmt->bind_param(
-            "iissssssssisd",
-            $hd->get_idtaikhoan(),
-            $hd->get_idxe(),
-            $hd->get_diemlay(),
-            $hd->get_diemtra(),
-            $hd->get_ngaymuon(),
-            $hd->get_ngaytra(),
-            $hd->get_hoten(),
-            $hd->get_email(),
-            $hd->get_sdt(),
-            $hd->get_cccd(),
-            $trangthai,
-            $hd->get_ghichu(),
-            $hd->get_tongtien()
-        );
-
-        return $stmt->execute();
-    }
-
-    /* ================= UPDATE ================= */
     public function update(nguyen_hoadon $hd) {
-
         $sql = "UPDATE hoadon SET
                     idtaikhoan = ?,
                     idxe = ?,
@@ -135,7 +137,6 @@ class nguyen_hoadonDAO {
                 WHERE idhoadon = ?";
 
         $stmt = $this->conn->prepare($sql);
-
         $stmt->bind_param(
             "iissssssssisdi",
             $hd->get_idtaikhoan(),
@@ -153,11 +154,9 @@ class nguyen_hoadonDAO {
             $hd->get_tongtien(),
             $hd->get_idhoadon()
         );
-
         return $stmt->execute();
     }
 
-    /* ================= DELETE ================= */
     public function delete($idhoadon) {
         $sql = "DELETE FROM hoadon WHERE idhoadon = ?";
         $stmt = $this->conn->prepare($sql);

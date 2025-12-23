@@ -54,6 +54,8 @@ function initModalXacNhan() {
             .then((result) => {
                 if (result.success) {
                     alert("✅ Thuê xe thành công!");
+
+                    resetForm();
                     closeModalXacNhan();
                     closeModal();
                 } else {
@@ -88,7 +90,6 @@ function calculateRent() {
     const returnVal = document.getElementById("return_date_thuexe").value;
 
     if (!pickupVal || !returnVal) return;
-
     const pickupDate = new Date(pickupVal);
     const returnDate = new Date(returnVal);
 
@@ -100,7 +101,13 @@ function calculateRent() {
     const days = Math.ceil((returnDate - pickupDate) / (1000 * 60 * 60 * 24));
     document.getElementById("songaythue_thuexe").innerText = days;
 
-    const TOTAL_COST = days * RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
+    document.getElementById("rent_date_thuexe").innerText =
+        formatDate(pickupVal);
+
+    document.getElementById("unrent_date_thuexe").innerText =
+        formatDate(returnVal);
+
+    TOTAL_COST = days * RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
 
     document.getElementById("sumprice_thuexe").innerText =
         formatVND(TOTAL_COST);
@@ -116,7 +123,7 @@ function canRent() {
 
 function collectFormData() {
     return {
-        idtaikhoan: 1, // nữa phải thay cái này
+        idtaikhoan: 3, // nữa phải thay cái này
         idxe: document.getElementById("modalOverlay").dataset.xeId,
 
         diemlay: document.getElementById("pickup_thuexe").value,
@@ -133,6 +140,7 @@ function collectFormData() {
 
         totalCost: TOTAL_COST,
     };
+    // dữ liệu trả về phải juan , nhiều ràng buộc khóa ngoại vc, check ỉa. idtaikhoan, idxe
 }
 
 function displayRentConfirmation(data) {}
@@ -173,4 +181,38 @@ function formatDate(dateStr) {
 
 function formatVND(number) {
     return number.toLocaleString("vi-VN") + " đ";
+}
+
+function resetForm() {
+    // 1. Reset input text & date
+    const INPUT_IDS = [
+        "pickup_thuexe",
+        "dropoff_thuexe",
+        "pickup_date_thuexe",
+        "return_date_thuexe",
+        "fullname_modalThuexe",
+        "email_modalThuexe",
+        "phone_modalThuexe",
+        "cccd_modalThuexe",
+        "note_modalThuexe",
+    ];
+
+    INPUT_IDS.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+    });
+
+    // 2. Reset checkbox
+    const CHECKBOX_IDS = ["terms_thuexe", "policy_thuexe"];
+    CHECKBOX_IDS.forEach((id) => {
+        const cb = document.getElementById(id);
+        if (cb) cb.checked = false;
+    });
+
+    // 3. Reset hiển thị ngày thuê & tiền
+    document.getElementById("songaythue_thuexe").innerText = "0";
+    document.getElementById("sumprice_thuexe").innerText = formatVND(0);
+
+    // 4. Reset biến global
+    TOTAL_COST = 0;
 }

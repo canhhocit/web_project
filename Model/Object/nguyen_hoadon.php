@@ -31,9 +31,9 @@ class nguyen_hoadon {
         $email,
         $sdt,
         $cccd,
-        $trangthai = 0,
-        $ghichu = null,
-        $tongtien = 0
+        // $trangthai,
+        $ghichu,
+        $tongtien
     ) {
         $this->idhoadon   = $idhoadon;
         $this->idtaikhoan = $idtaikhoan;
@@ -46,7 +46,7 @@ class nguyen_hoadon {
         $this->email      = $email;
         $this->sdt        = $sdt;
         $this->cccd       = $cccd;
-        $this->trangthai  = $trangthai;
+        $this->trangthai  = 0;
         $this->ghichu     = $ghichu;
         $this->tongtien   = $tongtien;
     }
@@ -85,7 +85,7 @@ class nguyen_hoadon {
     public function set_sdt($sdt)     { $this->sdt = $sdt; }
     public function set_cccd($cccd)   { $this->cccd = $cccd; }
 
-    public function set_trangthai($trangthai) { $this->trangthai = $trangthai; }
+    // public function set_trangthai($trangthai) { $this->trangthai = $trangthai; }
     public function set_ghichu($ghichu)       { $this->ghichu = $ghichu; }
     public function set_tongtien($tongtien)   { $this->tongtien = $tongtien; }
 }
