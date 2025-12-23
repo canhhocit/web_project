@@ -40,7 +40,8 @@ website tương tác giữa người dùng với người dùng
     -   Tỷ lệ thuê xe: Tính toán phần trăm số lượng xe đang hoạt động trên tổng số xe hiện có.
 
     -   Biểu đồ cột (Bar Chart): So sánh doanh thu giữa các tháng trong năm để thấy được xu hướng tăng trưởng.
-    -   Biểu đồ tròn (Doughnut Chart): Phân tích tỷ trọng các loại xe được ưa chuộng (Xe máy điện, Xe đạp điện...).
+    -   Biểu đồ tròn (Doughnut Chart): Phân tích tỷ trọng các loại xe được ưa chuộng (Xe máy điện, Xe đạp điện...)
+-   Phần lịch sử giao dịch:  Hiển thị danh sách các hóa đơn đã thanh toán thành công.
 
 4. TRẦN TRUNG NGUYÊN
 
