@@ -9,6 +9,7 @@ require_once __DIR__ . "/../config.php";
 require_once __DIR__ . "/../Model/Database/dbconnect.php";
 require_once __DIR__ . "/../Model/DAO/taikhoanDAO.php";
 require_once __DIR__ . "/../Model/DAO/vehicleDAO.php";
+require_once __DIR__ . "/../Model/DAO/favoriteVehicleDAO.php";
 require_once __DIR__ . "/../Model/Object/taikhoan.php";
 require_once __DIR__ . "/../Model/Object/anhxe.php";
 require_once __DIR__ . "/../Model/Object/xe.php";
@@ -19,11 +20,13 @@ class taikhoanController
 {
     private $Adao;
     private $Vdao;
+    private $Fdao;
     public function __construct()
     {
         global $conn;
         $this->Adao = new taikhoanDAO($conn);
         $this->Vdao = new vehicleDAO($conn);
+        $this->Fdao = new favoriteVehicleDAO($conn);
     }
 
     public function index()
@@ -235,6 +238,45 @@ class taikhoanController
             exit;
         }
     }
+    public function favoriteVehicle()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+            if (!isset($_GET['id'])) {
+                echo "<script>alert('Không lấy được idxe ồi!'); 
+                history.back();</script>";
+                exit;
+            }
+
+            $idtaikhoan = $_SESSION['idtaikhoan'];
+            $idxe = $_GET['id'];
+            $option = $_GET['option'];
+
+            if ($this->Fdao->checkExistsVehicle($idtaikhoan, $idxe)) {
+                if ($this->Fdao->delFavorite($idtaikhoan, $idxe)) {
+                    echo "<script>
+                    alert('Đã xóa khỏi yêu thích!');
+                    history.back();
+                    </script>";
+                } else {
+                    echo "<script>alert('Lỗi delF!'); 
+                history.back();;</script>";
+                    exit;
+                }
+            } else {
+                if ($this->Fdao->addFavorite($idtaikhoan, $idxe)) {
+                    echo "<script>
+                    alert('Đã thêm vào mục yêu thích!');
+                     history.back();
+                    </script>";
+                } else {
+                    echo "<script>alert('Lỗi addF!'); 
+                history.back();;</script>";
+                    exit;
+                }
+            }
+        }
+    }
+
     public function personal()
     {
         if (!isset($_SESSION['idtaikhoan'])) {
@@ -248,19 +290,42 @@ class taikhoanController
 
         //  selection = cars
         $xeWithImages = [];
-        if (isset($_GET['selection']) && $_GET['selection'] === 'cars') {
-            $danhsachxe = $this->Vdao->getXeByIdChuxe($idtaikhoan);
+        if (isset($_GET['selection']) && $_GET['selection'] === 'myvehicle') {
+            $danhsachxe = $this->Vdao->getXebyIdChuxe($idtaikhoan);
 
             foreach ($danhsachxe as $xe) {
                 $idxe = $xe->get_idxe();
                 $anhxe = $this->Vdao->getAnhxebyIdxe($idxe);
-
+                $trangthai = 'Chưa có người thuê';
+                $status = false;
+                if ($this->Vdao->checktrangthaithue($idxe)) {
+                    $trangthai = 'Đã được thuê';
+                    $status = true;
+                }
                 $xeWithImages[] = [
                     'xe' => $xe,
-                    'images' => $anhxe
+                    'images' => $anhxe,
+                    'trangthai' => $trangthai,
+                    'status' => $status
                 ];
             }
         }
+        //selection = favorite
+        $favotiteCars = [];
+        if (isset($_GET['selection']) && $_GET['selection'] === 'favorite') {
+            $listFavorite = $this->Vdao->getFavoritebyIdChuxe($idtaikhoan);
+
+            foreach ($listFavorite as $xe) {
+                $idxe = $xe->get_idxe();
+                $imgs = $this->Vdao->getAnhxebyIdxe($idxe);
+                $favotiteCars[] = [
+                    'xe' => $xe,
+                    'images' => $imgs
+                ];
+            }
+        }
+
+
 
         include_once __DIR__ . "/../View/taikhoan/personal.php";
     }

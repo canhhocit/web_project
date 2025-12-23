@@ -38,18 +38,22 @@
         <div class="col-md-5">
             <div class="card border-0 shadow p-4">
                 <div class="d-flex justify-content-between align-items-center">
-    <h2 class="text-primary fw-bold mb-1">
-        <?php echo $xe['tenxe']; ?>
-    </h2>
-    <button 
-        class="btn btn-outline-danger btn-sm btn-yeu-thich"
-        data-id-xe= '<?php echo $xe['maxe']; ?>'
-        title='Yêu thích xe'><i class="fa-regular fa-heart"></i>
-    </button>
-</div>
+                    <h2 class="text-primary fw-bold mb-1">
+                        <?php echo $xe['tenxe']; ?>
+                    </h2>
+                    <!-- Nút Yêu thích -->
+                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" 
+                        class="btn btn-outline-secondary rounded-circle p-2" title="Yêu thích xe">
+                        <span style="font-size: 24px;">
+                            <?php echo $exists ? "❤️" : "🤍" ?>
+
+                        </span>
+                    </a>
+
+                </div>
 
                 <p class="text-muted"><i class="fa-solid fa-tag"></i> Hãng: <?php echo $xe['tenhangxe']; ?></p>
-                
+
                 <h3 class="text-danger fw-bold my-3">
                     <?php echo number_format($xe['giathue'], 0, ',', '.'); ?> đ/ngày
                 </h3>
@@ -75,9 +79,16 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                    <a href="#" class="btn btn-primary btn-lg fw-bold">
-                        <i class="fa-regular fa-calendar-check"></i> Thuê Xe
-                    </a>
+                    <?php if (isset($isOwner) && $isOwner): ?>
+                        <button class="btn btn-secondary btn-lg fw-bold" disabled style="cursor: not-allowed;">
+                            <i class="fa-solid fa-user-check"></i> Đây là xe của bạn
+                        </button>
+                    <?php else: ?>
+                        <button onclick="openRentalModal(<?php echo $xe['idxe']; ?>)" class="btn btn-primary btn-lg fw-bold">
+                            <i class="fa-regular fa-calendar-check"></i> Thuê Xe Ngay
+                        </button>
+                    <?php endif; ?>
+
                     <a href="index.php" class="btn btn-outline-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Quay lại
                     </a>

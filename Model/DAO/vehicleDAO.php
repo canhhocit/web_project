@@ -13,7 +13,7 @@ class vehicleDAO
     public function addXe($xe)
     {
         $tenxe = $xe->get_tenxe();
-        $hangxe = $xe->get_hangxe(); 
+        $hangxe = $xe->get_hangxe();
         $giathue = $xe->get_giathue();
         $mota    = $xe->get_mota();
         $loaixe  = $xe->get_loaixe();
@@ -55,7 +55,7 @@ class vehicleDAO
 
         while ($row = mysqli_fetch_assoc($result)) {
             $val_hangxe = isset($row['hangxe']) ? $row['hangxe'] : "Chưa rõ";
-            
+
             $list[] = new xe(
                 $row['idxe'],
                 $row['tenxe'],
@@ -70,6 +70,7 @@ class vehicleDAO
         return $list;
     }
 
+
     public function getAllXe()
     {
         return $this->fetchXeList("SELECT * FROM xe");
@@ -83,6 +84,12 @@ class vehicleDAO
     {
         return $this->fetchXeList("SELECT * FROM xe WHERE idchuxe='$idchuxe'");
     }
+    public function getFavoritebyIdChuxe($idchuxe)
+    {
+        $sql = "SELECT xe.* FROM yeuthich JOIN xe ON yeuthich.idxe = xe.idxe WHERE yeuthich.idtaikhoan = $idchuxe";
+        return $this->fetchXeList($sql);
+    }
+
 
 
     public function addAnhxe($anhxe)
@@ -112,8 +119,9 @@ class vehicleDAO
         return $list;
     }
 
-   
-    public function getDanhSachXeHienThi() {
+    //Minh
+    public function getDanhSachXeHienThi()
+    {
 
         $sql = "SELECT x.*, x.hangxe AS tenhang, a.duongdan AS hinh_anh
                 FROM xe x 
@@ -121,11 +129,11 @@ class vehicleDAO
                     SELECT * FROM anhxe GROUP BY idxe
                 ) a ON x.idxe = a.idxe 
                 ORDER BY x.idxe DESC";
-                
+
         $result = mysqli_query($this->conn, $sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
-
+    //Minh
     public function getChiTietXe($idxe)
     {
 
@@ -133,32 +141,44 @@ class vehicleDAO
                 FROM xe x 
                 LEFT JOIN thongtintaikhoan t ON x.idchuxe = t.idtaikhoan
                 WHERE x.idxe = '$idxe'";
-                
+
         $result = mysqli_query($this->conn, $sql);
         $xe = mysqli_fetch_assoc($result);
 
         if ($xe) {
             $sqlAnh = "SELECT * FROM anhxe WHERE idxe = '$idxe'";
             $resultAnh = mysqli_query($this->conn, $sqlAnh);
-            
+
             $arrAnh = array();
             while ($row = mysqli_fetch_assoc($resultAnh)) {
-                $arrAnh[] = $row['duongdan']; 
+                $arrAnh[] = $row['duongdan'];
             }
             $xe['ds_anh'] = $arrAnh;
         }
         return $xe;
     }
-
-    public function timKiemXe($keyword) {
+    //Minh
+    public function timKiemXe($keyword)
+    {
+        // Escape keyword để tránh SQL Injection
+        $keyword = mysqli_real_escape_string($this->conn, $keyword);
+        
         $sql = "SELECT x.*, x.hangxe AS tenhang, a.duongdan AS hinh_anh
                 FROM xe x 
                 LEFT JOIN (SELECT * FROM anhxe GROUP BY idxe) a ON x.idxe = a.idxe 
                 WHERE x.tenxe LIKE '%$keyword%' OR x.hangxe LIKE '%$keyword%'
                 ORDER BY x.idxe DESC";
-                
-        $result = mysqli_query($this->conn, $sql);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        // Trả về danh sách xe dạng object (giống getAllXe) thay vì associative array
+        return $this->fetchXeList($sql);
+    }
+
+    //check trangthai thue
+    public function checktrangthaithue($idxe){
+        $rs = mysqli_query($this->conn,"select * from hoadon where idxe=$idxe");
+        if(mysqli_num_rows($rs) > 0){
+            return true;
+        }
+        return false;
     }
 }
-?>

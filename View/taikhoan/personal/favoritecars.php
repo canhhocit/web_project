@@ -1,51 +1,70 @@
-<?php require_once __DIR__ . "/../../../config.php"; ?>
-
-<link rel="stylesheet" href="/web_project/View/CSS/personal/favorite-cars.css">
-<h1>Xem cái đéo gì</h1>
-<!-- <div class="page-title">
-    <h2>Xe yêu thích</h2>
-    <p>Danh sách xe bạn đã lưu để tham khảo</p>
-</div>
-
-<div class="info-box">
-    <i class="fa-solid fa-heart"></i>
-    <span>Những chiếc xe bạn yêu thích sẽ được lưu tại đây</span>
-</div> -->
-
-<!-- Empty state -->
-<!-- <div class="empty">
-    <i class="fa-solid fa-heart-crack"></i>
-    <h3>Chưa có xe yêu thích</h3>
-    <p>Hãy khám phá và lưu những chiếc xe bạn thích!</p>
-    <a href="/web_project/index.php" class="btn-explore">
-        <i class="fa-solid fa-search"></i> Khám phá xe ngay
-    </a>
-</div> -->
-
-<!-- Danh sách yêu thích - uncomment khi có dữ liệu -->
-<!--
-<div class="favorites-header">
-    <span class="favorites-count">Đã lưu: <strong>3</strong> xe</span>
-    <button class="btn-clear">
-        <i class="fa-solid fa-broom"></i> Xóa tất cả
-    </button>
-</div>
-
-<div class="favorites-list">
-    <div class="favorite-item">
-        <span class="heart-icon"><i class="fa-solid fa-heart"></i></span>
-        <img src="/web_project/View/image/car1.jpg" alt="Car">
-        <div class="favorite-info">
-            <h4>Honda City 2023</h4>
-            <p><i class="fa-solid fa-copyright"></i> Honda</p>
-            <p><i class="fa-solid fa-car"></i> Sedan</p>
-            <p><i class="fa-solid fa-location-dot"></i> Hà Nội</p>
-            <p class="favorite-price"><i class="fa-solid fa-tag"></i> 500,000đ/ngày</p>
-        </div>
-        <div class="favorite-actions">
-            <a href="#" class="btn-view"><i class="fa-solid fa-eye"></i> Xem</a>
-            <button class="btn-remove"><i class="fa-solid fa-heart-crack"></i> Bỏ thích</button>
-        </div>
+<?php if (empty($favotiteCars)): ?>
+    <div class="no-vehicle">
+        <i class="fa-solid fa-car"></i>
+        <h3>Bạn chưa ưng xe nào cả...</h3>
+        <a href="/web_project/index.php" class="btn-add-vehicle">
+            <i class="fa-solid fa-plus"></i> Lướt xem xe
+        </a>
     </div>
-</div>
--->
+<?php else: ?>
+    <link rel="stylesheet" href="/web_project/View/CSS/taikhoan/personal/myvehicle.css">
+
+    <div class="vehicle-list">
+        <?php foreach ($favotiteCars as $item): ?>
+            <?php
+            $xe = $item['xe'];
+            $images = $item['images'];
+            ?>
+            <div class="vehicle-card">
+                <div class="image-section">
+                    <?php if (!empty($images)): ?>
+                        <?php foreach ($images as $index => $image): ?>
+                            <img src="/web_project/View/image/<?php echo $image->get_duongdan(); ?>"
+                                alt="<?php echo $xe->get_tenxe(); ?>"
+                                class="vehicle-image <?php echo $index === 0 ? 'active' : ''; ?>"
+                                onerror="this.src='/web_project/View/image/placeholder.jpg'">
+                        <?php endforeach; ?>
+
+                        <?php if (count($images) > 1): ?>
+                            <button class="btn-prev" onclick="changeImage(this, -1)">‹</button>
+                            <button class="btn-next" onclick="changeImage(this, 1)">›</button>
+                            <div class="image-counter">1 / <?php echo count($images); ?></div>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <img src="/web_project/View/image/placeholder.jpg" alt="No image" class="vehicle-image active">
+                    <?php endif; ?>
+                </div>
+
+                <div class="vehicle-info">
+                    <h4><?php echo $xe->get_tenxe(); ?></h4>
+                    <p>
+                        <strong>Hãng:</strong> <?php echo $xe->get_hangxe(); ?><br>
+                        <strong>Loại:</strong> <?php echo $xe->get_loaixe(); ?><br>
+                        <strong>Giá thuê:</strong> <?php echo number_format($xe->get_giathue()); ?> VND/ngày
+                        <strong>Ngày đăng:</strong>
+                        <?php echo date('d/m/Y', strtotime($xe->get_ngaydang())); ?>
+                    </p>
+                    <small>
+                        <i class="fa-solid fa-images"></i>
+                        <?php echo count($images); ?> ảnh
+                    </small>
+                        
+                    <div class="btn_tim">
+                        <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $xe->get_idxe() ?>" 
+                            class="heart-btn"
+                            title="Bỏ yêu thích xe">
+                            <span class="heart-icon">
+                                <?php
+                                echo "❤️";
+                                 ?>
+                            </span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <script src="/web_project/View/JS/taikhoan/personal/myvehicle.js"></script>
+<?php endif; ?>

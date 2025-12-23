@@ -29,7 +29,7 @@ $selection = $_GET['selection'] ?? 'info';
                     <i class="fa-solid fa-key"></i>
                     <span>Đổi mật khẩu</span>
                 </a>
-                <a href="/web_project/index.php?controller=taikhoan&action=personal&selection=cars"
+                <a href="/web_project/index.php?controller=taikhoan&action=personal&selection=myvehicle"
                     class="menu-item <?php echo $selection === 'cars' ? 'active' : ''; ?>">
                     <i class="fa-solid fa-car"></i>
                     <span>Xe của tôi</span>
@@ -53,8 +53,8 @@ $selection = $_GET['selection'] ?? 'info';
                 case 'password':
                     include __DIR__ . "/personal/changepass.php";
                     break;
-                case 'cars':
-                    include __DIR__ . "/personal/mycars.php";
+                case 'myvehicle':
+                    include __DIR__ . "/personal/myvehicle.php";
                     break;
                 case 'favorite':
                     include __DIR__ . "/personal/favoritecars.php";

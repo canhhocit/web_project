@@ -1,28 +1,45 @@
 <?php 
 
    require_once "Model/DAO/vehicleDAO.php";
+   require_once __DIR__ . "/../Model/DAO/favoriteVehicleDAO.php";
    require_once "Model/Database/dbconnect.php";
    class CarController {
     private $vehicleDAO;
+    private $Fdao;
     public function __construct()
     {
+
         global $conn;
         $this->vehicleDAO = new vehicleDAO($conn);
+        $this->Fdao = new favoriteVehicleDAO($conn);
     }
 
     public function detail(){
         if(isset($_GET["id"])){
-            $id = $_GET['id'];
-            $xe = $this->vehicleDAO->getChiTietXe($id);
+
+            $idxe = $_GET['id'];
+            $xe = $this->vehicleDAO->getChiTietXe($idxe);
+            //canh: ktra tontai trong DB
+            $exists = false;
+            // Kiểm tra session trước khi truy cập
+            if(isset($_SESSION['idtaikhoan']) && $this->Fdao->checkExistsVehicle($_SESSION['idtaikhoan'], $idxe)){
+                $exists = true;
+            }
+            //het canh
+
             if ($xe){
+                $currentUserId = isset($_SESSION['idtaikhoan']) ? $_SESSION['idtaikhoan'] : 0;
+                $isOwner = ($currentUserId != 0 && $currentUserId == $xe['idchuxe']);
+
                 include "./View/Home/carDetail.php";
-            }else{
+            } else {
                 header("Location: index.php");
             }
         }
     }
-        public function mycars(){
-            echo "....";
-        }
+    
+    public function mycars(){
+         header("Location: index.php?controller=taikhoan&action=personal&selection=cars");
     }
+}
 ?>

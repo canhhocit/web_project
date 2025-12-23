@@ -13,31 +13,31 @@ formRegister.addEventListener("submit", function (e) {
     msg.innerHTML = "Vui lòng nhập đầy đủ thông tin!";
     return;
   }
-  if (username.length < 4) {
-    msg.innerHTML = "Username phải ít nhất 4 ký tự";
-    return;
-  }
+  // if (username.length < 4) {
+  //   msg.innerHTML = "Username phải ít nhất 4 ký tự";
+  //   return;
+  // }
 
-  if (password.length < 6) {
-    msg.innerHTML = "Password phải ít nhất 6 ký tự";
-    return;
-  }
-  if (password !== confpassword) {
-    msg.innerHTML = "Mật khẩu không khớp!";
-    return;
-  }
+  // if (password.length < 6) {
+  //   msg.innerHTML = "Password phải ít nhất 6 ký tự";
+  //   return;
+  // }
+  // if (password !== confpassword) {
+  //   msg.innerHTML = "Mật khẩu không khớp!";
+  //   return;
+  // }
+  formRegister.submit();
+  // btnRegister.disabled = true;
+  // btnBack.style.pointerEvents = "none"; //  link
+  // msg.style.color = " #fdfdfdff";
+  // let time = 10;
+  // const countdown = setInterval(() => {
+  //   msg.innerHTML = `<span class="spinner"></span> Đang xử lý, vui lòng chờ trong ${time}s...`;
 
-  btnRegister.disabled = true;
-  btnBack.style.pointerEvents = "none"; //  link
-  msg.style.color = " #fdfdfdff";
-  let time = 10;
-  const countdown = setInterval(() => {
-    msg.innerHTML = `<span class="spinner"></span> Đang xử lý, vui lòng chờ trong ${time}s...`;
-
-    if (time <= 0) {
-      clearInterval(countdown);
-      formRegister.submit();
-    }
-    time--;
-  }, 1000);
+  //   if (time <= 0) {
+  //     clearInterval(countdown);
+  //     formRegister.submit();
+  //   }
+  //   time--;
+  // }, 1000);
 });

@@ -23,3 +23,19 @@
     background-color: #08315e;
     border-color: #378ae2;
 }
+
+.ps-5 {
+    padding-left: 3rem !important;
+    background-color: #f8f9fa; 
+    font-size: 0.95em;
+}
+
+[aria-expanded="true"] .fa-chevron-down {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}
+
+#submenuTaiChinh {
+    transition: all 0.3s ease;
+}
+

@@ -14,6 +14,7 @@ function showModal(idhoadon) {
                 $('#tong_tien').val(parseFloat(res.tong_tien).toLocaleString('vi-VN'));
 
                 var myModal = new bootstrap.Modal(document.getElementById('modalTraXe'));
+              
                 myModal.show();
             } catch (e) {
                 alert("Lỗi xử lý dữ liệu từ server!");
