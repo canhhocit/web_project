@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
-<link rel="stylesheet" href="/View/CSS/nguyen_css_thueXe.css" />
+
+<link rel="stylesheet" href="../View/CSS/nguyen_css_thueXe.css" />
 <link rel="stylesheet" href="../View/CSS/nguyen_css_popupXacNhan.css" />
 
 <!-- Phần hiển thị chi tiết xe (giữ nguyên) -->
@@ -322,6 +322,7 @@ function openRentalModal(xeId) {
         if (e.target === modal) closeModal();
     };
     
+    initThueXeEvents();
     // Load dữ liệu
     loadProductData(xeId);
 }
@@ -364,5 +365,5 @@ function formatVND(number) {
 }
 </script>
 
-<script src="../View/JS/nguyen_js_thuexe.js"></script>
-<script src="../View/JS/nguyen_js_xacNhan.js"></script>
+<script src="../JS/nguyen_js_thuexe.js"></script>
+<script src="../JS/nguyen_js_xacNhan.js"></script>
