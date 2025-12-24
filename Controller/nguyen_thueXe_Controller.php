@@ -90,35 +90,47 @@ class nguyen_thueXe_Controller
                 ]);
                 exit;
             case 'layhoadon':
-                // cta cần lấy thoogn tin hóa đơn từ idhoadon nhập vào
-                // cả ảnh thông qua idxe
-                $hoadon = $this->layhoadon($data_post['idhoadon']);
-                $item = $hoadon[0];
-                $hoadon_arr = [];
 
-                    $hoadon_arr = [
-                        "idhoadon"     => $item->get_idhoadon(),
-                        "idtaikhoan"   => $item->get_idtaikhoan(),
-                        "idxe"         => $item->get_idxe(),
-                        "diemlay"      => $item->get_diemlay(),
-                        "diemtra"      => $item->get_diemtra(),
-                        "ngaymuon"     => $item->get_ngaymuon(),
-                        "ngaytra"      => $item->get_ngaytra(),
-                        "hoten"        => $item->get_hoten(),
-                        "email"        => $item->get_email(),
-                        "sdt"          => $item->get_sdt(),
-                        "cccd"         => $item->get_cccd(),
-                        "trangthai"    => $item->get_trangthai(),
-                        "ghichu"       => $item->get_ghichu(),
-                        "tongtien"     => $item->get_tongtien()
-                    ];
+                $item = $this->layhoadon($data_post['idhoadon']); 
+
+                if (!$item) {
+                    echo json_encode(["success" => false, "message" => "Không tìm thấy hóa đơn"]);
+                    exit;
+                }
+            
+                $hoadon_arr = [
+                    "idhoadon"   => $item->get_idhoadon(),
+                    "idtaikhoan" => $item->get_idtaikhoan(),
+                    "idxe"       => $item->get_idxe(),
+                    "diemlay"    => $item->get_diemlay(),
+                    "diemtra"    => $item->get_diemtra(),
+                    "ngaymuon"   => $item->get_ngaymuon(),
+                    "ngaytra"    => $item->get_ngaytra(),
+                    "hoten"      => $item->get_hoten(),
+                    "email"      => $item->get_email(),
+                    "sdt"        => $item->get_sdt(),
+                    "cccd"       => $item->get_cccd(),
+                    "trangthai"  => $item->get_trangthai(),
+                    "ghichu"     => $item->get_ghichu(),
+                    "tongtien"   => $item->get_tongtien()
+                ];
+
+                $anhxe = $this->layanhxe($item->get_idxe());
+                $item_anhxe = $anhxe[0];
+                $anhxe_arr = [];
+
+                $anhxe_arr = [
+                    "id"     => $item_anhxe->get_idanh(),
+                    "idxe"   => $item_anhxe->get_idxe(),
+                    "duongdan"   => "/web_project/View/image/" . $item_anhxe->get_duongdan() 
+                ];
 
                 $anhxe = $this->vehicle_dao->getAnhxebyIdxe($item->get_idxe());
 
                 echo json_encode([
                     "success" => true,
                     "hoadon" => $hoadon_arr,
-                    "anhxe" => $anhxe
+                    "anhxe" => $anhxe_arr
                 ]);
                 exit;
             case 'laythongtinnguoidung':
@@ -165,7 +177,7 @@ class nguyen_thueXe_Controller
         return $anhxe;
     }
 
-    function layhoadon(){
+    function layhoadonbyidtaikhoan(){
         $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0;
         if ($idtaikhoan <= 0) {
             http_response_code(400);
@@ -173,6 +185,11 @@ class nguyen_thueXe_Controller
             exit;
         }
         $hoadon = $this->hoadon_dao->gethoadonById($idtaikhoan);
+        return $hoadon;
+    }
+
+    function layhoadon($idhoadon){
+        $hoadon = $this->hoadon_dao->gethoadonById($idhoadon);
         return $hoadon;
     }
 
