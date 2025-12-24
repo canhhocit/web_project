@@ -12,22 +12,10 @@ function initThueXeEvents() {
         console.warn("❌ Không tìm thấy nút Thuê ngay");
         return;
     }
-
-    btnThue.onclick = () => {
-        if (!validateTerms() || !validateRequiredFields()) return;
-
-        if (!document.getElementById("container_xacnhanthanhtoan")) {
-            fetch("../components/nguyen_popup_xacNhan.html")
-                .then((res) => res.text())
-                .then((html) => {
-                    document.body.insertAdjacentHTML("beforeend", html);
-                    initModalXacNhan();
-                })
-                .catch(console.error);
-        } else {
-            openModalXacNhan();
-        }
-    };
+    btnThue.addEventListener("click", () => {
+        openModalXacNhan();
+    });
+    initModalXacNhan();
 }
 
 function initModalXacNhan() {
@@ -35,11 +23,15 @@ function initModalXacNhan() {
     const btnClose = document.getElementById("btnhuy_xacnhan");
     const btnConfirm = document.getElementById("btnxacnhan_xacnhan");
 
-    openModalXacNhan();
+    if (!modal || !btnClose || !btnConfirm) {
+        console.error("❌ Modal xác nhận thiếu element");
+        return;
+    }
 
     btnClose.onclick = closeModalXacNhan;
 
     btnConfirm.onclick = () => {
+        if (!validateTerms() || !validateRequiredFields()) return;
         const data = collectFormData();
 
         fetch("../../Controller/nguyen_thueXe_Controller.php", {
@@ -47,14 +39,13 @@ function initModalXacNhan() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 action: "taohoadon",
-                data, // khi key và value trùng tên thì chỉ thế thôi
+                data,
             }),
         })
             .then((res) => res.json())
             .then((result) => {
                 if (result.success) {
                     alert("✅ Thuê xe thành công!");
-
                     resetForm();
                     closeModalXacNhan();
                     closeModal();
@@ -62,10 +53,7 @@ function initModalXacNhan() {
                     alert("❌ Thuê xe thất bại!");
                 }
             })
-            .catch((err) => {
-                console.error(err);
-                alert("❌ Lỗi kết nối server!");
-            });
+            .catch(() => alert("❌ Lỗi kết nối server!"));
     };
 
     modal.onclick = (e) => {

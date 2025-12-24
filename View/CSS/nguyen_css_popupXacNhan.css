@@ -11,7 +11,7 @@
     opacity: 0;
     visibility: hidden;
     transition: 0.3s;
-    z-index: 999;
+    z-index: 9999999;
 }
 
 .container_xacnhanthanhtoan.active {
