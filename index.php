@@ -132,7 +132,7 @@ switch ($controller) {
 
                 include_once "View/xe/editVehicle.php";
             } else {
-                $vehicle->$action(); // Các action khác
+                $vehicle->$action(); 
             }
         } else {
             $vehicle->index();
