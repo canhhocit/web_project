@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
 <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
+=======
+<link rel="stylesheet" href="/View/CSS/nguyen_css_thueXe.css" />
+<link rel="stylesheet" href="../View/CSS/nguyen_css_popupXacNhan.css" />
+>>>>>>> Stashed changes
 
 <!-- Phần hiển thị chi tiết xe (giữ nguyên) -->
 <div class="container mt-4 mb-5">
@@ -113,11 +118,12 @@
 <div class="modal-overlay" id="modalOverlay">
     <div class="container_modalThuexe">
         <span id="closeModal" class="close-btn">&times;</span>
-        
         <div class="container_contentLeft_mdThuexe">
-            <h2 class="section-title" id="title_xe_thuexe">Thông tin xe</h2>
+            <h2 class="section-title" id="title_xe_thuexe">
+                Totoro my's neighborhood
+            </h2>
             <hr />
-            
+            <br /><br />
             <div class="location-section">
                 <h3 class="sub-title">Điểm lấy xe</h3>
                 <div class="form-row">
@@ -128,14 +134,17 @@
                             <option value="airport">Sân bay</option>
                             <option value="city">Trung tâm thành phố</option>
                         </select>
-                        <label for="pickup_thuexe">Nơi lấy xe</label>
+                        <label for="pickup">Nơi lấy xe</label>
                     </div>
                     <div class="input-group">
-                        <input type="date" id="pickup_date_thuexe" placeholder=" " />
+                        <input
+                            type="date"
+                            id="pickup_date_thuexe"
+                            placeholder=" "
+                        />
                         <label for="pickup_date_thuexe">Thời gian lấy xe</label>
                     </div>
                 </div>
-                
                 <h3 class="sub-title" style="margin-top: 20px">Điểm trả xe</h3>
                 <div class="form-row">
                     <div class="input-group">
@@ -145,15 +154,18 @@
                             <option value="airport">Sân bay</option>
                             <option value="city">Trung tâm thành phố</option>
                         </select>
-                        <label for="dropoff_thuexe">Nơi trả xe</label>
+                        <label for="dropoff">Nơi trả xe</label>
                     </div>
                     <div class="input-group">
-                        <input type="date" id="return_date_thuexe" placeholder=" " />
+                        <input
+                            type="date"
+                            id="return_date_thuexe"
+                            placeholder=" "
+                        />
                         <label for="return_date_thuexe">Thời gian trả xe</label>
                     </div>
                 </div>
             </div>
-            
             <div class="driver-details-section">
                 <div class="useinf_titleu">
                     <h3 class="sub-title">Thông tin người lái chính</h3>
@@ -162,85 +174,134 @@
                         <span>Sử dụng thông tin của tôi</span>
                     </label>
                 </div>
-                
                 <div class="input-group">
-                    <input type="text" id="fullname_modalThuexe" placeholder=" " autocomplete="off" />
-                    <label for="fullname_modalThuexe">Họ tên*</label>
+                    <input
+                        type="text"
+                        id="fullname_modalThuexe"
+                        class="input-field"
+                        placeholder=" "
+                        autocomplete="off"
+                    />
+                    <label for="fullname_modalThuexe">Full name*</label>
                 </div>
                 <div class="input-group">
-                    <input type="email" id="email_modalThuexe" placeholder=" " />
+                    <input type="text" id="email_modalThuexe" placeholder=" " />
                     <label for="email_modalThuexe">Email*</label>
                 </div>
                 <div class="input-group">
-                    <input type="tel" id="phone_modalThuexe" placeholder=" " autocomplete="tel" />
-                    <label for="phone_modalThuexe">Số điện thoại*</label>
+                    <input
+                        type="tel"
+                        id="phone_modalThuexe"
+                        placeholder=" "
+                        autocomplete="tel"
+                    />
+                    <label for="phone_modalThuexe">Contact phone number*</label>
                 </div>
                 <div class="input-group">
-                    <input type="text" id="cccd_modalThuexe" placeholder=" " autocomplete="off" />
-                    <label for="cccd_modalThuexe">CCCD*</label>
+                    <input
+                        type="text"
+                        id="cccd_modalThuexe"
+                        class="input-field"
+                        placeholder=" "
+                        autocomplete="off"
+                    />
+                    <label for="cccd_modalThuexe">Cccd*</label>
                 </div>
                 <div class="input-group" style="margin-top: 20px">
-                    <textarea id="note_modalThuexe" placeholder=" " rows="4"></textarea>
-                    <label for="note_modalThuexe">Ghi chú</label>
+                    <textarea
+                        id="note_modalThuexe"
+                        class="input-field"
+                        placeholder=" "
+                        rows="4"
+                    ></textarea>
+                    <label for="note_modalThuexe">Comment</label>
                 </div>
-                
                 <div class="terms-container">
                     <label class="custom-check-row">
                         <input type="checkbox" id="terms_thuexe" />
-                        <span>Tôi đồng ý <a href="#" class="link-highlight">Điều khoản sử dụng</a></span>
+                        <span class="checkmark"></span>
+                        <span
+                            >I accept
+                            <a href="#" class="link-highlight"
+                                >the Terms of use</a
+                            ></span
+                        >
                     </label>
                     <label class="custom-check-row">
                         <input type="checkbox" id="policy_thuexe" />
-                        <span>Tôi đã đọc <a href="#" class="link-highlight">Chính sách bảo mật</a></span>
+                        <span class="checkmark"></span>
+                        <span
+                            >I have read
+                            <a href="#" class="link-highlight"
+                                >the Privacy policy</a
+                            ></span
+                        >
                     </label>
+                    <div class="scroll-spacer"></div>
                 </div>
             </div>
         </div>
-        
         <div class="container_contentRight_mdThuexe">
             <div class="img_contentRight">
-                <img id="anhxe_thuexe" src="/web_project/View/image/placeholder.jpg" alt="Xe" />
+                <img
+                    id="anhxe_thuexe"
+                    src="../image/camera.png"
+                    alt="Car Image"
+                />
             </div>
-            
             <div class="sticky-wrapper">
                 <h3 class="sub-title">Thời gian</h3>
                 <div class="cost-row">
                     <span>Ngày thuê xe</span>
-                    <span id="rent_date_thuexe">--/--/----</span>
+                    <span id="rent_date_thuexe">dd/mm/yyyy</span>
                 </div>
                 <div class="cost-row">
                     <span>Ngày trả xe</span>
-                    <span id="unrent_date_thuexe">--/--/----</span>
+                    <span id="unrent_date_thuexe">dd/mm/yyyy</span>
                 </div>
                 <div class="cost-row">
                     <span>Số ngày thuê</span>
                     <span id="songaythue_thuexe">0</span>
                 </div>
-                
                 <div class="divider"></div>
-                
                 <h3 class="sub-title">Chi phí</h3>
                 <div class="cost-row">
                     <span>Giá thuê xe / ngày</span>
-                    <span id="price_thuexe">0đ</span>
+                    <span id="price_thuexe">200.000đ</span>
                 </div>
                 <div class="cost-row">
                     <span>Phí bảo trì</span>
-                    <span id="feeMaintain_thuexe">0đ</span>
+                    <span id="feeMaintain_thuexe">50.000đ</span>
                 </div>
                 <div class="cost-row">
                     <span>Phí bảo hiểm</span>
-                    <span id="feeBaoHiem_thuexe">0đ</span>
+                    <span id="feeBaoHiem_thuexe">50.000đ</span>
                 </div>
                 <div class="cost-row">
-                    <span style="color: red; font-weight: bold">Chi phí dự kiến</span>
-                    <span id="sumprice_thuexe" style="color: red; font-weight: bold">0đ</span>
+                    <span style="color: red; font-size: 16px; font-weight: bold"
+                        >Chi phí dự kiến</span
+                    >
+                    <span
+                        id="sumprice_thuexe"
+                        style="color: red; font-size: 16px; font-weight: bold"
+                        >300.000đ</span
+                    >
                 </div>
-                
                 <div class="btn_pay_container">
-                    <button id="btnthue_thuexe" type="button" class="btn-pay">Thuê ngay</button>
+                    <button id="btnthue_thuexe" type="button" class="btn-pay">
+                        Thuê ngay
+                    </button>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div id="container_xacnhanthanhtoan" class="container_xacnhanthanhtoan">
+    <div class="modal_xacnhanthanhtoan">
+        <h1 id="title_xacnhan">Xác nhận thanh toán với chủ thuê?</h1>
+        <div class="div_button_xacnhanthanhtoan">
+            <button id="btnhuy_xacnhan" type="button">Hủy</button>
+            <button id="btnxacnhan_xacnhan" type="button">Xác nhận</button>
         </div>
     </div>
 </div>
@@ -277,7 +338,7 @@ function closeModal() {
 
 // Load thông tin xe
 function loadProductData(xeId) {
-    fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
+    fetch("../../Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "openModal", id: xeId })
@@ -286,7 +347,8 @@ function loadProductData(xeId) {
     .then(data => {
         document.getElementById("title_xe_thuexe").innerText = data.xe.name + " - " + xeId;
         document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
-        document.getElementById("anhxe_thuexe").src = data.anhxe.duongdan;
+        document.getElementById("anhxe_thuexe").src = "../../image/camera.png";
+        //data.anhxe.duongdan;
         
         RENT_PRICE = data.xe.price;
         MAINTAIN_FEE = data.xe.type === "car" ? 100000 : 50000;
@@ -305,5 +367,5 @@ function formatVND(number) {
 }
 </script>
 
-<script src="/web_project/View/JS/nguyen_js_thuexe.js"></script>
-<script src="/web_project/View/JS/nguyen_js_xacNhan.js"></script>
+<script src="../View/JS/nguyen_js_thuexe.js"></script>
+<script src="../View/JS/nguyen_js_xacNhan.js"></script>

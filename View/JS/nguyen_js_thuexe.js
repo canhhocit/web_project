@@ -15,18 +15,7 @@ function initThueXeEvents() {
 
     btnThue.onclick = () => {
         if (!validateTerms() || !validateRequiredFields()) return;
-
-        if (!document.getElementById("container_xacnhanthanhtoan")) {
-            fetch("../components/nguyen_popup_xacNhan.html")
-                .then((res) => res.text())
-                .then((html) => {
-                    document.body.insertAdjacentHTML("beforeend", html);
-                    initModalXacNhan();
-                })
-                .catch(console.error);
-        } else {
-            openModalXacNhan();
-        }
+        openModalXacNhan(); // ✅ LUÔN MỞ
     };
 }
 
@@ -35,7 +24,10 @@ function initModalXacNhan() {
     const btnClose = document.getElementById("btnhuy_xacnhan");
     const btnConfirm = document.getElementById("btnxacnhan_xacnhan");
 
-    openModalXacNhan();
+    if (!modal || !btnClose || !btnConfirm) {
+        console.error("❌ Modal xác nhận thiếu element");
+        return;
+    }
 
     btnClose.onclick = closeModalXacNhan;
 
@@ -47,14 +39,13 @@ function initModalXacNhan() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 action: "taohoadon",
-                data, // khi key và value trùng tên thì chỉ thế thôi
+                data,
             }),
         })
             .then((res) => res.json())
             .then((result) => {
                 if (result.success) {
                     alert("✅ Thuê xe thành công!");
-
                     resetForm();
                     closeModalXacNhan();
                     closeModal();
@@ -62,10 +53,7 @@ function initModalXacNhan() {
                     alert("❌ Thuê xe thất bại!");
                 }
             })
-            .catch((err) => {
-                console.error(err);
-                alert("❌ Lỗi kết nối server!");
-            });
+            .catch(() => alert("❌ Lỗi kết nối server!"));
     };
 
     modal.onclick = (e) => {
@@ -216,3 +204,6 @@ function resetForm() {
     // 4. Reset biến global
     TOTAL_COST = 0;
 }
+document.addEventListener("DOMContentLoaded", () => {
+    initModalXacNhan();
+});
