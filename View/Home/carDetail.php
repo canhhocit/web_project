@@ -1,5 +1,6 @@
-        <link rel="stylesheet" href="../CSS/nguyen_css_thueXe.css" />
+<link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
 
+<!-- Phần hiển thị chi tiết xe (giữ nguyên) -->
 <div class="container mt-4 mb-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -43,15 +44,12 @@
                     <h2 class="text-primary fw-bold mb-1">
                         <?php echo $xe['tenxe']; ?>
                     </h2>
-                    <!-- Nút Yêu thích -->
                     <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" 
                         class="btn btn-outline-secondary rounded-circle p-2" title="Yêu thích xe">
                         <span style="font-size: 24px;">
                             <?php echo $exists ? "❤️" : "🤍" ?>
-
                         </span>
                     </a>
-
                 </div>
 
                 <p class="text-muted"><i class="fa-solid fa-tag"></i> Hãng: <?php echo $xe['tenhangxe']; ?></p>
@@ -110,127 +108,201 @@
         </div>
     </div>
 </div>
+
+<!-- ========== MODAL THUÊ XE (Tách riêng ở đây) ========== -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="container_modalThuexe">
+        <span id="closeModal" class="close-btn">&times;</span>
+        
+        <div class="container_contentLeft_mdThuexe">
+            <h2 class="section-title" id="title_xe_thuexe">Thông tin xe</h2>
+            <hr />
+            
+            <div class="location-section">
+                <h3 class="sub-title">Điểm lấy xe</h3>
+                <div class="form-row">
+                    <div class="input-group">
+                        <select id="pickup_thuexe" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="office">Văn phòng cho thuê</option>
+                            <option value="airport">Sân bay</option>
+                            <option value="city">Trung tâm thành phố</option>
+                        </select>
+                        <label for="pickup_thuexe">Nơi lấy xe</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="date" id="pickup_date_thuexe" placeholder=" " />
+                        <label for="pickup_date_thuexe">Thời gian lấy xe</label>
+                    </div>
+                </div>
+                
+                <h3 class="sub-title" style="margin-top: 20px">Điểm trả xe</h3>
+                <div class="form-row">
+                    <div class="input-group">
+                        <select id="dropoff_thuexe" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="office">Văn phòng cho thuê</option>
+                            <option value="airport">Sân bay</option>
+                            <option value="city">Trung tâm thành phố</option>
+                        </select>
+                        <label for="dropoff_thuexe">Nơi trả xe</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="date" id="return_date_thuexe" placeholder=" " />
+                        <label for="return_date_thuexe">Thời gian trả xe</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="driver-details-section">
+                <div class="useinf_titleu">
+                    <h3 class="sub-title">Thông tin người lái chính</h3>
+                    <label for="useinforable" class="custom-check-row">
+                        <input type="checkbox" id="useinforable" />
+                        <span>Sử dụng thông tin của tôi</span>
+                    </label>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="fullname_modalThuexe" placeholder=" " autocomplete="off" />
+                    <label for="fullname_modalThuexe">Họ tên*</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email_modalThuexe" placeholder=" " />
+                    <label for="email_modalThuexe">Email*</label>
+                </div>
+                <div class="input-group">
+                    <input type="tel" id="phone_modalThuexe" placeholder=" " autocomplete="tel" />
+                    <label for="phone_modalThuexe">Số điện thoại*</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="cccd_modalThuexe" placeholder=" " autocomplete="off" />
+                    <label for="cccd_modalThuexe">CCCD*</label>
+                </div>
+                <div class="input-group" style="margin-top: 20px">
+                    <textarea id="note_modalThuexe" placeholder=" " rows="4"></textarea>
+                    <label for="note_modalThuexe">Ghi chú</label>
+                </div>
+                
+                <div class="terms-container">
+                    <label class="custom-check-row">
+                        <input type="checkbox" id="terms_thuexe" />
+                        <span>Tôi đồng ý <a href="#" class="link-highlight">Điều khoản sử dụng</a></span>
+                    </label>
+                    <label class="custom-check-row">
+                        <input type="checkbox" id="policy_thuexe" />
+                        <span>Tôi đã đọc <a href="#" class="link-highlight">Chính sách bảo mật</a></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container_contentRight_mdThuexe">
+            <div class="img_contentRight">
+                <img id="anhxe_thuexe" src="/web_project/View/image/placeholder.jpg" alt="Xe" />
+            </div>
+            
+            <div class="sticky-wrapper">
+                <h3 class="sub-title">Thời gian</h3>
+                <div class="cost-row">
+                    <span>Ngày thuê xe</span>
+                    <span id="rent_date_thuexe">--/--/----</span>
+                </div>
+                <div class="cost-row">
+                    <span>Ngày trả xe</span>
+                    <span id="unrent_date_thuexe">--/--/----</span>
+                </div>
+                <div class="cost-row">
+                    <span>Số ngày thuê</span>
+                    <span id="songaythue_thuexe">0</span>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <h3 class="sub-title">Chi phí</h3>
+                <div class="cost-row">
+                    <span>Giá thuê xe / ngày</span>
+                    <span id="price_thuexe">0đ</span>
+                </div>
+                <div class="cost-row">
+                    <span>Phí bảo trì</span>
+                    <span id="feeMaintain_thuexe">0đ</span>
+                </div>
+                <div class="cost-row">
+                    <span>Phí bảo hiểm</span>
+                    <span id="feeBaoHiem_thuexe">0đ</span>
+                </div>
+                <div class="cost-row">
+                    <span style="color: red; font-weight: bold">Chi phí dự kiến</span>
+                    <span id="sumprice_thuexe" style="color: red; font-weight: bold">0đ</span>
+                </div>
+                
+                <div class="btn_pay_container">
+                    <button id="btnthue_thuexe" type="button" class="btn-pay">Thuê ngay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-    var RENT_PRICE = 0;
-    var MAINTAIN_FEE = 0;
-    var INSURANCE_FEE = 0;
-    var TOTAL_COST = 0;
+var RENT_PRICE = 0;
+var MAINTAIN_FEE = 0;
+var INSURANCE_FEE = 0;
+var TOTAL_COST = 0;
 
-    // --- 2. HÀM MỞ MODAL (Hứng sự kiện onclick từ HTML) ---
-    function openRentalModal(xeId) {
-        // Kiểm tra xem modal đã có trong trang chưa
-        const modalElement = document.getElementById("modalOverlay");
+function openRentalModal(xeId) {
+    const modal = document.getElementById("modalOverlay");
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
 
-        if (!modalElement) {
-            // Chưa có -> Tải file HTML về
-            // LƯU Ý: Sửa đường dẫn 'View/nguyen_modal_thueXe.html' cho đúng thư mục của bạn
-            fetch("../../components/nguyen_modal_thueXe.html") 
-                .then((res) => {
-                    if (!res.ok) throw new Error("Không tải được modal HTML");
-                    return res.text();
-                })
-                .then((html) => {
-                    document.body.insertAdjacentHTML("beforeend", html);
-                    
-                    // Setup logic ban đầu
-                    initModal(xeId);
+    modal.dataset.xeId = xeId; // ⭐ rất quan trọng
 
-                    // Gọi các hàm khởi tạo từ file JS ngoài (nếu có)
-                    // Ví dụ: logic chọn lịch, tính ngày...
-                    if (typeof initThueXeEvents === "function") {
-                        requestAnimationFrame(() => {
-                            initThueXeEvents();
-                        });
-                    }
-                })
-                .catch(err => console.error(err));
-        } else {
-            // Đã có -> Mở lên và cập nhật ID
-            modalElement.dataset.xeId = xeId; 
-            initModal(xeId);
-        }
-    }
-    function initModal(xeId) {
-                const modal = document.getElementById("modalOverlay");
-                const btnClose = document.getElementById("closeModal");
+    document.getElementById("closeModal").onclick = closeModal;
+    modal.onclick = (e) => {
+        if (e.target === modal) closeModal();
+    };
 
-                modal.dataset.xeId = xeId;
-                openModal(xeId);
-                btnClose.onclick = () => closeModal();
-                // btnClose.addEventListener("click", () => {
-                //     closeModal();
-                // });
+    initThueXeEvents(); // ✅ gọi ở đây
+    loadProductData(xeId);
+}
 
-                // modal.click = (e) => {
-                //     if (e.target === modal) closeModal();
-                // };
-                modal.addEventListener("click", (e) => {
-                    if (e.target === modal) closeModal();
-                });
-            }
 
-            function openModal(xeId) {
-                const modal = document.getElementById("modalOverlay");
+function closeModal() {
+    const modal = document.getElementById("modalOverlay");
+    modal.classList.remove("active");
+    document.body.style.overflow = "auto";
+}
+// Load thông tin xe
+function loadProductData(xeId) {
+    fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "openModal", id: xeId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("title_xe_thuexe").innerText = data.xe.name + " - " + xeId;
+        document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
+        document.getElementById("anhxe_thuexe").src = data.anhxe.duongdan;
+        
+        RENT_PRICE = data.xe.price;
+        MAINTAIN_FEE = data.xe.type === "car" ? 100000 : 50000;
+        INSURANCE_FEE = data.xe.type === "car" ? 100000 : 50000;
+        TOTAL_COST = RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
+        
+        document.getElementById("feeBaoHiem_thuexe").innerText = formatVND(INSURANCE_FEE);
+        document.getElementById("feeMaintain_thuexe").innerText = formatVND(MAINTAIN_FEE);
+        document.getElementById("sumprice_thuexe").innerText = formatVND(TOTAL_COST);
+    })
+    .catch(err => console.error("Lỗi:", err));
+}
 
-                modal.classList.add("active");
-                document.body.style.overflow = "hidden"; // chặn cuộn trang chính
-
-                loadProductData(xeId);
-            }
-            function closeModal() {
-                const modal = document.getElementById("modalOverlay");
-                modal.classList.remove("active");
-                document.body.style.overflow = "auto";
-            }
-            function loadProductData(xeId) {
-                fetch("../../Controller/nguyen_thueXe_Controller.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        action: "openModal",
-                        id: xeId,
-                    }),
-                })
-                    .then((res) => {
-                        if (!res.ok) throw new Error("HTTP " + res.status);
-                        return res.json();
-                    })
-                    .then((data) => {
-                        // console.log("DATA:", data);
-                        document.getElementById("title_xe_thuexe").innerText =
-                            data.xe.name + " - " + xeId;
-                        // console.log("Ảnh xe:", data.anhxe.duongdan);
-
-                        document.getElementById("price_thuexe").innerText =
-                            formatVND(data.xe.price);
-                        document.getElementById("anhxe_thuexe").src =
-                            data.anhxe.duongdan;
-
-                        RENT_PRICE = data.xe.price;
-
-                        if (data.xe.type === "car") {
-                            MAINTAIN_FEE = 100000;
-                            INSURANCE_FEE = 100000;
-                        } else {
-                            MAINTAIN_FEE = 50000;
-                            INSURANCE_FEE = 50000;
-                        }
-                        TOTAL_COST = RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
-                        document.getElementById("feeBaoHiem_thuexe").innerText =
-                            formatVND(INSURANCE_FEE);
-                        document.getElementById(
-                            "feeMaintain_thuexe"
-                        ).innerText = formatVND(MAINTAIN_FEE);
-                        document.getElementById("sumprice_thuexe").innerText =
-                            formatVND(TOTAL_COST);
-                    })
-                    .catch((err) => console.error("Fetch lỗi:", err));
-            }
-            function formatVND(number) {
-                return number.toLocaleString("vi-VN") + " đ";
-            }
+function formatVND(number) {
+    return number.toLocaleString("vi-VN") + " đ";
+}
 </script>
-        <script src="../JS/nguyen_js_thuexe.js"></script>
-        <script src="../JS/nguyen_js_xacNhan.js"></script>
+
+<script src="/web_project/View/JS/nguyen_js_thuexe.js"></script>
+<script src="/web_project/View/JS/nguyen_js_xacNhan.js"></script>
