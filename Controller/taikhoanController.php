@@ -129,7 +129,7 @@ class taikhoanController
                 exit;
             }
 
-            $anhdaidien = "default-avt.png";
+            $anhdaidien = "default-avt.jpg";
 
             $thongtinCu = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
             if ($thongtinCu && $thongtinCu->get_anhdaidien() != "") {
@@ -139,7 +139,7 @@ class taikhoanController
 
             if (isset($_FILES['anhdaidien']) && $_FILES['anhdaidien']['error'] === UPLOAD_ERR_OK) {
                 //xoa anh cu tru mac dinh
-                if ($anhdaidien != "default-avatar.png") {
+                if ($anhdaidien != "default-avt.jpg") {
                     $oldImagePath = __DIR__ . "/../View/image/" . $anhdaidien;
                     if (file_exists($oldImagePath)) {
                         unlink($oldImagePath);
@@ -241,6 +241,12 @@ class taikhoanController
     public function favoriteVehicle()
     {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
+            if (!isset($_SESSION['idtaikhoan'])) {
+                echo "<script>alert('Vui lòng đăng nhập!'); 
+                window.location='/web_project/View/taikhoan/login.php';</script>";
+                exit;
+            }
+            
             if (!isset($_GET['id'])) {
                 echo "<script>alert('Không lấy được idxe ồi!'); 
                 history.back();</script>";
@@ -249,7 +255,6 @@ class taikhoanController
 
             $idtaikhoan = $_SESSION['idtaikhoan'];
             $idxe = $_GET['id'];
-            $option = $_GET['option'];
 
             if ($this->Fdao->checkExistsVehicle($idtaikhoan, $idxe)) {
                 if ($this->Fdao->delFavorite($idtaikhoan, $idxe)) {

@@ -17,19 +17,17 @@
         echo '</div>';
         echo '</div>';
     } else {
-        global $conn;
-        $vDAO = new vehicleDAO($conn);
-
         foreach ($listCar as $car) {
             $idxe = $car->get_idxe();
             $tenxe = $car->get_tenxe();
             $hangxe = $car->get_hangxe();
             $loaixe = $car->get_loaixe();
             $giathue = number_format($car->get_giathue(), 0, ',', '.');
-            $listAnh = $vDAO->getAnhxebyIdxe($idxe);
+            
+            // Lấy ảnh từ mảng đã chuẩn bị sẵn (tối ưu hơn)
             $hinhAnh = 'https://via.placeholder.com/300x200?text=No+Image';
-            if (!empty($listAnh)) {
-                $hinhAnh = 'View/image/' . $listAnh[0]->get_duongdan();
+            if (isset($listCarImages[$idxe]) && !empty($listCarImages[$idxe])) {
+                $hinhAnh = 'View/image/' . $listCarImages[$idxe][0]->get_duongdan();
             }
     ?>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">

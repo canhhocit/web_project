@@ -42,7 +42,7 @@
                         <?php echo $xe['tenxe']; ?>
                     </h2>
                     <!-- Nút Yêu thích -->
-                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>" 
+                    <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $idxe ?>"
                         class="btn btn-outline-secondary rounded-circle p-2" title="Yêu thích xe">
                         <span style="font-size: 24px;">
                             <?php echo $exists ? "❤️" : "🤍" ?>
@@ -79,11 +79,18 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                    <?php if (isset($isOwner) && $isOwner): ?>
+                    <?php if (!isset($_SESSION['idtaikhoan'])): ?>
+                        <!-- Chưa đăng nhập -->
+                        <a href="index.php?controller=taikhoan&action=login" class="btn btn-warning btn-lg fw-bold">
+                            <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập để thuê xe
+                        </a>
+                    <?php elseif (isset($isOwner) && $isOwner): ?>
+                        <!-- Xe của chính mình -->
                         <button class="btn btn-secondary btn-lg fw-bold" disabled style="cursor: not-allowed;">
                             <i class="fa-solid fa-user-check"></i> Đây là xe của bạn
                         </button>
                     <?php else: ?>
+                        <!-- Đã đăng nhập và không phải xe của mình -->
                         <button onclick="openRentalModal(<?php echo $xe['idxe']; ?>)" class="btn btn-primary btn-lg fw-bold">
                             <i class="fa-regular fa-calendar-check"></i> Thuê Xe Ngay
                         </button>
