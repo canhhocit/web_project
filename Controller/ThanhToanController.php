@@ -14,7 +14,7 @@ class ThanhToanController {
         $idtaikhoan = $_SESSION['idtaikhoan'];
 
         $hoadon = $this->model->getHoaDonChuaThanhToan();
-        require_once 'View/thanhtoan/quanly.php';
+        include_once 'View/thanhtoan/quanly.php';
     }
 
     public function xacNhanTraXe() {

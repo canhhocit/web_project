@@ -151,15 +151,6 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
 
                                 <li><hr class="dropdown-divider"></li>
 
-                                <!-- Đổi mật khẩu -->
-                                <li>
-                                    <a class="dropdown-item" href="index.php?controller=taikhoan&action=changePassword">
-                                        <i class="fa-solid fa-key me-2"></i> Đổi mật khẩu
-                                    </a>
-                                </li>
-
-                                <li><hr class="dropdown-divider"></li>
-
                                 <!-- Đăng xuất -->
                                 <li>
                                     <a class="dropdown-item text-danger" href="index.php?controller=taikhoan&action=logout">
