@@ -131,15 +131,17 @@
                 })
                 .then((html) => {
                     document.body.insertAdjacentHTML("beforeend", html);
-                    const modal = document.getElementById("modalOverlay");
-                    document.body.appendChild(modal);
-                    requestAnimationFrame(() => {
-                        initModal(xeId);
                     
-                        if (typeof initThueXeEvents === "function") {
+                    // Setup logic ban đầu
+                    initModal(xeId);
+
+                    // Gọi các hàm khởi tạo từ file JS ngoài (nếu có)
+                    // Ví dụ: logic chọn lịch, tính ngày...
+                    if (typeof initThueXeEvents === "function") {
+                        requestAnimationFrame(() => {
                             initThueXeEvents();
-                        }
-                    });
+                        });
+                    }
                 })
                 .catch(err => console.error(err));
         } else {
