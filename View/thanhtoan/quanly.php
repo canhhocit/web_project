@@ -142,9 +142,14 @@ $jsonData = json_encode($data_from_db);
                 return;
             }
             if(tabIndex === 1){
-                renderTab1(1);
+                if (typeof renderTab1 === "function") {
+                    renderTab1(1); 
+                } else {
+                    console.error("Chưa load được file nguyen_quanly.js");
+                }
                 return;
             }
+            
             data[tabIndex].forEach((item) => {
                         content.innerHTML += `
                         <div class="row">

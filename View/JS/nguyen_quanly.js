@@ -1,6 +1,5 @@
-//Hàm entry point được gọi từ switchTab(tabIndex)
 async function renderTab1(tabIndex) {
-    if (tabIndex !== 1 && tabIndex !== 2) return;
+    if (tabIndex !== 1) return;
 
     const content = document.getElementById("content");
     content.innerHTML =
@@ -9,75 +8,74 @@ async function renderTab1(tabIndex) {
     try {
         const list = await fetchDataTab(tabIndex);
 
-        console.log(list.success);
+        if (list.status === "error") {
+            content.innerHTML = `<div style='color:red;text-align:center'>${list.message}</div>`;
+            return;
+        }
 
         renderList(list, tabIndex);
     } catch (err) {
         console.error(err);
         content.innerHTML =
-            "<div style='padding:20px;text-align:center;color:red'>Lỗi tải dữ liệu</div>";
+            "<div style='color:red;text-align:center'>Lỗi kết nối server</div>";
     }
 }
 
-// Hàm fetch dữ liệu từ server cho tab
 async function fetchDataTab(tabIndex) {
-    const response = await fetch("/Controller/nguyen_quanly_Controller.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            tab: tabIndex,
-        }),
-    });
+    const response = await fetch(
+        "/web_project/Controller/nguyen_quanly_Controller.php",
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tab: tabIndex }),
+        }
+    );
     return await response.json();
 }
 
-// Hàm render danh sách item
 function renderList(list, tabIndex) {
     const content = document.getElementById("content");
     content.innerHTML = "";
 
     if (!Array.isArray(list) || list.length === 0) {
         content.innerHTML =
-            "<div style='padding:20px;text-align:center'>Không có dữ liệu</div>";
+            "<div style='padding:20px;text-align:center'>Bạn chưa thuê xe nào.</div>";
         return;
     }
 
     list.forEach((item) => {
-        content.insertAdjacentHTML("beforeend", renderRow(item, tabIndex));
+        content.insertAdjacentHTML("beforeend", renderRow(item));
     });
 }
 
-// Hàm render một dòng item
-function renderRow(item, tabIndex) {
+function renderRow(item) {
     return `
     <div class="row" data-idhoadon="${item.idhoadon}">
         <div class="image">
             <img 
                 src="${item.image}" 
                 alt="${item.name}" 
-                onerror="this.src='/View/image/car_default.png'">
+                onerror="this.onerror=null; this.src='/web_project/View/image/none_image.png'" 
+                style="width:120px; height:80px; object-fit:cover; border-radius:5px;"
+            >
         </div>
 
         <div class="info">
-            <div class="name">${item.name} (HĐ: ${item.idhoadon})</div>
-            <div class="price">${item.price}</div>
-            <span class="status ${item.statusClass}">${item.status}</span>
+            <div class="name" style="font-weight:bold">${item.name}</div>
+            <div class="sub-info" style="font-size:0.9em; color:#666">Mã HĐ: ${item.idhoadon}</div>
+            <div class="price" style="color:red; font-weight:bold">${item.price}</div>
+            <span class="status ${item.statusClass}" style="padding: 2px 8px; border-radius:10px; font-size:0.8em; background:#fff3cd; color:#856404">${item.status}</span>
         </div>
+        
         <div class="actions">
-            <button class="btn-view">Xem</button>
-            ${
-                tabIndex === 1
-                    ? `<button class="btn-return">Trả xe</button>`
-                    : ""
-            }
+            <button class="btn-view" style="margin-right:5px">Chi tiết</button>
+            
+            <button class="btn-return">Trả xe</button> 
         </div>
     </div>
     `;
 }
 
-// Xử lý sự kiện click trong vùng #content
-// document.getElementById("content").addEventListener("click", (e) => {
-// });
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("content").addEventListener("click", (e) => {
         const row = e.target.closest(".row");
@@ -101,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function xemChiTietHoaDon(idhoadon) {
     console.log("Xem chi tiết hoá đơn:", idhoadon);
 
-    fetch("/Controller/nguyen_thuexe_Controller.php", {
+    fetch("/web_project/Controller/nguyen_thuexe_Controller.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -156,7 +154,7 @@ function closeModal() {
     document.body.style.overflow = "auto";
 }
 function loadProductData(xeId) {
-    fetch("/Controller/nguyen_thueXe_Controller.php", {
+    fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
