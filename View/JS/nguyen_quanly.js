@@ -55,7 +55,7 @@ function renderRow(item, tabIndex) {
             <img 
                 src="${item.image}" 
                 alt="${item.name}" 
-                onerror="this.src='View/image/car_default.png'">
+                onerror="this.src='/View/image/car_default.png'">
         </div>
 
         <div class="info">

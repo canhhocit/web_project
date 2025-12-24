@@ -1,6 +1,6 @@
 
-<link rel="stylesheet" href="../View/CSS/nguyen_css_thueXe.css" />
-<link rel="stylesheet" href="../View/CSS/nguyen_css_popupXacNhan.css" />
+<link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
+<link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_popupXacNhan.css" />
 
 <!-- Phần hiển thị chi tiết xe (giữ nguyên) -->
 <div class="container mt-4 mb-5">
@@ -309,6 +309,7 @@ var RENT_PRICE = 0;
 var MAINTAIN_FEE = 0;
 var INSURANCE_FEE = 0;
 var TOTAL_COST = 0;
+var CURENTUSERID = 0;
 
 // Mở modal
 function openRentalModal(xeId) {
@@ -335,7 +336,7 @@ function closeModal() {
 
 // Load thông tin xe
 function loadProductData(xeId) {
-    fetch("../../Controller/nguyen_thueXe_Controller.php", {
+    fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "openModal", id: xeId })
@@ -344,8 +345,9 @@ function loadProductData(xeId) {
     .then(data => {
         document.getElementById("title_xe_thuexe").innerText = data.xe.name + " - " + xeId;
         document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
-        document.getElementById("anhxe_thuexe").src = "/View/image/" + data.anhxe.duongdan;
-        
+        document.getElementById("anhxe_thuexe").src = "/web_project/View/image/" + data.anhxe.duongdan;
+        CURENTUSERID = data.curentUserID;
+
         RENT_PRICE = data.xe.price;
         MAINTAIN_FEE = data.xe.type === "car" ? 100000 : 50000;
         INSURANCE_FEE = data.xe.type === "car" ? 100000 : 50000;
@@ -363,7 +365,7 @@ function formatVND(number) {
 }
 </script>
 
-<script src="/View/JS/nguyen_js_thuexe.js"></script>
+<script src="/web_project/View/JS/nguyen_js_thuexe.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         initThueXeEvents();

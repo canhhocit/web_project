@@ -2,7 +2,7 @@ function initThueXeEvents() {
     const btnThue = document.getElementById("btnthue_thuexe");
     const pickup = document.getElementById("pickup_date_thuexe");
     const ret = document.getElementById("return_date_thuexe");
-
+    console.log(CURENTUSERID);
     if (pickup && ret) {
         pickup.addEventListener("change", calculateRent);
         ret.addEventListener("change", calculateRent);
@@ -34,7 +34,7 @@ function initModalXacNhan() {
         if (!validateTerms() || !validateRequiredFields()) return;
         const data = collectFormData();
 
-        fetch("../../Controller/nguyen_thueXe_Controller.php", {
+        fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -44,6 +44,7 @@ function initModalXacNhan() {
         })
             .then((res) => res.json())
             .then((result) => {
+                console.log("✅ Kết quả cuối cùng:", result); // In kết quả đã xử lý
                 if (result.success) {
                     alert("✅ Thuê xe thành công!");
                     resetForm();
@@ -111,6 +112,7 @@ function canRent() {
 
 function collectFormData() {
     return {
+        // idtaikhoan: CURENTUSERID, // nữa phải thay cái này
         idtaikhoan: 3, // nữa phải thay cái này
         idxe: document.getElementById("modalOverlay").dataset.xeId,
 

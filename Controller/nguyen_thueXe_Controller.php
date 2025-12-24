@@ -30,6 +30,7 @@ class nguyen_thueXe_Controller
             case 'openModal':
                 $xe = $this->layxe($data_post['id'] ?? 0);
                 $xe_arr = [];
+                $curentUserID = isset($_SESSION['idtaikhoan']) ? $_SESSION['idtaikhoan'] : 0;
 
                 $anhxe = $this->layanhxe($data_post['id'] ?? 0);
                 $anhxe_arr = [];
@@ -56,12 +57,13 @@ class nguyen_thueXe_Controller
                 echo json_encode([
                     "status" => "success",
                     "xe" => $xe_arr[0], // chỉ 1 mà thôi
-                    "anhxe" => $anhxe_arr[0]
+                    "anhxe" => $anhxe_arr[0],
+                    "curentUserID" => $curentUserID
                 ]);
                 exit;
             case 'taohoadon': 
                 $data = $data_post['data'] ?? [];
-
+                
                 $hoadon = new nguyen_hoadon(
                     null,
                     $data['idtaikhoan'] ?? 0,
