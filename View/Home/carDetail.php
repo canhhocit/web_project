@@ -1,3 +1,5 @@
+        <link rel="stylesheet" href="../CSS/nguyen_css_thueXe.css" />
+
 <div class="container mt-4 mb-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -115,3 +117,125 @@
         </div>
     </div>
 </div>
+<script>
+    var RENT_PRICE = 0;
+    var MAINTAIN_FEE = 0;
+    var INSURANCE_FEE = 0;
+    var TOTAL_COST = 0;
+
+    // --- 2. HÀM MỞ MODAL (Hứng sự kiện onclick từ HTML) ---
+    function openRentalModal(xeId) {
+        // Kiểm tra xem modal đã có trong trang chưa
+        const modalElement = document.getElementById("modalOverlay");
+
+        if (!modalElement) {
+            // Chưa có -> Tải file HTML về
+            // LƯU Ý: Sửa đường dẫn 'View/nguyen_modal_thueXe.html' cho đúng thư mục của bạn
+            fetch("../../components/nguyen_modal_thueXe.html") 
+                .then((res) => {
+                    if (!res.ok) throw new Error("Không tải được modal HTML");
+                    return res.text();
+                })
+                .then((html) => {
+                    document.body.insertAdjacentHTML("beforeend", html);
+                    const modal = document.getElementById("modalOverlay");
+                    document.body.appendChild(modal);
+                    requestAnimationFrame(() => {
+                        initModal(xeId);
+                    
+                        if (typeof initThueXeEvents === "function") {
+                            initThueXeEvents();
+                        }
+                    });
+                })
+                .catch(err => console.error(err));
+        } else {
+            // Đã có -> Mở lên và cập nhật ID
+            modalElement.dataset.xeId = xeId; 
+            initModal(xeId);
+        }
+    }
+    function initModal(xeId) {
+                const modal = document.getElementById("modalOverlay");
+                const btnClose = document.getElementById("closeModal");
+
+                modal.dataset.xeId = xeId;
+                openModal(xeId);
+                btnClose.onclick = () => closeModal();
+                // btnClose.addEventListener("click", () => {
+                //     closeModal();
+                // });
+
+                // modal.click = (e) => {
+                //     if (e.target === modal) closeModal();
+                // };
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) closeModal();
+                });
+            }
+
+            function openModal(xeId) {
+                const modal = document.getElementById("modalOverlay");
+
+                modal.classList.add("active");
+                document.body.style.overflow = "hidden"; // chặn cuộn trang chính
+
+                loadProductData(xeId);
+            }
+            function closeModal() {
+                const modal = document.getElementById("modalOverlay");
+                modal.classList.remove("active");
+                document.body.style.overflow = "auto";
+            }
+            function loadProductData(xeId) {
+                fetch("../../Controller/nguyen_thueXe_Controller.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        action: "openModal",
+                        id: xeId,
+                    }),
+                })
+                    .then((res) => {
+                        if (!res.ok) throw new Error("HTTP " + res.status);
+                        return res.json();
+                    })
+                    .then((data) => {
+                        // console.log("DATA:", data);
+                        document.getElementById("title_xe_thuexe").innerText =
+                            data.xe.name + " - " + xeId;
+                        // console.log("Ảnh xe:", data.anhxe.duongdan);
+
+                        document.getElementById("price_thuexe").innerText =
+                            formatVND(data.xe.price);
+                        document.getElementById("anhxe_thuexe").src =
+                            data.anhxe.duongdan;
+
+                        RENT_PRICE = data.xe.price;
+
+                        if (data.xe.type === "car") {
+                            MAINTAIN_FEE = 100000;
+                            INSURANCE_FEE = 100000;
+                        } else {
+                            MAINTAIN_FEE = 50000;
+                            INSURANCE_FEE = 50000;
+                        }
+                        TOTAL_COST = RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
+                        document.getElementById("feeBaoHiem_thuexe").innerText =
+                            formatVND(INSURANCE_FEE);
+                        document.getElementById(
+                            "feeMaintain_thuexe"
+                        ).innerText = formatVND(MAINTAIN_FEE);
+                        document.getElementById("sumprice_thuexe").innerText =
+                            formatVND(TOTAL_COST);
+                    })
+                    .catch((err) => console.error("Fetch lỗi:", err));
+            }
+            function formatVND(number) {
+                return number.toLocaleString("vi-VN") + " đ";
+            }
+</script>
+        <script src="../JS/nguyen_js_thuexe.js"></script>
+        <script src="../JS/nguyen_js_xacNhan.js"></script>
