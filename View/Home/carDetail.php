@@ -1,9 +1,6 @@
-<<<<<<< Updated upstream
 <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
-=======
 <link rel="stylesheet" href="/View/CSS/nguyen_css_thueXe.css" />
 <link rel="stylesheet" href="../View/CSS/nguyen_css_popupXacNhan.css" />
->>>>>>> Stashed changes
 
 <!-- Phần hiển thị chi tiết xe (giữ nguyên) -->
 <div class="container mt-4 mb-5">
