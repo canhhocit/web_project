@@ -10,7 +10,7 @@ class ThanhToanController {
 
     public function index() {
         $hoadon = $this->model->getHoaDonChuaThanhToan();
-        require_once 'View/thanhtoan/quanly.php';
+        include_once 'View/thanhtoan/quanly.php';
     }
 
     public function xacNhanTraXe() {
