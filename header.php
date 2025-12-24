@@ -22,6 +22,22 @@ if (isset($_SESSION['idtaikhoan'])) {
     }
 }
 
+$is_chuxe = false; 
+if (isset($_SESSION['idtaikhoan'])) {
+    require_once __DIR__ . "/Model/DAO/taikhoanDAO.php";
+    global $conn;
+    $dao = new taikhoanDAO($conn);
+    
+    $sql_role = "SELECT lachuxe FROM taikhoan WHERE idtaikhoan = " . $_SESSION['idtaikhoan'];
+    $res_role = mysqli_query($conn, $sql_role);
+    if ($row_role = mysqli_fetch_assoc($res_role)) {
+        if ($row_role['lachuxe'] == 1) {
+            $is_chuxe = true;
+        }
+    }
+}
+
+
 $current_controller = $_GET['controller'] ?? 'home';
 $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller === 'thongke');
 
@@ -39,7 +55,6 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="View/CSS/modal.css">
 </head>
 
 <body>
@@ -115,11 +130,15 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
                                                     <i class="fa-solid fa-file-invoice-dollar me-2"></i> Hóa đơn / Lịch sử
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a class="dropdown-item ps-5" href="index.php?controller=thongke&action=index">
-                                                    <i class="fa-solid fa-chart-line me-2"></i> Thống kê
-                                                </a>
-                                            </li>
+                                          
+                                            <?php if ($is_chuxe): ?>
+                                                <li>
+                                                    <a class="dropdown-item ps-5" href="index.php?controller=thongke&action=index"> 
+                                                    <i class="fa-solid fa-chart-line me-2"></i> Thống kê 
+                                                    </a>
+                                                </li>
+                                                <?php endif; ?>
+
                                             <li>
                                                 <a class="dropdown-item ps-5" href="index.php?controller=lichsutt&action=index">
                                                     <i class="fa-solid fa-clock-rotate-left me-2"></i> Lịch sử giao dịch

@@ -3,12 +3,16 @@ require_once 'Model/hd_tk/hoadonModel.php';
 
 class ThanhToanController {
     private $model;
+    private $db;
 
     public function __construct($db) {
+        $this->db = $db;
         $this->model = new HoaDonModel($db);
     }
 
     public function index() {
+        $idtaikhoan = $_SESSION['idtaikhoan'];
+
         $hoadon = $this->model->getHoaDonChuaThanhToan();
         require_once 'View/thanhtoan/quanly.php';
     }
