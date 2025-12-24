@@ -315,15 +315,14 @@ function openRentalModal(xeId) {
     const modal = document.getElementById("modalOverlay");
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
-    
-    // Bind sự kiện đóng
+    console.log("Xe ID:", xeId);
+    modal.dataset.xeId = xeId;
+
     document.getElementById("closeModal").onclick = closeModal;
     modal.onclick = function(e) {
         if (e.target === modal) closeModal();
     };
-    
-    initThueXeEvents();
-    // Load dữ liệu
+
     loadProductData(xeId);
 }
 
@@ -345,7 +344,7 @@ function loadProductData(xeId) {
     .then(data => {
         document.getElementById("title_xe_thuexe").innerText = data.xe.name + " - " + xeId;
         document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
-        document.getElementById("anhxe_thuexe").src = "../../image/camera.png";
+        document.getElementById("anhxe_thuexe").src = "../View/image/camera.png";
         //data.anhxe.duongdan;
         
         RENT_PRICE = data.xe.price;
@@ -365,5 +364,9 @@ function formatVND(number) {
 }
 </script>
 
-<script src="../JS/nguyen_js_thuexe.js"></script>
-<script src="../JS/nguyen_js_xacNhan.js"></script>
+<script src="../View/JS/nguyen_js_thuexe.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        initThueXeEvents();
+    });
+</script>

@@ -12,11 +12,10 @@ function initThueXeEvents() {
         console.warn("❌ Không tìm thấy nút Thuê ngay");
         return;
     }
-
-    btnThue.onclick = () => {
-        if (!validateTerms() || !validateRequiredFields()) return;
-        openModalXacNhan(); // ✅ LUÔN MỞ
-    };
+    btnThue.addEventListener("click", () => {
+        openModalXacNhan();
+    });
+    initModalXacNhan();
 }
 
 function initModalXacNhan() {
@@ -32,6 +31,7 @@ function initModalXacNhan() {
     btnClose.onclick = closeModalXacNhan;
 
     btnConfirm.onclick = () => {
+        if (!validateTerms() || !validateRequiredFields()) return;
         const data = collectFormData();
 
         fetch("../../Controller/nguyen_thueXe_Controller.php", {
@@ -204,6 +204,3 @@ function resetForm() {
     // 4. Reset biến global
     TOTAL_COST = 0;
 }
-document.addEventListener("DOMContentLoaded", () => {
-    initModalXacNhan();
-});
