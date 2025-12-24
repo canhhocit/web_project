@@ -2,6 +2,16 @@ function initThueXeEvents() {
     const btnThue = document.getElementById("btnthue_thuexe");
     const pickup = document.getElementById("pickup_date_thuexe");
     const ret = document.getElementById("return_date_thuexe");
+    const chk = document.getElementById("useinforable");
+
+    chk.addEventListener("change", function () {
+        if (this.checked) {
+            fillUserInfo();
+        } else {
+            clearUserInfo();
+        }
+    });
+
     console.log(CURENTUSERID);
     if (pickup && ret) {
         pickup.addEventListener("change", calculateRent);
@@ -205,4 +215,27 @@ function resetForm() {
 
     // 4. Reset biến global
     TOTAL_COST = 0;
+}
+
+function fillUserInfo() {
+    if (!window.CURRENT_USER_INFO) return;
+
+    document.getElementById("input_name").value =
+        window.CURRENT_USER_INFO.name || "";
+
+    document.getElementById("input_phone").value =
+        window.CURRENT_USER_INFO.phone || "";
+
+    document.getElementById("input_cccd").value =
+        window.CURRENT_USER_INFO.cccd || "";
+
+    document.getElementById("input_address").value =
+        window.CURRENT_USER_INFO.address || "";
+}
+
+function clearUserInfo() {
+    document.getElementById("input_name").value = "";
+    document.getElementById("input_phone").value = "";
+    document.getElementById("input_cccd").value = "";
+    document.getElementById("input_address").value = "";
 }

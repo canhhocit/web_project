@@ -346,7 +346,9 @@ function loadProductData(xeId) {
         document.getElementById("title_xe_thuexe").innerText = data.xe.name + " - " + xeId;
         document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
         document.getElementById("anhxe_thuexe").src = "/web_project/View/image/" + data.anhxe.duongdan;
-        CURENTUSERID = data.curentUserID;
+
+        CURENTUSERID = data.curentUserID;//tìm cách lấy id uuser
+        window.CURRENT_USER_INFO = data.user; 
 
         RENT_PRICE = data.xe.price;
         MAINTAIN_FEE = data.xe.type === "car" ? 100000 : 50000;
