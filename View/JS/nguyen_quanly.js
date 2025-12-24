@@ -1,5 +1,5 @@
 //Hàm entry point được gọi từ switchTab(tabIndex)
-async function renderTab1And2(tabIndex) {
+async function renderTab1(tabIndex) {
     if (tabIndex !== 1 && tabIndex !== 2) return;
 
     const content = document.getElementById("content");
@@ -8,6 +8,9 @@ async function renderTab1And2(tabIndex) {
 
     try {
         const list = await fetchDataTab(tabIndex);
+
+        console.log(list.success);
+
         renderList(list, tabIndex);
     } catch (err) {
         console.error(err);
@@ -18,14 +21,13 @@ async function renderTab1And2(tabIndex) {
 
 // Hàm fetch dữ liệu từ server cho tab
 async function fetchDataTab(tabIndex) {
-    const response = await fetch(
-        "Controller/nguyen_quanly_Controller.php",
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ tab: tabIndex }),
-        }
-    );
+    const response = await fetch("/Controller/nguyen_quanly_Controller.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            tab: tabIndex,
+        }),
+    });
     return await response.json();
 }
 
@@ -49,12 +51,13 @@ function renderList(list, tabIndex) {
 function renderRow(item, tabIndex) {
     return `
     <div class="row" data-idhoadon="${item.idhoadon}">
-        <div class="image"     
+        <div class="image">
             <img 
                 src="${item.image}" 
                 alt="${item.name}" 
-                onerror="this.src='../assets/no-image.png'">
+                onerror="this.src='View/image/car_default.png'">
         </div>
+
         <div class="info">
             <div class="name">${item.name} (HĐ: ${item.idhoadon})</div>
             <div class="price">${item.price}</div>
@@ -73,29 +76,32 @@ function renderRow(item, tabIndex) {
 }
 
 // Xử lý sự kiện click trong vùng #content
-document.getElementById("content").addEventListener("click", (e) => {
-    const row = e.target.closest(".row");
-    if (!row) return;
+// document.getElementById("content").addEventListener("click", (e) => {
+// });
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("content").addEventListener("click", (e) => {
+        const row = e.target.closest(".row");
+        if (!row) return;
 
-    const idhoadon = row.dataset.idhoadon;
+        const idhoadon = row.dataset.idhoadon;
 
-    // Trả xe
-    if (e.target.classList.contains("btn-return")) {
-        showModal(idhoadon); // từ thanhtoan.js
-        return;
-    }
+        // Trả xe
+        if (e.target.classList.contains("btn-return")) {
+            showModal(idhoadon); // từ thanhtoan.js
+            return;
+        }
 
-    // Xem chi tiết
-    if (e.target.classList.contains("btn-view")) {
-        xemChiTietHoaDon(idhoadon);
-    }
+        // Xem chi tiết
+        if (e.target.classList.contains("btn-view")) {
+            xemChiTietHoaDon(idhoadon);
+        }
+    });
 });
-
 // Hàm xem chi tiết hoá đơn
 function xemChiTietHoaDon(idhoadon) {
     console.log("Xem chi tiết hoá đơn:", idhoadon);
 
-    fetch("Controller/nguyen_thuexe_Controller.php", {
+    fetch("/Controller/nguyen_thuexe_Controller.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -150,7 +156,7 @@ function closeModal() {
     document.body.style.overflow = "auto";
 }
 function loadProductData(xeId) {
-    fetch("Controller/nguyen_thueXe_Controller.php", {
+    fetch("/Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

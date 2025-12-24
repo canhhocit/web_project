@@ -344,8 +344,7 @@ function loadProductData(xeId) {
     .then(data => {
         document.getElementById("title_xe_thuexe").innerText = data.xe.name + " - " + xeId;
         document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
-        document.getElementById("anhxe_thuexe").src = "../View/image/camera.png";
-        //data.anhxe.duongdan;
+        document.getElementById("anhxe_thuexe").src = "/View/image/" + data.anhxe.duongdan;
         
         RENT_PRICE = data.xe.price;
         MAINTAIN_FEE = data.xe.type === "car" ? 100000 : 50000;
@@ -364,7 +363,7 @@ function formatVND(number) {
 }
 </script>
 
-<script src="../View/JS/nguyen_js_thuexe.js"></script>
+<script src="/View/JS/nguyen_js_thuexe.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         initThueXeEvents();

@@ -123,7 +123,8 @@ $jsonData = json_encode($data_from_db);
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <script src="View/JS/nguyen_quanly.js"></script>
-    <script src="View/JS/thanhtoan.js"></script> <script>
+    <script src="View/JS/thanhtoan.js"></script> 
+    <script>
         // Đổ dữ liệu thật từ PHP vào biến JS
         const data = <?php echo $jsonData; ?>;
 
@@ -140,7 +141,10 @@ $jsonData = json_encode($data_from_db);
                 content.innerHTML = "<div class='text-center p-4'>Bạn không có lịch sử giao dịch nào ở mục này.</div>";
                 return;
             }
-
+            if(tabIndex === 1){
+                renderTab1(1);
+                return;
+            }
             data[tabIndex].forEach((item) => {
                         content.innerHTML += `
                         <div class="row">
