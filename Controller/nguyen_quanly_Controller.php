@@ -36,7 +36,7 @@ if ($tab === 2) {
     $sql = "SELECT hd.idhoadon, x.tenxe, x.giathue
             FROM hoadon hd
             JOIN xe x ON hd.idxe = x.idxe
-            WHERE x.idchuxe = $idtaikhoan AND hd.trangthai = 0";
+            WHERE x.idchuxe = $idtaikhoan AND hd.trangthai = 1";
 }
 
 if (isset($sql)) {

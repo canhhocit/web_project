@@ -1,16 +1,15 @@
 <?php
 global $conn; 
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// if (session_status() === PHP_SESSION_NONE) {
+//     session_start();
+// }
 
-$idtaikhoan = $_SESSION['idtaikhoan'] ?? 3; 
+$idtaikhoan = $_SESSION['idtaikhoan']; 
 
 $data_from_db = [
     1 => [], // Đang thuê
-    2 => [], // Cho thuê
-    3 => []  // Đã thuê
+    2 => []  // Đã thuê
 ];
 
 if ($conn) {
@@ -31,30 +30,13 @@ if ($conn) {
     }
 
 
-    $sql2 = "SELECT hd.idhoadon, x.tenxe, x.giathue 
-            FROM hoadon hd 
-            JOIN xe x ON hd.idxe = x.idxe 
-            WHERE x.idchuxe = $idtaikhoan AND hd.trangthai = 0"; 
-
-    $res2 = mysqli_query($conn, $sql2);
-    while ($row = mysqli_fetch_assoc($res2)) {
-        $data_from_db[2][] = [
-            "idhoadon" => $row['idhoadon'],
-            "name" => $row['tenxe'],
-            "price" => number_format($row['giathue'], 0, ',', '.') . "đ / ngày",
-            "status" => "Khách đang thuê",
-            "statusClass" => "yellow",
-            "showReturn" => false 
-        ];
-    }
-
-    $sql3 = "SELECT hd.idhoadon, x.tenxe, hd.tongtien 
+    $sql2 = "SELECT hd.idhoadon, x.tenxe, hd.tongtien 
             FROM hoadon hd 
             JOIN xe x ON hd.idxe = x.idxe 
             WHERE hd.idtaikhoan = $idtaikhoan AND hd.trangthai = 1";
-    $res3 = mysqli_query($conn, $sql3);
-    while ($res3 && $row = mysqli_fetch_assoc($res3)) {
-        $data_from_db[3][] = [
+    $res2 = mysqli_query($conn, $sql2);
+    while ($res2 && $row = mysqli_fetch_assoc($res2)) {
+        $data_from_db[2][] = [
             "idhoadon" => $row['idhoadon'],
             "name" => $row['tenxe'],
             "price" => "Tổng: " . number_format($row['tongtien'], 0, ',', '.') . "đ",
@@ -74,6 +56,8 @@ $jsonData = json_encode($data_from_db);
 <head>
     <meta charset="UTF-8" />
     <title>Quản lý thuê xe</title>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="View/CSS/nguyen_css_quanly.css" />
     <link rel="stylesheet" href="View/CSS/thanhtoan.css" />
@@ -85,8 +69,7 @@ $jsonData = json_encode($data_from_db);
         <div class="container_table_quanly">
             <div class="tabs">
                 <div class="tab active" onclick="switchTab(1)">Đang thuê</div>
-                <div class="tab" onclick="switchTab(2)">Cho thuê</div>
-                <div class="tab" onclick="switchTab(3)">Đã thuê</div>
+                <div class="tab" onclick="switchTab(2)">Đã thuê</div>
             </div>
             <div class="content_container_quanly">
                 <div class="content" id="content"></div>
@@ -145,41 +128,39 @@ $jsonData = json_encode($data_from_db);
         const data = <?php echo $jsonData; ?>;
 
         function switchTab(tabIndex) {
-            document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        // UI Tabs
+            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
             const tabs = document.querySelectorAll(".tab");
             if(tabs[tabIndex-1]) tabs[tabIndex-1].classList.add("active");
 
-            if (tabIndex === 1 || tabIndex === 2) {
-                renderTab1And2(tabIndex);
-                return;
-            }
-            
             const content = document.getElementById("content");
             content.innerHTML = "";
 
             if (!data[tabIndex] || data[tabIndex].length === 0) {
-                content.innerHTML = "<div style='text-align:center; padding:20px;'>Không có dữ liệu hiển thị.</div>";
+                content.innerHTML = "<div class='text-center p-4'>Bạn không có lịch sử giao dịch nào ở mục này.</div>";
                 return;
             }
 
             data[tabIndex].forEach((item) => {
-                content.innerHTML += `
-                <div class="row">
-                    <div class="image">Ảnh xe</div>
-                    <div class="info">
-                        <div class="name">${item.name} (Mã HĐ: ${item.idhoadon})</div>
-                        <div class="price">${item.price}</div>
-                        <span class="status ${item.statusClass}">${item.status}</span>
-                    </div>
-                    <div class="actions">
-                        <button class="btn-view">Xem chi tiết</button>
-                        ${item.showReturn ? 
-                            `<button class="btn-return" onclick="showModal(${item.idhoadon})">Trả xe</button>` : ''}
-                    </div>
-                </div>`;
-            });
-        }
-        switchTab(1);
+                        content.innerHTML += `
+                        <div class="row">
+                            <div class="image">
+                                <img src="View/image/car_default.png" style="width:100px"> 
+                            </div>
+                            <div class="info">
+                                <div class="name">${item.name} (Mã HĐ: ${item.idhoadon})</div>
+                                <div class="price">${item.price}</div>
+                                <span class="status ${item.statusClass}">${item.status}</span>
+                            </div>
+                            <div class="actions">
+                                <button class="btn-view">Chi tiết</button>
+                                ${item.showReturn ? `<button class="btn-return" onclick="showModal(${item.idhoadon})">Trả xe</button>` : ''}
+                            </div>
+                        </div>`;
+                    });
+                }
+
+    window.onload = () => switchTab(1);
     </script>
 </body>
 </html>
