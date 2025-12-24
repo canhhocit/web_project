@@ -252,28 +252,29 @@ var MAINTAIN_FEE = 0;
 var INSURANCE_FEE = 0;
 var TOTAL_COST = 0;
 
+// Mở modal
 function openRentalModal(xeId) {
     const modal = document.getElementById("modalOverlay");
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
-
-    modal.dataset.xeId = xeId; // ⭐ rất quan trọng
-
+    
+    // Bind sự kiện đóng
     document.getElementById("closeModal").onclick = closeModal;
-    modal.onclick = (e) => {
+    modal.onclick = function(e) {
         if (e.target === modal) closeModal();
     };
-
-    initThueXeEvents(); // ✅ gọi ở đây
+    
+    // Load dữ liệu
     loadProductData(xeId);
 }
 
-
+// Đóng modal
 function closeModal() {
     const modal = document.getElementById("modalOverlay");
     modal.classList.remove("active");
     document.body.style.overflow = "auto";
 }
+
 // Load thông tin xe
 function loadProductData(xeId) {
     fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
