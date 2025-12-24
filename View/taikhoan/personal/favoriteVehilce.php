@@ -50,7 +50,7 @@
                     </small>
                         
                     <div class="btn_tim">
-                        <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $xe->get_idxe() ?>" 
+                        <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $xe->get_idxe() ?>&option=1" 
                             class="heart-btn"
                             title="Bỏ yêu thích xe">
                             <span class="heart-icon">
