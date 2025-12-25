@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Mock giao diện thuê sản phẩm</title>
-        <link rel="stylesheet" href="../CSS/nguyen_css_thueXe.css" />
+        <link rel="stylesheet" href="../View/CSS/nguyen_css_thueXe.css" />
         <style>
             .product {
                 position: absolute;
@@ -90,7 +90,7 @@
                 document.body.style.overflow = "auto";
             }
             function loadProductData(xeId) {
-                fetch("../../Controller/nguyen_thueXe_Controller.php", {
+                fetch("../Controller/nguyen_thueXe_Controller.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -139,7 +139,7 @@
                 return number.toLocaleString("vi-VN") + " đ";
             }
         </script>
-        <script src="../JS/nguyen_js_thuexe.js"></script>
-        <script src="../JS/nguyen_js_xacNhan.js"></script>
+        <script src="../View/JS/nguyen_js_thuexe.js"></script>
+        <script src="../View/JS/nguyen_js_xacNhan.js"></script>
     </body>
 </html>
