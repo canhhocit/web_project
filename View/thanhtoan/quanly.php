@@ -59,7 +59,8 @@ $jsonData = json_encode($data_from_db);
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="View/CSS/nguyen_css_quanly.css" />
+    <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_quanly.css" />
+    <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
     <link rel="stylesheet" href="View/CSS/thanhtoan.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -122,8 +123,9 @@ $jsonData = json_encode($data_from_db);
     </div>
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
-    <script src="View/JS/nguyen_quanly.js"></script>
-    <script src="View/JS/thanhtoan.js"></script> <script>
+    <script src="/web_project/View/JS/nguyen_quanly.js"></script>
+    <script src="View/JS/thanhtoan.js"></script> 
+    <script>
         // Đổ dữ liệu thật từ PHP vào biến JS
         const data = <?php echo $jsonData; ?>;
 
@@ -140,7 +142,15 @@ $jsonData = json_encode($data_from_db);
                 content.innerHTML = "<div class='text-center p-4'>Bạn không có lịch sử giao dịch nào ở mục này.</div>";
                 return;
             }
-
+            if(tabIndex === 1){
+                if (typeof renderTab1 === "function") {
+                    renderTab1(1); 
+                } else {
+                    console.error("Chưa load được file nguyen_quanly.js");
+                }
+                return;
+            }
+            
             data[tabIndex].forEach((item) => {
                         content.innerHTML += `
                         <div class="row">

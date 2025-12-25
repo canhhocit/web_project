@@ -101,7 +101,7 @@ class nguyen_hoadonDAO {
     $tongtien   = $hd->get_tongtien();
 
     $stmt->bind_param(
-        "iissssssssisd",
+        "iissssssssisi",
         $idtaikhoan,
         $idxe,
         $diemlay,

@@ -2,7 +2,17 @@ function initThueXeEvents() {
     const btnThue = document.getElementById("btnthue_thuexe");
     const pickup = document.getElementById("pickup_date_thuexe");
     const ret = document.getElementById("return_date_thuexe");
+    const chk = document.getElementById("useinforable");
 
+    chk.addEventListener("change", function () {
+        if (this.checked) {
+            fillUserInfo();
+        } else {
+            clearUserInfo();
+        }
+    });
+
+    console.log(CURENTUSERID);
     if (pickup && ret) {
         pickup.addEventListener("change", calculateRent);
         ret.addEventListener("change", calculateRent);
@@ -12,22 +22,10 @@ function initThueXeEvents() {
         console.warn("❌ Không tìm thấy nút Thuê ngay");
         return;
     }
-
-    btnThue.onclick = () => {
-        if (!validateTerms() || !validateRequiredFields()) return;
-
-        if (!document.getElementById("container_xacnhanthanhtoan")) {
-            fetch("../components/nguyen_popup_xacNhan.html")
-                .then((res) => res.text())
-                .then((html) => {
-                    document.body.insertAdjacentHTML("beforeend", html);
-                    initModalXacNhan();
-                })
-                .catch(console.error);
-        } else {
-            openModalXacNhan();
-        }
-    };
+    btnThue.addEventListener("click", () => {
+        openModalXacNhan();
+    });
+    initModalXacNhan();
 }
 
 function initModalXacNhan() {
@@ -35,26 +33,30 @@ function initModalXacNhan() {
     const btnClose = document.getElementById("btnhuy_xacnhan");
     const btnConfirm = document.getElementById("btnxacnhan_xacnhan");
 
-    openModalXacNhan();
+    if (!modal || !btnClose || !btnConfirm) {
+        console.error("❌ Modal xác nhận thiếu element");
+        return;
+    }
 
     btnClose.onclick = closeModalXacNhan;
 
     btnConfirm.onclick = () => {
+        if (!validateTerms() || !validateRequiredFields()) return;
         const data = collectFormData();
 
-        fetch("../../Controller/nguyen_thueXe_Controller.php", {
+        fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 action: "taohoadon",
-                data, // khi key và value trùng tên thì chỉ thế thôi
+                data,
             }),
         })
             .then((res) => res.json())
             .then((result) => {
+                console.log("✅ Kết quả cuối cùng:", result); // In kết quả đã xử lý
                 if (result.success) {
                     alert("✅ Thuê xe thành công!");
-
                     resetForm();
                     closeModalXacNhan();
                     closeModal();
@@ -62,10 +64,7 @@ function initModalXacNhan() {
                     alert("❌ Thuê xe thất bại!");
                 }
             })
-            .catch((err) => {
-                console.error(err);
-                alert("❌ Lỗi kết nối server!");
-            });
+            .catch(() => alert("❌ Lỗi kết nối server!"));
     };
 
     modal.onclick = (e) => {
@@ -123,7 +122,8 @@ function canRent() {
 
 function collectFormData() {
     return {
-        idtaikhoan: 3, // nữa phải thay cái này
+        idtaikhoan: CURENTUSERID, // nữa phải thay cái này
+        // idtaikhoan: 3, // nữa phải thay cái này
         idxe: document.getElementById("modalOverlay").dataset.xeId,
 
         diemlay: document.getElementById("pickup_thuexe").value,
@@ -215,4 +215,27 @@ function resetForm() {
 
     // 4. Reset biến global
     TOTAL_COST = 0;
+}
+
+function fillUserInfo() {
+    if (!window.CURRENT_USER_INFO) return;
+
+    document.getElementById("input_name").value =
+        window.CURRENT_USER_INFO.name || "";
+
+    document.getElementById("input_phone").value =
+        window.CURRENT_USER_INFO.phone || "";
+
+    document.getElementById("input_cccd").value =
+        window.CURRENT_USER_INFO.cccd || "";
+
+    document.getElementById("input_address").value =
+        window.CURRENT_USER_INFO.address || "";
+}
+
+function clearUserInfo() {
+    document.getElementById("input_name").value = "";
+    document.getElementById("input_phone").value = "";
+    document.getElementById("input_cccd").value = "";
+    document.getElementById("input_address").value = "";
 }
