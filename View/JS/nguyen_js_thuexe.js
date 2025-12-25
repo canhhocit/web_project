@@ -122,8 +122,8 @@ function canRent() {
 
 function collectFormData() {
     return {
-        // idtaikhoan: CURENTUSERID, // nữa phải thay cái này
-        idtaikhoan: 3, // nữa phải thay cái này
+        idtaikhoan: CURENTUSERID, // nữa phải thay cái này
+        // idtaikhoan: 3, // nữa phải thay cái này
         idxe: document.getElementById("modalOverlay").dataset.xeId,
 
         diemlay: document.getElementById("pickup_thuexe").value,

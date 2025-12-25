@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 header('Content-Type: application/json; charset=utf-8');
 $raw = file_get_contents("php://input");
