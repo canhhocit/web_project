@@ -57,7 +57,7 @@ $selection = $_GET['selection'] ?? 'info';
                     include __DIR__ . "/personal/myvehicle.php";
                     break;
                 case 'favorite':
-                    include __DIR__ . "/personal/favoritecars.php";
+                    include __DIR__ . "/personal/favoriteVehilce.php";
                     break;
                 default:
                     include __DIR__ . "/personal/info.php";

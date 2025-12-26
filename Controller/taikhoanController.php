@@ -258,24 +258,34 @@ class taikhoanController
 
             if ($this->Fdao->checkExistsVehicle($idtaikhoan, $idxe)) {
                 if ($this->Fdao->delFavorite($idtaikhoan, $idxe)) {
+                    echo "<script> alert('Đã xóa khỏi yêu thích!');</script>";
+                    if (isset($_GET['option'])) {//link ben favorite
+                        echo "<script>
+                    window.location='/web_project/index.php?controller=taikhoan&action=personal&selection=favorite';
+                    </script>";
+                    }
                     echo "<script>
-                    alert('Đã xóa khỏi yêu thích!');
-                    history.back();
+                    window.location='/web_project/index.php?controller=car&action=detail&id=$idxe';
                     </script>";
                 } else {
                     echo "<script>alert('Lỗi delF!'); 
-                history.back();;</script>";
+                history.back();</script>";
                     exit;
                 }
             } else {
                 if ($this->Fdao->addFavorite($idtaikhoan, $idxe)) {
+                    echo " <script>alert('Đã thêm vào yêu thích!'); </script>";
+                    if (isset($_GET['option'])) {
+                        echo "<script>
+                    window.location='/web_project/index.php?controller=taikhoan&action=personal&selection=favorite';
+                    </script>";
+                    }
                     echo "<script>
-                    alert('Đã thêm vào mục yêu thích!');
-                     history.back();
+                    window.location='/web_project/index.php?controller=car&action=detail&id=$idxe';
                     </script>";
                 } else {
                     echo "<script>alert('Lỗi addF!'); 
-                history.back();;</script>";
+                history.back();</script>";
                     exit;
                 }
             }
@@ -293,7 +303,7 @@ class taikhoanController
         $idtaikhoan = $_SESSION['idtaikhoan'];
         $thongtin = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
 
-        //  selection = cars
+        //  selection = myvehicle
         $xeWithImages = [];
         if (isset($_GET['selection']) && $_GET['selection'] === 'myvehicle') {
             $danhsachxe = $this->Vdao->getXebyIdChuxe($idtaikhoan);
