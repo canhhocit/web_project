@@ -2,11 +2,11 @@
 require_once "Model/Database/dbconnect.php";
 require_once "Model/DAO/ThanhVienDAO.php";
 
-class AboutController {
+class AboutController {         
     private $dao;
 
     public function __construct() {
-        global $conn;
+        global $conn;               
         $this->dao = new ThanhVienDAO($conn);
     }
 
