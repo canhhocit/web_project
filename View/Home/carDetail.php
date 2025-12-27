@@ -293,12 +293,14 @@
         </div>
     </div>
 </div>
-<div id="container_xacnhanthanhtoan" class="container_xacnhanthanhtoan">
-    <div class="modal_xacnhanthanhtoan">
-        <h1 id="title_xacnhan">Xác nhận thanh toán với chủ thuê?</h1>
-        <div class="div_button_xacnhanthanhtoan">
-            <button id="btnhuy_xacnhan" type="button">Hủy</button>
-            <button id="btnxacnhan_xacnhan" type="button">Xác nhận</button>
+<div class="main_container">
+    <div id="container_xacnhanthanhtoan" class="container_xacnhanthanhtoan">
+        <div class="modal_xacnhanthanhtoan">
+            <h1 id="title_xacnhan">Xác nhận thanh toán với chủ thuê?</h1>
+            <div class="div_button_xacnhanthanhtoan">
+                <button id="btnhuy_xacnhan" type="button">Hủy</button>
+                <button id="btnxacnhan_xacnhan" type="button">Xác nhận</button>
+            </div>
         </div>
     </div>
 </div>
@@ -310,23 +312,43 @@ var MAINTAIN_FEE = 0;
 var INSURANCE_FEE = 0;
 var TOTAL_COST = 0;
 var CURENTUSERID = 0;
-
+var INFORUSER;
 // Mở modal
-function openRentalModal(xeId) {
+async function openRentalModal(xeId) {
+    const isRented = await checkVehicleRented(xeId);
+    if(isRented) {
+        const btnClose = document.getElementById("btnhuy_xacnhan");
+        const btnConfirm = document.getElementById("btnxacnhan_xacnhan");
+        const modal_xacnhan = document.getElementById("container_xacnhanthanhtoan");
+        document.getElementById("title_xacnhan").innerText =
+        "Xe này đã thuê, có muốn thuê tiếp?";
+        document.getElementById("btnxacnhan_xacnhan").innerText = "Thuê tiếp";
+        modal_xacnhan.classList.add("active");
+        btnClose.onclick = () => {
+            modal_xacnhan.classList.remove("active");
+            return;
+        };
+
+        btnConfirm.onclick = () => {
+            modal_xacnhan.classList.remove("active");
+            init(xeId);
+        };
+    } else {
+        init(xeId);
+    }
+}
+function init(xeId){
     const modal = document.getElementById("modalOverlay");
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
     console.log("Xe ID:", xeId);
-    modal.dataset.xeId = xeId;
-
+    modal.dataset.xeId = xeId
     document.getElementById("closeModal").onclick = closeModal;
     modal.onclick = function(e) {
         if (e.target === modal) closeModal();
-    };
-
+    }
     loadProductData(xeId);
 }
-
 // Đóng modal
 function closeModal() {
     const modal = document.getElementById("modalOverlay");
@@ -348,7 +370,9 @@ function loadProductData(xeId) {
         document.getElementById("anhxe_thuexe").src = "/web_project/View/image/" + data.anhxe.duongdan;
 
         CURENTUSERID = data.curentUserID;//tìm cách lấy id uuser
-        window.CURRENT_USER_INFO = data.user; 
+        console.log("Thông tin người dùng:" ,  data.infouser);    
+        INFORUSER = data.infouser;
+        // window.CURRENT_USER_INFO = data.user; 
 
         RENT_PRICE = data.xe.price;
         MAINTAIN_FEE = data.xe.type === "car" ? 100000 : 50000;
@@ -358,6 +382,8 @@ function loadProductData(xeId) {
         document.getElementById("feeBaoHiem_thuexe").innerText = formatVND(INSURANCE_FEE);
         document.getElementById("feeMaintain_thuexe").innerText = formatVND(MAINTAIN_FEE);
         document.getElementById("sumprice_thuexe").innerText = formatVND(TOTAL_COST);
+    
+        initThueXeEvents();
     })
     .catch(err => console.error("Lỗi:", err));
 }
@@ -365,11 +391,24 @@ function loadProductData(xeId) {
 function formatVND(number) {
     return number.toLocaleString("vi-VN") + " đ";
 }
+
+function checkVehicleRented(xeId) {
+    return fetch(`/web_project/Controller/nguyen_thueXe_Controller.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "checkRented", xeId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("state:", data.isRented);
+        return data.isRented;
+    })
+    .catch(err => {
+        console.error("Lỗi khi kiểm tra xe đã thuê:", err);
+        return false;
+    });
+}
+
 </script>
 
 <script src="/web_project/View/JS/nguyen_js_thuexe.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        initThueXeEvents();
-    });
-</script>

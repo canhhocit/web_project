@@ -55,16 +55,23 @@ function renderRow(item) {
             <img 
                 src="${item.image}" 
                 alt="${item.name}" 
-                onerror="this.onerror=null; this.src='/web_project/View/image/none_image.png'" 
-                style="width:120px; height:80px; object-fit:cover; border-radius:5px;"
+                onerror="this.onerror=null; this.src='/web_project/View/image/none_image.png'"
             >
         </div>
 
         <div class="info">
             <div class="name" style="font-weight:bold">${item.name}</div>
-            <div class="sub-info" style="font-size:0.9em; color:#666">Mã HĐ: ${item.idhoadon}</div>
-            <div class="price" style="color:red; font-weight:bold">${item.price}</div>
-            <span class="status ${item.statusClass}" style="padding: 2px 8px; border-radius:10px; font-size:0.8em; background:#fff3cd; color:#856404">${item.status}</span>
+            <div class="sub-info" style="font-size:0.9em; color:#666">Mã HĐ: ${
+                item.idhoadon
+            }</div>
+            <div class="price" style="color:red; font-weight:bold">${formatVND(
+                item.price
+            )}</div>
+            <span class="status ${
+                item.statusClass
+            }" style="padding: 2px 8px; border-radius:10px; font-size:0.8em; background:#fff3cd; color:#856404">${
+        item.status
+    }</span>
         </div>
         
         <div class="actions">
@@ -165,14 +172,13 @@ function loadProductData(idhoadon) {
 
             const hd = data.hoadon;
             const anh = data.anhxe;
+            const xe = data.xe;
 
-            document.getElementById("title_xe_xemhd").innerText =
-                "Chi tiết hóa đơn #" + hd.idhoadon;
-
+            document.getElementById("title_xe_xemhd").innerText = xe.tenxe;
             document.getElementById("anhxe_xemhd").src = anh.duongdan;
 
-            document.getElementById("pickup_xemhd").value = hd.diemlay || "";
-            document.getElementById("dropoff_xemhd").value = hd.diemtra || "";
+            document.getElementById("pickup_xemhd").value = hd.diemlay;
+            document.getElementById("dropoff_xemhd").value = hd.diemtra;
             document.getElementById("pickup_date_xemhd").value = hd.ngaymuon;
             document.getElementById("return_date_xemhd").value = hd.ngaytra;
 
@@ -199,9 +205,9 @@ function loadProductData(idhoadon) {
                 hd.tongtien
             );
 
-            const giaMotNgay = hd.tongtien / days;
-            document.getElementById("price_xemhd").innerText =
-                formatVND(giaMotNgay);
+            document.getElementById("price_xemhd").innerText = formatVND(
+                xe.giathue
+            );
 
             const btnThue = document.getElementById("btnthue_xemhd");
             if (btnThue) btnThue.style.display = "none";
@@ -210,6 +216,10 @@ function loadProductData(idhoadon) {
             adjustUIForViewMode();
         })
         .catch((err) => console.error("Fetch lỗi:", err));
+}
+
+function formatVND(number) {
+    return parseInt(number).toLocaleString("vi-VN") + " đ";
 }
 
 function disableInputs() {
@@ -228,6 +238,7 @@ function formatDate(dateStr) {
     const d = new Date(dateStr);
     return d.toLocaleDateString("vi-VN");
 }
+
 function adjustUIForViewMode() {
     const useInfoRow = document.querySelector(
         ".useinf_titleu .custom-check-row"
@@ -245,4 +256,5 @@ function adjustUIForViewMode() {
         btnPay.onclick = closeModal;
     }
 }
+
 // =========================================================================================

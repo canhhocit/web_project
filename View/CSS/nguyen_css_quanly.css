@@ -10,9 +10,9 @@
 }
 
 .container_table_quanly {
-    width: 80%; 
+    width: 80%;
     background: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -20,7 +20,7 @@
 
 .content_container_quanly {
     width: 100%;
-    padding: 0; 
+    padding: 0;
 }
 
 .tabs {
@@ -49,24 +49,30 @@
 
 .row {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
     border-bottom: 1px solid #f0f0f0;
-    margin: 0 !important; 
+    margin: 0 !important;
 }
 
 .image {
     width: 100px;
     height: 70px;
-    border: 1px dashed #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f5f5f5;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 20px;
-    flex-shrink: 0;
-    background: #fdfdfd;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* ✅ đổi cover -> contain */
+    display: block;
 }
 
 .info {
@@ -89,8 +95,8 @@
 .actions {
     flex: 1;
     display: flex;
-    justify-content: flex-end; 
-    gap: 10px; 
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .actions button {
@@ -99,7 +105,7 @@
     border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 .btn-view {
@@ -122,5 +128,9 @@
     margin-top: 5px;
 }
 
-.yellow { background: #f1c40f; }
-.green { background: #2ecc71; }
+.yellow {
+    background: #f1c40f;
+}
+.green {
+    background: #2ecc71;
+}
