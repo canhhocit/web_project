@@ -59,9 +59,9 @@ $jsonData = json_encode($data_from_db);
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_quanly.css" />
-    <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
     <link rel="stylesheet" href="View/CSS/thanhtoan.css" />
+    <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
+    <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_quanly.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
@@ -124,7 +124,7 @@ $jsonData = json_encode($data_from_db);
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <script src="/web_project/View/JS/nguyen_quanly.js"></script>
-    <script src="View/JS/thanhtoan.js"></script> 
+    <script src="/web_project/View/JS/thanhtoan.js"></script> 
     <script>
         // Đổ dữ liệu thật từ PHP vào biến JS
         const data = <?php echo $jsonData; ?>;
@@ -145,6 +145,7 @@ $jsonData = json_encode($data_from_db);
             if(tabIndex === 1){
                 if (typeof renderTab1 === "function") {
                     renderTab1(1); 
+                    console.log("1111111111111111");
                 } else {
                     console.error("Chưa load được file nguyen_quanly.js");
                 }
@@ -155,7 +156,7 @@ $jsonData = json_encode($data_from_db);
                         content.innerHTML += `
                         <div class="row">
                             <div class="image">
-                                <img src="View/image/car_default.png" style="width:100px"> 
+                                <img src="View/image/car_default.png" alt=""> 
                             </div>
                             <div class="info">
                                 <div class="name">${item.name} (Mã HĐ: ${item.idhoadon})</div>

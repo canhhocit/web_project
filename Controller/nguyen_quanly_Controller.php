@@ -26,6 +26,7 @@ $data = [];
 if ($tab === 1) {
     $sql = "SELECT 
                 hd.idhoadon, 
+                hd.tongtien,
                 x.tenxe, 
                 x.giathue, 
                 (SELECT ax.duongdan FROM anhxe ax WHERE ax.idxe = x.idxe LIMIT 1) AS image 
@@ -52,8 +53,10 @@ if ($tab === 1) {
 
         $data[] = [
             "idhoadon" => $row['idhoadon'],
+            "price" => $row['tongtien'],
+            "statusClass"    => "yellow",
+            "status"   => "Đang thuê",
             "name"     => $row['tenxe'],
-            "price"    => $row['giathue'], 
             "image"    => $finalImage
         ];
     }

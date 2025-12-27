@@ -6,13 +6,26 @@ function initThueXeEvents() {
 
     chk.addEventListener("change", function () {
         if (this.checked) {
+            if (
+                !INFORUSER ||
+                !INFORUSER.name ||
+                !INFORUSER.email ||
+                !INFORUSER.phone ||
+                !INFORUSER.cccd
+            ) {
+                alert("Vui lòng cập nhật đầy đủ thông tin cá nhân trước!");
+                this.checked = false;
+                return;
+            }
             fillUserInfo();
         } else {
             clearUserInfo();
         }
     });
 
-    console.log(CURENTUSERID);
+    console.log("id nguoi dung la: " + CURENTUSERID);
+    console.log("thong tin người dung ", INFORUSER);
+
     if (pickup && ret) {
         pickup.addEventListener("change", calculateRent);
         ret.addEventListener("change", calculateRent);
@@ -56,15 +69,15 @@ function initModalXacNhan() {
             .then((result) => {
                 console.log("✅ Kết quả cuối cùng:", result); // In kết quả đã xử lý
                 if (result.success) {
-                    alert("✅ Thuê xe thành công!");
+                    alert("Thuê xe thành công!");
                     resetForm();
                     closeModalXacNhan();
                     closeModal();
                 } else {
-                    alert("❌ Thuê xe thất bại!");
+                    alert("Thuê xe thất bại!");
                 }
             })
-            .catch(() => alert("❌ Lỗi kết nối server!"));
+            .catch(() => alert("Lỗi kết nối server!"));
     };
 
     modal.onclick = (e) => {
@@ -80,6 +93,9 @@ function closeModalXacNhan() {
 
 function openModalXacNhan() {
     const modal = document.getElementById("container_xacnhanthanhtoan");
+    document.getElementById("title_xacnhan").innerText =
+        "Xác nhận thanh toán với chủ thuê?";
+    document.getElementById("btnxacnhan_xacnhan").innerText = "Xác nhận";
     modal.classList.add("active");
     // document.body.style.overflow = "hidden"; // chặn cuộn trang chính
 }
@@ -218,24 +234,21 @@ function resetForm() {
 }
 
 function fillUserInfo() {
-    if (!window.CURRENT_USER_INFO) return;
+    if (!CURENTUSERID) return;
 
-    document.getElementById("input_name").value =
-        window.CURRENT_USER_INFO.name || "";
+    document.getElementById("fullname_modalThuexe").value =
+        INFORUSER.name || "";
 
-    document.getElementById("input_phone").value =
-        window.CURRENT_USER_INFO.phone || "";
+    document.getElementById("phone_modalThuexe").value = INFORUSER.phone || "";
 
-    document.getElementById("input_cccd").value =
-        window.CURRENT_USER_INFO.cccd || "";
+    document.getElementById("cccd_modalThuexe").value = INFORUSER.cccd || "";
 
-    document.getElementById("input_address").value =
-        window.CURRENT_USER_INFO.address || "";
+    document.getElementById("email_modalThuexe").value = INFORUSER.email || "";
 }
 
 function clearUserInfo() {
-    document.getElementById("input_name").value = "";
-    document.getElementById("input_phone").value = "";
-    document.getElementById("input_cccd").value = "";
-    document.getElementById("input_address").value = "";
+    document.getElementById("fullname_modalThuexe").value = "";
+    document.getElementById("phone_modalThuexe").value = "";
+    document.getElementById("cccd_modalThuexe").value = "";
+    document.getElementById("email_modalThuexe").value = "";
 }
