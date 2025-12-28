@@ -178,4 +178,13 @@ class nguyen_hoadonDAO {
         return $row['total'] > 0;
     }
 
+    public function getthanhtoanbyidhoadon($idhoadon){
+        $sql = "SELECT * FROM thanhtoan WHERE idhoadon = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $idhoadon);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }

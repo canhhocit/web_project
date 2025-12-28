@@ -63,5 +63,44 @@ if ($tab === 1) {
     
     echo json_encode($data);
     exit; 
-} 
+} else if ($tab === 2) {
+    $sql = "SELECT 
+            hd.idhoadon,
+            hd.tongtien,
+            x.tenxe,
+            (SELECT ax.duongdan FROM anhxe ax WHERE ax.idxe = x.idxe LIMIT 1) AS image
+            FROM hoadon hd
+            JOIN xe x ON hd.idxe = x.idxe
+            WHERE hd.idtaikhoan = $idtaikhoan
+            AND hd.trangthai = 1";
+
+    $res = mysqli_query($conn, $sql);
+    if (!$res) {
+    echo json_encode(["status" => "error", "message" => "Lỗi SQL Tab 2: " . mysqli_error($conn)]);
+    exit;
+    }
+
+    while ($row = mysqli_fetch_assoc($res)) {
+    $finalImage = empty($row['image'])
+        ? "/web_project/View/image/none_image.png"
+        : "/web_project/View/image/" . $row['image'];
+
+    $data[] = [
+        "idhoadon" => $row['idhoadon'],
+        "price" => $row['tongtien'],
+        "priceText" => "Tổng: " . number_format((float)$row['tongtien'], 0, ',', '.') . "đ",
+        "statusClass" => "green",
+        "status" => "Đã trả xe",
+        "name" => $row['tenxe'],
+        "image" => $finalImage,
+        "showReturn" => false
+    ];
+    }
+
+    echo json_encode($data);
+    exit;
+}
+
+echo json_encode(["status" => "error", "message" => "Tab không hợp lệ."]);
+exit;
 ?>
