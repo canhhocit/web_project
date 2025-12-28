@@ -29,9 +29,18 @@ class nguyen_thueXe_Controller
     {
         switch ($action) {
             case 'openModal':
+                $curentUserID = isset($_SESSION['idtaikhoan']) ? $_SESSION['idtaikhoan'] : 0;
+                $item_user_info = $this->laythongtinnguoidung($curentUserID);
+                $user_info = [
+                    "idtaikhoan"     => $item_user_info->get_idtaikhoan(),
+                    "name"  => $item_user_info->get_hoten(),
+                    "email" => $item_user_info->get_email(),
+                    "phone" => $item_user_info->get_sdt(),
+                    "cccd"  => $item_user_info->get_cccd()
+                ];
+
                 $xe = $this->layxe($data_post['id'] ?? 0);
                 $xe_arr = [];
-                $curentUserID = isset($_SESSION['idtaikhoan']) ? $_SESSION['idtaikhoan'] : 0;
 
                 $anhxe = $this->layanhxe($data_post['id'] ?? 0);
                 $anhxe_arr = [];
@@ -39,7 +48,7 @@ class nguyen_thueXe_Controller
                     $anhxe_arr[] = [
                         "id"     => $item->get_idanh(),
                         "idxe"   => $item->get_idxe(),
-                        "duongdan"   => "../image/" . $item->get_duongdan() 
+                        "duongdan"   => $item->get_duongdan() 
                     ];
                 }
 
@@ -59,7 +68,8 @@ class nguyen_thueXe_Controller
                     "status" => "success",
                     "xe" => $xe_arr[0], // chỉ 1 mà thôi
                     "anhxe" => $anhxe_arr[0],
-                    "curentUserID" => $curentUserID
+                    "curentUserID" => $curentUserID,
+                    "infouser" => $user_info
                 ]);
                 exit;
             case 'taohoadon': 
@@ -118,7 +128,6 @@ class nguyen_thueXe_Controller
 
                 $anhxe = $this->layanhxe($item->get_idxe());
                 $item_anhxe = $anhxe[0];
-                $anhxe_arr = [];
 
                 $anhxe_arr = [
                     "id"     => $item_anhxe->get_idanh(),
@@ -128,29 +137,28 @@ class nguyen_thueXe_Controller
 
                 $anhxe = $this->vehicle_dao->getAnhxebyIdxe($item->get_idxe());
 
+                $xe = $this->layxe($item->get_idxe());
+                $item_xe = $xe[0];
+
+                $xe_arr = [
+                    "giathue"     => $item_xe->get_giathue(),
+                    "tenxe"     => $item_xe->get_tenxe(),
+                    "loai"   => $item_xe->get_loaixe()
+                ];
+
                 echo json_encode([
                     "success" => true,
                     "hoadon" => $hoadon_arr,
-                    "anhxe" => $anhxe_arr
+                    "anhxe" => $anhxe_arr,
+                    "xe" => $xe_arr
                 ]);
                 exit;
-            case 'laythongtinnguoidung':
-                // $user = $this->laythongtinnguoidung($data_post['idtaikhoan'] ?? 0);
-
-                //$user_info = [];
-                // foreach ($user as $item) {
-                //     $user_info[] = [
-                //         "idtaikhoan"     => $item->get_idtaikhoan(),
-                //         "username"   => $item->get_username(),
-                //         "pass"  => $item->get_pass()
-                //     ];
-                // }
-                // echo json_encode([
-                //     "status" => "success",
-                //     "user_info" => $user_info[0]
-                // ]);
+            case 'checkRented':
+                $state = $this->hoadon_dao->isXeDangDuocThue($data_post['idxe'] ?? 0);
+                echo json_encode([
+                    "isRented" => $state
+                ]);
                 exit;
-            
             default:
                 http_response_code(400);
                 echo json_encode(["error" => "Hành động không hợp lệ"]);
@@ -194,16 +202,16 @@ class nguyen_thueXe_Controller
         return $hoadon;
     }
 
-    function laythongtinnguoidung($data_post){
+    function laythongtinnguoidung($curentUserID){
         // $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0; cho sang bên kia đê
-        if ($data_post['idtaikhoan'] <= 0) {
+        if ($curentUserID <= 0) {
             http_response_code(400);
             echo json_encode(["error" => "ID tài khoản không hợp lệ"]);
             exit;
         }
         // getThongTinTaiKhoanbyID
-        // $user_info = $this->user_dao->getThongTinTaiKhoanbyID($idtaikhoan);
-        // return $user_info;
+        $user_info = $this->user_dao->getThongTinTaiKhoanbyID($curentUserID);
+        return $user_info;
     }
 }
 

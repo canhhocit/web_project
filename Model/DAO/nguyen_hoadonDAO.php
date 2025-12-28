@@ -57,7 +57,6 @@ class nguyen_hoadonDAO {
                 $row['email'],
                 $row['sdt'],
                 $row['cccd'],
-                $row['trangthai'],
                 $row['ghichu'],
                 $row['tongtien']
             );
@@ -163,4 +162,20 @@ class nguyen_hoadonDAO {
         $stmt->bind_param("i", $idhoadon);
         return $stmt->execute();
     }
+
+    public function isXeDangDuocThue($idxe) {
+        $sql = "SELECT COUNT(*) AS total 
+                FROM hoadon 
+                WHERE idxe = ? AND trangthai = 0";
+    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $idxe);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        return $row['total'] > 0;
+    }
+
 }
