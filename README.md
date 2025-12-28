@@ -13,11 +13,12 @@ website tương tác giữa người dùng với người dùng
     -   Lịch sử xe đã đăng, sửa xóa thông tin về bài đăng
     -   Thêm, xóa xe yêu thích
 
-2. ĐẶNG VĂN MINH 
+2. ĐẶNG VĂN MINH
+
     - Giao diện trang chủ:
     - Các chức năng sẵn chỉ chờ team add sự kiện vào :))
     - Về chúng tôi
-    - Chi tiết, tình trạng xe 
+    - Chi tiết, tình trạng xe
 
 3. LÒ VĂN ĐIỆP
 
@@ -37,10 +38,11 @@ website tương tác giữa người dùng với người dùng
 
     -   Biểu đồ cột (Bar Chart): So sánh doanh thu giữa các tháng trong năm để thấy được xu hướng tăng trưởng.
     -   Biểu đồ tròn (Doughnut Chart): Phân tích tỷ trọng các loại xe được ưa chuộng (Xe máy điện, Xe đạp)
-    
--   Phần lịch sử giao dịch:  Hiển thị danh sách các hóa đơn đã thanh toán thành công.
+
+-   Phần lịch sử giao dịch: Hiển thị danh sách các hóa đơn đã thanh toán thành công.
 
 4. TRẦN TRUNG NGUYÊN
+    - ăn rồi lọ
 
 -   Phần tài khoản
     -   Đăng ký, đăng nhập, đăng xuất
