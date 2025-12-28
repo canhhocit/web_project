@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__ . "/../Object/ThanhVien.php/";
+    require_once __DIR__ . "/../Object/ThanhVien.php";
     class thanhvienDAO{
         private $conn; // biến lưu trữ kết nối db.
         public function __construct($conn) // nhận tham số kết nối db
@@ -12,7 +12,7 @@
             $result = $this->conn->query($sql);// biến chứa kết quả truy vấn
             $listTV = []; 
             while($row = $result->fetch_assoc()){ // "$result->fetch_assoc()" có nghĩa là: Lấy 1 dòng dữ liệu dạng mảng kết hợp, duyệt qua từng dòng của DB
-                $listTV = new ThanhVien($row ['id'], $row ['ten_thanhvien'], $row['mssv'], $row['cong_viec']);
+                $listTV[] = new ThanhVien($row ['id'], $row ['ten_thanhvien'], $row['mssv'], $row['cong_viec']);
             }
             return $listTV;
         }
@@ -31,7 +31,7 @@
             return $stmt->execute();
         }
     }
-?>+
+?>
 
 
 /**

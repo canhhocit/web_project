@@ -160,7 +160,6 @@ class vehicleDAO
     //Minh
     public function timKiemXe($keyword)
     {
-        // Escape keyword để tránh SQL Injection
         $keyword = mysqli_real_escape_string($this->conn, $keyword);
         
         $sql = "SELECT x.*, x.hangxe AS tenhang, a.duongdan AS hinh_anh

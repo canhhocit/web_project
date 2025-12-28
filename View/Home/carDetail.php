@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
 <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_popupXacNhan.css" />
 
-<!-- Phần hiển thị chi tiết xe (giữ nguyên) -->
 <div class="container mt-4 mb-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
