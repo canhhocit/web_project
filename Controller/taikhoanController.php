@@ -168,7 +168,7 @@ class taikhoanController
 
                 if ($daCoThongTin) {
                     if ($this->Adao->updateThongTinTaiKhoan($thongtin)) {
-                        echo "<script>alert('Cập nhật thành công!'); window.location='/web_project/index.php';</script>";
+                        echo "<script>alert('Cập nhật thành công!'); window.location='/web_project/index.php?controller=taikhoan&action=personal';</script>";
                     } else {
                         echo "<script>alert('Cập nhật thất bại!'); history.back();</script>";
                     }
@@ -183,6 +183,20 @@ class taikhoanController
             } catch (Exception $e) {
                 echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
             }
+            exit;
+        }
+    }
+    public function deleteAvatar()
+    {
+        if (!isset($_SESSION['idtaikhoan'])) {
+                echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
+                exit;
+            }
+
+            $idtaikhoan = $_SESSION['idtaikhoan'];
+        if($this->Adao->delAvatar($idtaikhoan)){
+             echo "<script>alert('Xóa ảnh thành công!');
+              window.location='/web_project/index.php?controller=taikhoan&action=personal';</script>";
             exit;
         }
     }
@@ -246,7 +260,7 @@ class taikhoanController
                 window.location='/web_project/View/taikhoan/login.php';</script>";
                 exit;
             }
-            
+
             if (!isset($_GET['id'])) {
                 echo "<script>alert('Không lấy được idxe ồi!'); 
                 history.back();</script>";
@@ -259,7 +273,7 @@ class taikhoanController
             if ($this->Fdao->checkExistsVehicle($idtaikhoan, $idxe)) {
                 if ($this->Fdao->delFavorite($idtaikhoan, $idxe)) {
                     echo "<script> alert('Đã xóa khỏi yêu thích!');</script>";
-                    if (isset($_GET['option'])) {//link ben favorite
+                    if (isset($_GET['option'])) { //link ben favorite
                         echo "<script>
                     window.location='/web_project/index.php?controller=taikhoan&action=personal&selection=favorite';
                     </script>";
@@ -302,6 +316,7 @@ class taikhoanController
 
         $idtaikhoan = $_SESSION['idtaikhoan'];
         $thongtin = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
+        $defaultAvatar= $this->Adao->checkdefaultAvatar($idtaikhoan);
 
         //  selection = myvehicle
         $xeWithImages = [];

@@ -26,18 +26,17 @@ formRegister.addEventListener("submit", function (e) {
   //   msg.innerHTML = "Mật khẩu không khớp!";
   //   return;
   // }
-  formRegister.submit();
-  // btnRegister.disabled = true;
-  // btnBack.style.pointerEvents = "none"; //  link
-  // msg.style.color = " #fdfdfdff";
-  // let time = 10;
-  // const countdown = setInterval(() => {
-  //   msg.innerHTML = `<span class="spinner"></span> Đang xử lý, vui lòng chờ trong ${time}s...`;
-
-  //   if (time <= 0) {
-  //     clearInterval(countdown);
-  //     formRegister.submit();
-  //   }
-  //   time--;
-  // }, 1000);
+  // formRegister.submit();
+  btnRegister.disabled = true;
+  btnBack.style.pointerEvents = "none"; //  link
+  msg.style.color = " #fdfdfdff";
+  let time = 3;
+  const countdown = setInterval(() => {
+    msg.innerHTML = `<span class="spinner"></span> Đang xử lý, ${time}s...`;
+    if (time <= 0) {
+      clearInterval(countdown);
+      formRegister.submit();
+    }
+    time--;
+  }, 1000);
 });

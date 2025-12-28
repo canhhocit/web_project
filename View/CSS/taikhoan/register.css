@@ -8,8 +8,7 @@
 body {
     height: 100vh;
     /* background-color:	rgb(237, 196, 164) ; */
-    background: url("https://wallpapers.com/images/hd/pretty-purple-1920-x-1080-background-tcqxrh4icc58kbyb.jpg") no-repeat center center fixed;
-    /* background: url("https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1350&q=80") no-repeat center center fixed; */
+    background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url("https://wallpapers.com/images/hd/pretty-purple-1920-x-1080-background-tcqxrh4icc58kbyb.jpg") no-repeat center center fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -17,46 +16,49 @@ body {
     align-items: center;
 }
 
-.header {
-    color: #eeedf5;
+#box {
+    width: 350px;
+    padding: 40px;
+    background: rgba(87, 87, 87, 0.6);
+    border-radius: 15px;
+
+    color: #fff;
     text-align: center;
-    border-radius: 5px;
-    /* background-image: url("https://wallpapers.com/images/hd/pretty-purple-1920-x-1080-background-tcqxrh4icc58kbyb.jpg"); */
-    background-image: url("https://png.pngtree.com/background/20211215/original/pngtree-sunset-sunset-sky-clouds-sunset-photography-pictures-with-pictures-picture-image_1504665.jpg");
-    background-size: cover;
-    background-clip: text;
-    color: transparent;
-    animation: animate 15s linear infinite;
-}
-@keyframes animate{
-    to{
-        background-position-x: -500px;
-    }
-}
-h1{
-    font-size: 100px;
-    font-family: "Noto Sans" ,sans-serif;
-   
-    
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-label {
-    width: 300px;
-    margin-bottom: 5px;
-    color: #f1f1f1;
-    font-size: 14px;
+#box h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: normal;
 }
 
-input {
-    width: 300px;
-    height: 40px;
-    padding: 0 10px;
+#box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
 
+    background: transparent;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
 
+    color: #fff;
     font-size: 14px;
 }
+
+#box input::placeholder {
+    color: #ddd;
+    font-style: italic;
+}
+
+#box input:focus {
+    outline: none;
+    border-color: #2ecc71;
+}
+
+
 
 .btn {
     width: 300px;
@@ -66,9 +68,8 @@ input {
 }
 
 button {
-    width: 48%;
+    width: 40%;
     height: 40px;
-
     border: none;
     border-radius: 5px;
 
@@ -78,9 +79,8 @@ button {
 }
 
 #btnBack {
-    width: 48%;
+    width: 40%;
     height: 40px;
-
     background: #bdc3c7;
     color: #333;
 
@@ -96,11 +96,12 @@ button {
 }
 
 #btnBack:hover {
-    background: #0d1e1f;
+    background: #9bb4ec;
 }
 
 
 #btnRegister {
+    margin-right: 30px;
     background: #2ecc71;
     color: #fff;
 }
@@ -108,27 +109,31 @@ button {
 #btnRegister:hover {
     background: #105a2f;
 }
-.message{
-    margin-top: 10px;
+
+.message {
+    margin-top: 3px;
     text-align: center;
     color: rgb(116, 244, 102);
     font-size: 16px;
 }
-/* load fake */
-@keyframes spin {
-    to { transform: rotate(1080deg); }
-}
+
 
 .spinner {
     display: inline-block;
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(255,255,255,.3);
+    border: 2px solid rgba(255, 255, 255, .3);
     border-radius: 50%;
-    border-top-color: #fff;
+    border-top-color: #88d622;
     animation: spin 0.8s linear infinite;
     margin-right: 8px;
     vertical-align: middle;
+}
+/* load fake */
+@keyframes spin {
+    to {
+        transform: rotate(1080deg);
+    }
 }
 
 button:disabled {

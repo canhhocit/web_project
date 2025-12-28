@@ -15,6 +15,7 @@
         <input type="password" id="password" name="password" placeholder="Password" required />
         
         <button id="btnLogin" type="submit">Đăng nhập</button><br />
+        <div id="msg"></div>
         <i class="register">Bạn chưa có tài khoản?<a href="register.php">Đăng ký</a></i>
       </div>
     </form>
