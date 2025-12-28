@@ -19,10 +19,15 @@
             }
             $curentUserID = isset($_SESSION['idtaikhoan']) ? $_SESSION['idtaikhoan'] : 0;
             $listCar = [];
+            $listCarImages = []; // Mảng chứa ảnh của từng xe
+            
             if (!empty($searchList)) {
                 foreach ($searchList as $car){
                     if ($car->get_idchuxe() != $curentUserID) {
                         $listCar[] = $car;
+                        // Lấy ảnh cho xe này
+                        $idxe = $car->get_idxe();
+                        $listCarImages[$idxe] = $this->vehicleDAO->getAnhxebyIdxe($idxe);
                     }
                 }
             }
