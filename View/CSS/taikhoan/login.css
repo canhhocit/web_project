@@ -79,11 +79,23 @@ button {
     background: #106132;
     scale: 1.2;
 }
-.register{
-    display: block;
+.footer{
     margin-top: 15px;
     font-size: 13px;
     color: #ddd;
+}
+
+.footer i{
+    display: block;
+    margin-top: 6px;
+}
+.forgot a{
+    color: #5dade2;
+    text-decoration: none;
+}
+
+.forgot a:hover{
+    text-decoration: underline;
 }
 
 .register a{

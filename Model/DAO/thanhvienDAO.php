@@ -12,7 +12,11 @@
             $result = $this->conn->query($sql);// biến chứa kết quả truy vấn
             $listTV = []; 
             while($row = $result->fetch_assoc()){ // "$result->fetch_assoc()" có nghĩa là: Lấy 1 dòng dữ liệu dạng mảng kết hợp, duyệt qua từng dòng của DB
-                $listTV[] = new ThanhVien($row ['id'], $row ['ten_thanhvien'], $row['mssv'], $row['cong_viec']);
+                $listTV[] = new ThanhVien(
+                $row ['id'], 
+                $row ['ten_thanhvien'], 
+                $row['mssv'], 
+                $row['cong_viec']);
             }
             return $listTV;
         }
@@ -33,8 +37,7 @@
     }
 ?>
 
-
-/**
+<!-- /**
 //UPDATE
     public function upTV($id){
         $sql = "UPDATE thanhvien_nhom SET ten_thanhvien = ? where id = ?";
@@ -45,9 +48,9 @@
 // get by id
     public function getbyID($id){
         $sql = "SELECT * FROM thanhvien_nhom where id = ?";
-        $stmt = this->conn->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        $stmt->execute();
         $result = $stmt->get_result();
         $row = $result -> fetch_assoc();
             if ($row){
@@ -61,7 +64,7 @@
         $stmt = $this->conn->prepare($sql);
         $searchh = "%" .$name . "%";
         $stmt->bind_param("s", $searchh);
-        return $stmt->execute();
+        $stmt->execute();
         $result = $stmt -> get_result();
         $listTV = [];
         while($row = $result->fetch_assoc()){
@@ -69,4 +72,4 @@
     }
         return $listTV;
     }
-*/
+**/ -->

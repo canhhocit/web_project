@@ -5,9 +5,9 @@
 
     class AboutController{
         private $dao; // lưu các object để dùng trong class này
-        public function __construct() // hàm tự động chạy khi new đối tượng
+        public function __construct($conn) // hàm tự động chạy khi new đối tượng
         {
-            global $conn;
+            
             $this->dao = new thanhvienDAO($conn); // taoj 1 object mới lưu vào this-dao để dùng cho các hàm khác 
             // vd có thể dùng this->dao->getTV();
         }
@@ -38,7 +38,7 @@
 ?>
 
 
-/**
+<!--/**
      LUỒNG HOẠT ĐỘNG (FLOW)
 
 User truy cập:
@@ -59,4 +59,4 @@ $about->index();
         ↓
 index() gọi DAO + include View
 
-*/
+*/ -->
