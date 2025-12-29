@@ -28,7 +28,6 @@ function showModal(idhoadon) {
 
 window.addEventListener('beforeunload', function (e) {
     if (isModalOpen) {
-        // Thông báo mặc định của trình duyệt 
         e.preventDefault();
         e.returnValue = ''; 
     }
@@ -40,7 +39,6 @@ function xacNhanTraXe() {
     let formData = {
         idhoadon: $('#idhoadon').val(),
         ngay_qua_han: $('#ngay_qua_han').val(),
-        // Xóa dấu chấm phân cách nghìn trước khi gửi
         tong_tien: $('#tong_tien').val().replace(/\D/g, ''),
         phuongthuc: $('#phuongthuc').val()
     };

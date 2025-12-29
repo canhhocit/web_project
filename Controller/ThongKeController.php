@@ -8,9 +8,7 @@ class ThongKeController {
         $this->model = new ThongKeModel($db);
     }
     
-    // Action mặc định - hiển thị trang thống kê
     public function index() {
-        // Kiểm tra đăng nhập
         if (!isset($_SESSION['idtaikhoan'])) {
             $this->redirectToLogin();
             return;
@@ -18,10 +16,8 @@ class ThongKeController {
         
         $idtaikhoan = $_SESSION['idtaikhoan'];
         
-        // Lấy dữ liệu thống kê từ Model
         $data = $this->model->getAllStatistics($idtaikhoan);
         
-        // Kiểm tra kết quả
         if (!$data['success']) {
             if ($data['error'] === 'ACCESS_DENIED') {
                 $this->showAccessDenied();
@@ -32,11 +28,9 @@ class ThongKeController {
             }
         }
         
-        // Render view
         $this->renderView('thongke/indexTK.php', $data);
     }
     
-    // Action cho API (nếu cần)
     public function apiGetStatistics() {
         header('Content-Type: application/json');
         
@@ -54,7 +48,6 @@ class ThongKeController {
         echo json_encode($data);
     }
     
-    // Private methods
     private function showAccessDenied() {
         $this->renderView('thongke/accessDenied.php');
     }
@@ -86,10 +79,8 @@ class ThongKeController {
     }
     
     private function renderView($viewPath, $data = []) {
-        // Truyền dữ liệu vào view
         extract($data);
         
-        // Include view
         $fullPath = "View/" . $viewPath;
         if (file_exists($fullPath)) {
             require_once $fullPath;
