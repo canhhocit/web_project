@@ -89,7 +89,7 @@ class nguyen_thueXe_Controller
                     $data['email'] ?? '',
                     $data['phone'] ?? '',
                     $data['cccd'] ?? '',
-
+                    0,
                     $data['comment'] ?? '',
                     $data['totalCost'] ?? 0
                 );
@@ -102,7 +102,7 @@ class nguyen_thueXe_Controller
                 exit;
             case 'layhoadon':
 
-                $item = $this->layhoadon($data_post['idhoadon']);
+                $item = $this->layhoadonbyid($data_post['idhoadon']);
 
                 if (!$item) {
                     echo json_encode(["success" => false, "message" => "Không tìm thấy hóa đơn"]);
@@ -173,9 +173,9 @@ class nguyen_thueXe_Controller
                     $idhoadon = $row['idhoadon'];
                     $idxe     = $row['idxe'];
                 
-                    $hd = $this->layhoadon($idhoadon); // thường là object nguyen_hoadon
-                    $xeImages = $this->layanhxe($idxe);   // thường là array object ảnh
-                    $xe = $this->layxe($idxe);           // thường là array object xe
+                    $hd = $this->layhoadonbyid($idhoadon); // object nguyen_hoadon
+                    $xeImages = $this->layanhxe($idxe);   // array object ảnh
+                    $xe = $this->layxe($idxe);           //  array object xe
 
                     $anhxe_arr = [];
                     if (is_array($xeImages)) {
@@ -198,8 +198,6 @@ class nguyen_thueXe_Controller
                             ];
                         }
                     }
-                    // 3) Convert hoadon object -> array để json_encode
-                    // (Bạn sửa getter theo class hoadon của bạn)
                     $hd_arr = null;
                     if ($hd) {
                         $hd_arr = [
@@ -220,7 +218,7 @@ class nguyen_thueXe_Controller
                         ];
                     }
                 
-                    // 4) push item đầy đủ
+                    //  push item 
                     $result[] = [
                         "idhoadon" => $idhoadon,
                         "idxe"     => $idxe,
@@ -278,7 +276,7 @@ class nguyen_thueXe_Controller
         return $hoadon;
     }
 
-    function layhoadon($idhoadon)
+    function layhoadonbyid($idhoadon)
     {
         $hoadon = $this->hoadon_dao->gethoadonById($idhoadon);
         return $hoadon;
