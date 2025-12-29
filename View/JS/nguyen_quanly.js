@@ -12,7 +12,7 @@ async function renderTab(tabIndex) {
 
     try {
         const list = await fetchDataTab(tabIndex);
-
+        console.log("dữ liệu thật của list:" + list);
         if (list && list.status === "error") {
             content.innerHTML = `<div style='color:red;text-align:center'>${list.message}</div>`;
             return;
@@ -50,6 +50,7 @@ function renderList(list, tabIndex) {
     }
 
     list.forEach((item) => {
+        console.log("item hiện tại:", item);
         content.insertAdjacentHTML("beforeend", renderRow(item, tabIndex));
     });
 }
@@ -104,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
 function xemChiTietHoaDon(idhoadon) {
     console.log("Xem chi tiết hoá đơn:", idhoadon);
 

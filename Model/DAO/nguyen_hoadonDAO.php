@@ -187,4 +187,26 @@ class nguyen_hoadonDAO {
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function gethoadonnguoithue($idChuXe) {
+        $sql = "
+            SELECT x.idxe, hd.idhoadon
+            FROM xe x
+            JOIN hoadon hd ON hd.idxe = x.idxe
+            WHERE x.idchuxe = ?
+            ORDER BY hd.trangthai ASC, hd.idhoadon DESC
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $idChuXe);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $list = [];
+        while ($row = $result->fetch_assoc()) {
+            $list[] = $row;
+        }
+        return $list;
+    }
+
 }
