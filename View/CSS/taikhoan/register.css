@@ -72,37 +72,21 @@ button {
     height: 40px;
     border: none;
     border-radius: 5px;
-
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
 }
 
-#btnBack {
-    width: 40%;
-    height: 40px;
-    background: #bdc3c7;
-    color: #333;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-}
 
 #btnBack:hover {
-    background: #9bb4ec;
+    background: #272220;
+    color: #ddd;
 }
 
 
 #btnRegister {
     margin-right: 30px;
-    background: #2ecc71;
+    background: #c052f3;
     color: #fff;
 }
 
