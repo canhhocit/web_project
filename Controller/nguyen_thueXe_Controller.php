@@ -146,15 +146,18 @@ class nguyen_thueXe_Controller
                     "loai"   => $item_xe->get_loaixe()
                 ];
 
+                $list = $this->hoadon_dao->getthanhtoanbyidhoadon($item->get_idhoadon());
+
                 echo json_encode([
                     "success" => true,
                     "hoadon" => $hoadon_arr,
                     "anhxe" => $anhxe_arr,
-                    "xe" => $xe_arr
+                    "xe" => $xe_arr,
+                    "thanhtoan" => $list
                 ]);
                 exit;
             case 'checkRented':
-                $state = $this->hoadon_dao->isXeDangDuocThue($data_post['idxe'] ?? 0);
+                $state = $this->hoadon_dao->isXeDangDuocThue($data_post['xeId'] ?? 0);
                 echo json_encode([
                     "isRented" => $state
                 ]);
@@ -212,6 +215,11 @@ class nguyen_thueXe_Controller
         // getThongTinTaiKhoanbyID
         $user_info = $this->user_dao->getThongTinTaiKhoanbyID($curentUserID);
         return $user_info;
+    }
+
+    function laythanhtoanbyidhoadon($idhoadon){
+        $thanhtoan = $this->hoadon_dao->getthanhtoanbyidhoadon($idhoadon);
+        return $thanhtoan;
     }
 }
 

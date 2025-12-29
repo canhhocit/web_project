@@ -1,10 +1,8 @@
-/* info.css - CSS đơn giản cho form thông tin */
 
-/* Tiêu đề trang */
 .page-header {
     margin-bottom: 20px;
-    border-bottom: 2px solid #ddd;
     padding-bottom: 15px;
+    border-bottom: 2px solid #ddd;
 }
 
 .page-header h3 {
@@ -15,27 +13,25 @@
 .page-header p {
     margin: 0;
     color: #999;
-    font-size: 0.9rem;
+    font-size: smaller;
 }
 
-/* Layout form: 2 cột (trái-phải) */
-.form-grid {
+/* 2 col (trái-phải) */
+.panel {
     display: flex;
     gap: 30px;
     margin-bottom: 20px;
 }
-
-/* Cột trái: các input */
-.form-fields {
+/* LEFT panel */
+.panel-left {
     flex: 2;
 }
 
-/* Mỗi ô input */
-.field {
+.left-itemInput {
     margin-bottom: 20px;
 }
 
-.field label {
+.left-itemInput label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
@@ -45,27 +41,28 @@
     color: red;
 }
 
-.field input {
+.left-itemInput input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.field input:focus {
+.left-itemInput input:focus {
     border-color: #0d6efd;
     outline: none;
+    /* transform: translateX(5px); */
+    transform: scale(1.1);
 }
 
-/* Cột phải: avatar */
-.avatar-section {
+/*  avatar */
+.panel-right{
     flex: 1;
     text-align: center;
 }
 
-.avatar-section > label {
+.panel-right> label {
     display: block;
-    margin-bottom: 10px;
     font-weight: bold;
 }
 
@@ -74,7 +71,7 @@
     height: 200px;
     border: 2px solid #ddd;
     border-radius: 10px;
-    margin: 0 auto 15px;
+    margin: 10px auto 15px;
     overflow: hidden;
 }
 
@@ -94,20 +91,16 @@
     color: white;
 }
 
-.avatar-placeholder i {
-    font-size: 4rem;
-}
-
-.avatar-section input[type="file"] {
+.panel-right input[type="file"] {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 5px;
+    font-size: smaller;
+    margin-left: 25px;
 }
 
 
 .divider {
     border-top: 1px solid #ddd;
-    margin: 20px 0;
+    margin: 10px 0px 0px 20px ;
 }
 
 .form-actions {
@@ -142,16 +135,12 @@
 
 .btn-cancel:hover {
     background: #5a6268;
+    color: green;
+}
+.btn-cancel.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-/* Responsive: màn hình nhỏ */
-@media (max-width: 768px) {
-    .form-grid {
-        flex-direction: column;
-    }
-    
-    .avatar-box {
-        width: 150px;
-        height: 150px;
-    }
-}
+

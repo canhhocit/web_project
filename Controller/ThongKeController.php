@@ -1,45 +1,101 @@
 <?php
 require_once 'Model/hd_tk/ThongKeModel.php';
-require_once 'Model/DAO/taikhoanDAO.php';
 
 class ThongKeController {
     private $model;
-    private $db;
-
+    
     public function __construct($db) {
-        $this->db = $db;
         $this->model = new ThongKeModel($db);
     }
-
+    
+    // Action mặc định - hiển thị trang thống kê
     public function index() {
-
-    $idtaikhoan = $_SESSION['idtaikhoan'];
-    $sql = "SELECT lachuxe, languoithue FROM taikhoan WHERE idtaikhoan = '$idtaikhoan'";
-    $result = mysqli_query($this->db, $sql);
-    $userRole = mysqli_fetch_assoc($result);
+        // Kiểm tra đăng nhập
+        if (!isset($_SESSION['idtaikhoan'])) {
+            $this->redirectToLogin();
+            return;
+        }
         
-    if (!$userRole || $userRole['lachuxe'] != 1) {
-            echo "<div class='container mt-5'>
-                    <div class='alert alert-danger shadow-sm border-start border-danger border-5'>
-                        <h4 class='alert-heading'><i class='fas fa-lock me-2'></i>Quyền truy cập bị hạn chế</h4>
-                        <p>Trang thống kê này <strong>chỉ dành cho Chủ xe</strong> để quản lý doanh thu.</p>
-                        <hr>
-                        <p class='mb-0'>Khách thuê vui lòng quay lại <a href='index.php' class='alert-link'>Trang chủ</a>.</p>
-                    </div>
-                  </div>";
-            exit();
+        $idtaikhoan = $_SESSION['idtaikhoan'];
+        
+        // Lấy dữ liệu thống kê từ Model
+        $data = $this->model->getAllStatistics($idtaikhoan);
+        
+        // Kiểm tra kết quả
+        if (!$data['success']) {
+            if ($data['error'] === 'ACCESS_DENIED') {
+                $this->showAccessDenied();
+                return;
+            } else {
+                $this->showError($data['message']);
+                return;
+            }
+        }
+        
+        // Render view
+        $this->renderView('thongke/indexTK.php', $data);
     }
-
-    $data = [
-            'tongDoanhThu' => $this->model->getTongDoanhThu($idtaikhoan),
-            'doanhThuThang' => $this->model->getDoanhThuThang($idtaikhoan),
-            'tyLeLoaiXe' => $this->model->getTyLeLoaiXe($idtaikhoan),
-            'doanhThuCacThang' => $this->model->getDoanhThuCacThang($idtaikhoan),
-            'statsPhu' => $this->model->getStatsPhu($idtaikhoan)
-        ];
+    
+    // Action cho API (nếu cần)
+    public function apiGetStatistics() {
+        header('Content-Type: application/json');
         
+        if (!isset($_SESSION['idtaikhoan'])) {
+            echo json_encode([
+                'success' => false,
+                'error' => 'NOT_LOGGED_IN'
+            ]);
+            return;
+        }
+        
+        $idtaikhoan = $_SESSION['idtaikhoan'];
+        $data = $this->model->getAllStatistics($idtaikhoan);
+        
+        echo json_encode($data);
+    }
+    
+    // Private methods
+    private function showAccessDenied() {
+        $this->renderView('thongke/accessDenied.php');
+    }
+    
+    private function showError($message) {
+         echo '
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+            </head>
+            <body class="bg-light">
+                <div class="container mt-5">
+                    <div class="alert alert-danger">
+                        <h4><i class="fas fa-exclamation-triangle me-2"></i>Lỗi</h4>
+                        <p>' . htmlspecialchars($message) . '</p>
+                        <hr>
+                        <a href="index.php" class="btn btn-primary">Về trang chủ</a>
+                    </div>
+                </div>
+            </body>
+            </html>';
+        exit();
+    }
+    
+    private function redirectToLogin() {
+        header('Location: index.php?controller=taikhoan&action=login');
+        exit();
+    }
+    
+    private function renderView($viewPath, $data = []) {
+        // Truyền dữ liệu vào view
         extract($data);
-        require 'View/thongke/indexTK.php';
+        
+        // Include view
+        $fullPath = "View/" . $viewPath;
+        if (file_exists($fullPath)) {
+            require_once $fullPath;
+        } else {
+            die("View không tồn tại: " . $fullPath);
+        }
     }
 }
 ?>

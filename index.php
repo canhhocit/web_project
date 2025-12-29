@@ -166,12 +166,16 @@ switch ($controller) {
     case 'thongke':
         require_once "Controller/ThongKeController.php";
         $thongke = new ThongKeController($conn);
+        $allowedActions = ['index', 'apiGetStatistics'];
+        $action = in_array($action, $allowedActions) ? $action : 'index';
+        
         if (method_exists($thongke, $action)) {
             $thongke->$action();
         } else {
             $thongke->index();
         }
         break;
+
     case 'lichsutt':
         require_once "Controller/LichSuTTController.php";
         $lichsuCtrl = new LichSuTTController($conn);

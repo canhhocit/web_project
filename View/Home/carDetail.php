@@ -272,15 +272,15 @@
                 <h3 class="sub-title">Chi phí</h3>
                 <div class="cost-row">
                     <span>Giá thuê xe / ngày</span>
-                    <span id="price_thuexe">200.000đ</span>
+                    <span id="price_thuexe">0đ</span>
                 </div>
                 <div class="cost-row">
                     <span>Phí bảo trì</span>
-                    <span id="feeMaintain_thuexe">50.000đ</span>
+                    <span id="feeMaintain_thuexe">0đ</span>
                 </div>
                 <div class="cost-row">
                     <span>Phí bảo hiểm</span>
-                    <span id="feeBaoHiem_thuexe">50.000đ</span>
+                    <span id="feeBaoHiem_thuexe">0đ</span>
                 </div>
                 <div class="cost-row">
                     <span style="color: red; font-size: 16px; font-weight: bold"
@@ -289,7 +289,7 @@
                     <span
                         id="sumprice_thuexe"
                         style="color: red; font-size: 16px; font-weight: bold"
-                        >300.000đ</span
+                        >0đ</span
                     >
                 </div>
                 <div class="btn_pay_container">

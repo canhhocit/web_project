@@ -30,7 +30,7 @@ $selection = $_GET['selection'] ?? 'info';
                     <span>Đổi mật khẩu</span>
                 </a>
                 <a href="/web_project/index.php?controller=taikhoan&action=personal&selection=myvehicle"
-                    class="menu-item <?php echo $selection === 'cars' ? 'active' : ''; ?>">
+                    class="menu-item <?php echo $selection === 'myvehicle' ? 'active' : ''; ?>">
                     <i class="fa-solid fa-car"></i>
                     <span>Xe của tôi</span>
                 </a>

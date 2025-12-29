@@ -1,3 +1,25 @@
+.edit-vehicle-box {
+    all: initial; /* Reset tất cả CSS */
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.edit-vehicle-box * {
+    box-sizing: border-box;
+}
+
+.edit-vehicle-box .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
 .page-header h3 {
     color: #333;
     font-size: 24px;
@@ -13,7 +35,6 @@ form label {
     margin-top: 15px;
 }
 
-/* input, textarea*/
 form input[type="text"],
 form input[type="number"],
 form textarea {
@@ -27,9 +48,12 @@ form textarea {
 form input:focus,
 form textarea:focus {
     border-color: #007bff;
-    outline: none;
+    outline:     none;
 }
-
+textarea{
+    min-height: fit-content;
+    resize: vertical;
+}
 .radio-group {
     display: flex;
     gap: 20px;
@@ -79,16 +103,26 @@ form input[type="file"] {
 
 .remove-btn {
     position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 24px;
-    height: 24px;
-    background: red;
-    color: white;
+    top: 0;
+    right: 0;
+    margin: 2px;
+    width: 18px;
+    height: 18px;
+
+    background: #ccc;
+    color: rgb(24, 18, 18);
+
+    border: none;
     border-radius: 50%;
+    
+    font-size: 12px;
+    font-weight: bold;
     cursor: pointer;
-    text-align: center;
-    line-height: 24px;
+    padding: 0;
+}
+.remove-btn:hover{
+    background: #2b2929;
+    color: rgb(150, 137, 137);
 }
 
 form button[type="submit"] {

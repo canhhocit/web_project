@@ -1,6 +1,11 @@
-async function renderTab1(tabIndex) {
-    if (tabIndex !== 1) return;
+let currentTab = 1;
 
+async function renderTab(tabIndex) {
+    // =========================== title_here ==================================================
+    // document.getElementById("id_content_tab").dataset.tab = tabIndex;
+    currentTab = tabIndex;
+    console.log("tab hiện tại:" + currentTab);
+    // =========================================================================================
     const content = document.getElementById("content");
     content.innerHTML =
         "<div style='padding:20px;text-align:center'>Đang tải dữ liệu...</div>";
@@ -8,7 +13,7 @@ async function renderTab1(tabIndex) {
     try {
         const list = await fetchDataTab(tabIndex);
 
-        if (list.status === "error") {
+        if (list && list.status === "error") {
             content.innerHTML = `<div style='color:red;text-align:center'>${list.message}</div>`;
             return;
         }
@@ -16,6 +21,7 @@ async function renderTab1(tabIndex) {
         renderList(list, tabIndex);
     } catch (err) {
         console.error(err);
+
         content.innerHTML =
             "<div style='color:red;text-align:center'>Lỗi kết nối server</div>";
     }
@@ -39,50 +45,48 @@ function renderList(list, tabIndex) {
 
     if (!Array.isArray(list) || list.length === 0) {
         content.innerHTML =
-            "<div style='padding:20px;text-align:center'>Bạn chưa thuê xe nào.</div>";
+            "<div style='padding:20px;text-align:center'>Bạn không có lịch sử giao dịch nào ở mục này.</div>";
         return;
     }
 
     list.forEach((item) => {
-        content.insertAdjacentHTML("beforeend", renderRow(item));
+        content.insertAdjacentHTML("beforeend", renderRow(item, tabIndex));
     });
 }
 
-function renderRow(item) {
+function renderRow(item, tabIndex) {
+    const showReturn = tabIndex === 1;
+
+    const priceText = item.priceText ?? formatVND(item.price);
+
     return `
     <div class="row" data-idhoadon="${item.idhoadon}">
         <div class="image">
-            <img 
-                src="${item.image}" 
-                alt="${item.name}" 
-                onerror="this.onerror=null; this.src='/web_project/View/image/none_image.png'"
-            >
+        <img
+            src="${item.image}"
+            alt="${item.name}"
+            onerror="this.onerror=null; this.src='/web_project/View/image/none_image.png'"
+        >
         </div>
 
         <div class="info">
-            <div class="name" style="font-weight:bold">${item.name}</div>
-            <div class="sub-info" style="font-size:0.9em; color:#666">Mã HĐ: ${
-                item.idhoadon
-            }</div>
-            <div class="price" style="color:red; font-weight:bold">${formatVND(
-                item.price
-            )}</div>
-            <span class="status ${
-                item.statusClass
-            }" style="padding: 2px 8px; border-radius:10px; font-size:0.8em; background:#fff3cd; color:#856404">${
-        item.status
-    }</span>
+        <div class="name" style="font-weight:bold">${item.name}</div>
+        <div class="sub-info" style="font-size:0.9em; color:#666">
+            Mã HĐ: ${item.idhoadon}
         </div>
-        
+        <div class="price" style="color:red; font-weight:bold">${priceText}</div>
+        <span class="status ${item.statusClass}">${item.status}</span>
+        </div>
+
         <div class="actions">
-            <button class="btn-view" style="margin-right:5px">Chi tiết</button>
-            
-            <button class="btn-return">Trả xe</button> 
+        <button class="btn-view" style="margin-right:5px">Chi tiết</button>
+        ${showReturn ? `<button class="btn-return">Trả xe</button>` : ``}
         </div>
     </div>
     `;
 }
 
+// Event delegation: xử lý click cho cả tab1/tab2
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("content").addEventListener("click", (e) => {
         const row = e.target.closest(".row");
@@ -90,13 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const idhoadon = row.dataset.idhoadon;
 
-        // Trả xe
         if (e.target.classList.contains("btn-return")) {
             showModal(idhoadon); // từ thanhtoan.js
             return;
         }
 
-        // Xem chi tiết
         if (e.target.classList.contains("btn-view")) {
             xemChiTietHoaDon(idhoadon);
         }
@@ -108,7 +110,7 @@ function xemChiTietHoaDon(idhoadon) {
     const existingModal = document.getElementById("modalOverlay_xemhd");
 
     if (!existingModal) {
-        fetch("/web_project/components/nguyen_modal_xemhd.html")
+        fetch("/web_project/components/nguyen_modal_xemhd1.html")
             .then((res) => {
                 if (!res.ok) throw new Error("Không tải được file modal");
                 return res.text();
@@ -131,7 +133,9 @@ function initModal(idhoadon) {
     const btnClose = document.getElementById("closeModal_xemhd");
 
     modal.dataset.xeId = idhoadon;
-    openModal(idhoadon);
+    setTimeout(() => {
+        openModal(idhoadon);
+    }, 0);
     btnClose.onclick = () => closeModal();
 
     modal.addEventListener("click", (e) => {
@@ -141,7 +145,6 @@ function initModal(idhoadon) {
 
 function openModal(idhoadon) {
     const modal = document.getElementById("modalOverlay_xemhd");
-
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
 
@@ -155,6 +158,12 @@ function closeModal() {
 }
 
 function loadProductData(idhoadon) {
+    // =========================== title_here ==================================================
+    // const tab = Number(
+    //     document.getElementById("id_content_tab").dataset.tab || -1
+    // );
+    console.log("hiện tab:", currentTab);
+    // =========================================================================================
     fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -173,6 +182,9 @@ function loadProductData(idhoadon) {
             const hd = data.hoadon;
             const anh = data.anhxe;
             const xe = data.xe;
+            //chưa xết được loại xe
+            console.log("có loại xe", xe.loai);
+            const thanhtoan = data.thanhtoan;
 
             document.getElementById("title_xe_xemhd").innerText = xe.tenxe;
             document.getElementById("anhxe_xemhd").src = anh.duongdan;
@@ -195,11 +207,10 @@ function loadProductData(idhoadon) {
                 hd.ngaytra
             );
 
-            const days = Math.ceil(
+            let days = Math.ceil(
                 (new Date(hd.ngaytra) - new Date(hd.ngaymuon)) /
                     (1000 * 60 * 60 * 24)
             );
-            document.getElementById("songaythue_xemhd").innerText = days;
 
             document.getElementById("sumprice_xemhd").innerText = formatVND(
                 hd.tongtien
@@ -212,6 +223,40 @@ function loadProductData(idhoadon) {
             const btnThue = document.getElementById("btnthue_xemhd");
             if (btnThue) btnThue.style.display = "none";
 
+            const realRentRow = document.getElementById("realrent_row_xemhd");
+            const realRentLabel = document.getElementById(
+                "realrent_label_xemhd"
+            );
+            const realRentDate = document.getElementById("realrent_date_xemhd");
+            const sumLabel = document.getElementById("sumprice_label_xemhd");
+
+            if (realRentRow) realRentRow.classList.add("hidden");
+            if (realRentLabel) realRentLabel.innerText = "";
+            if (realRentDate) realRentDate.innerText = "";
+
+            // lấy bản ghi thanh toán đầu tiên
+            const tt = Array.isArray(thanhtoan)
+                ? thanhtoan[0] || null
+                : thanhtoan;
+
+            if (currentTab === 2) {
+                realRentRow.classList.remove("hidden");
+
+                console.log("đã vào dduoj if tab2");
+                realRentLabel.innerText = "Ngày trả thực tế";
+                realRentDate.innerText = formatDate(tt?.ngaythanhtoan);
+                sumLabel.innerText = "Tổng tiền";
+
+                days = Math.ceil(
+                    (new Date(tt.ngaythanhtoan) - new Date(hd.ngaymuon)) /
+                        (1000 * 60 * 60 * 24)
+                );
+            } else {
+                if (sumLabel) sumLabel.innerText = "Chi phí dự kiến";
+            }
+
+            document.getElementById("songaythue_xemhd").innerText = days;
+
             disableInputs();
             adjustUIForViewMode();
         })
@@ -219,7 +264,9 @@ function loadProductData(idhoadon) {
 }
 
 function formatVND(number) {
-    return parseInt(number).toLocaleString("vi-VN") + " đ";
+    const n = Number(number);
+    if (!Number.isFinite(n)) return `${number ?? ""}`;
+    return n.toLocaleString("vi-VN") + " đ";
 }
 
 function disableInputs() {

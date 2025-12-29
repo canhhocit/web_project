@@ -29,7 +29,7 @@ class vehicleController
         // check login
         if (!isset($_SESSION['idtaikhoan'])) {
             echo "<script>
-            alert('Vui lòng đăng nhập để đăng xe!');
+            alert('Vui lòng đăng nhập trước!');
             window.location='/web_project/View/taikhoan/login.php';
         </script>";
             exit;

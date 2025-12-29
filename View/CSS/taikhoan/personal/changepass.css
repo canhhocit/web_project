@@ -9,18 +9,15 @@
     color: #333;
 }
 
-/* Layout: 2 cột */
 .password-container {
     display: flex;
     gap: 30px;
 }
-
-/* Cột trái: Form */
+/* left */
 .password-form {
     flex: 1;
 }
 
-/* Mỗi ô input */
 .field {
     margin-bottom: 20px;
 }
@@ -47,7 +44,6 @@
     outline: none;
 }
 
-/* Thông báo lưu ý */
 .notice {
     display: flex;
     align-items: center;
@@ -64,7 +60,6 @@
     font-size: 1.2rem;
 }
 
-/* Nút bấm */
 .form-actions {
     display: flex;
     gap: 10px;
@@ -98,7 +93,7 @@
     background: #5a6268;
 }
 
-/* Cột phải: Hướng dẫn */
+/* right */
 .security-tips {
     flex: 1;
 }

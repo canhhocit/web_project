@@ -39,6 +39,19 @@ class taikhoanDAO
         $rs = mysqli_query($this->conn, "select * from thongtintaikhoan where idtaikhoan = '$idtaikhoan'");
         return mysqli_num_rows($rs) > 0;
     }
+    public function checkdefaultAvatar($idtaikhoan){
+        $rs = mysqli_query($this->conn, "SELECT anhdaidien FROM thongtintaikhoan WHERE idtaikhoan = '$idtaikhoan'");
+        $row = mysqli_fetch_assoc($rs);
+        $avt = $row['anhdaidien'];
+        if($avt==='default-avt.jpg'){
+            return true;
+        }
+        return false;
+    }
+    public function delAvatar($idtaikhoan){
+        return mysqli_query($this->conn, "update thongtintaikhoan set anhdaidien='default-avt.jpg' where idtaikhoan = '$idtaikhoan'");
+       
+    }
     public function checkThongtinTK_isNULL($idtaikhoan)
     {
         $rs = mysqli_query($this->conn, "SELECT hoten, email,sdt,cccd FROM thongtintaikhoan where idtaikhoan = '$idtaikhoan'");
