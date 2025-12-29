@@ -192,7 +192,7 @@ switch ($controller) {
 
     case 'about':
         require_once "Controller/AboutController.php";
-        $about = new AboutController();
+        $about = new AboutController($conn);
         if ($action === 'addWork') {
             $about->addWork();
         } else {

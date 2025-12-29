@@ -62,6 +62,13 @@ class taikhoanDAO
 
         return false; 
     }
+    public function checkUserforgot($username){
+         $rs = mysqli_query($this->conn, "SELECT * FROM taikhoan WHERE username = '$username'");
+        if(mysqli_num_rows($rs)>0){
+            return true;
+        }
+        return false;
+    }
 
     
     //THÔNG TIN TÀI KHOẢN
@@ -120,7 +127,11 @@ class taikhoanDAO
         $result = mysqli_query($this->conn, $sql);
         return mysqli_num_rows($result) > 0;
     }
-
+    public function updateForgotpass($username, $newpass)
+    {
+        $sql = "UPDATE taikhoan SET pass = '$newpass' WHERE username = '$username'";
+        return mysqli_query($this->conn, $sql);
+    }
     public function updatePassword($idtaikhoan, $newpass)
     {
         $sql = "UPDATE taikhoan SET pass = '$newpass' WHERE idtaikhoan = '$idtaikhoan'";
