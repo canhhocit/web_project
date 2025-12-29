@@ -1,13 +1,17 @@
 <?php
     require_once "Model/DAO/vehicleDAO.php";
+    require_once "Model/DAO/nguyen_hoadonDAO.php";
     require_once "Model/Database/dbconnect.php";
     require_once "Model/Object/xe.php";
 
     class HomeController{
         private $vehicleDAO;
+        private $hoadonDAO;
+        
         public function __construct(){
             global $conn;
             $this->vehicleDAO = new VehicleDAO($conn);
+            $this->hoadonDAO = new nguyen_hoadonDAO($conn);
         }
         public function index(){
             // timf kiem xe 
@@ -23,10 +27,12 @@
             
             if (!empty($searchList)) {
                 foreach ($searchList as $car){
-                    if ($car->get_idchuxe() != $curentUserID) {
+                    $idxe = $car->get_idxe();
+                    
+                    // Bỏ qua xe của chính mình và xe đang được thuê (trangthai = 0)
+                    if ($car->get_idchuxe() != $curentUserID && !$this->hoadonDAO->isXeDangDuocThue($idxe)) {
                         $listCar[] = $car;
                         // Lấy ảnh cho xe này
-                        $idxe = $car->get_idxe();
                         $listCarImages[$idxe] = $this->vehicleDAO->getAnhxebyIdxe($idxe);
                     }
                 }
