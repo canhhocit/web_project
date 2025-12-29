@@ -33,8 +33,7 @@
     }
 ?>
 
-
-/**
+<!-- /**
 //UPDATE
     public function upTV($id){
         $sql = "UPDATE thanhvien_nhom SET ten_thanhvien = ? where id = ?";
@@ -69,4 +68,4 @@
     }
         return $listTV;
     }
-*/
+**/ -->
