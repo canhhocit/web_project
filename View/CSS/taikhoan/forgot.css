@@ -25,7 +25,7 @@ input {
 button {
   width: 100%;
   padding: 12px;
-  background: #4285f4;
+  background: #2b2420;
   color: white;
   border: none;
   border-radius: 5px;
@@ -34,7 +34,7 @@ button {
 }
 
 button:hover {
-  background: #357ae8;
+  background: #2b2d2f;
 }
 
 .back-login {
@@ -43,7 +43,7 @@ button:hover {
 }
 
 .back-login a {
-  color: #4285f4;
+  color: #526688;
   text-decoration: none;
 }
 

@@ -1,18 +1,18 @@
 // Validate form đổi mật khẩu
 document.getElementById('resetPasswordForm')?.addEventListener('submit', function(e) {
-    var newPass = document.getElementById('new_password').value;
-    var confirmPass = document.getElementById('confirm_password').value;
-    var captcha = grecaptcha.getResponse();
+    let newPass = document.getElementById('new_password').value;
+    let confirmPass = document.getElementById('confirm_password').value;
+    let captcha = grecaptcha.getResponse();
     
-    var errorNew = document.getElementById('error_new');
-    var errorConfirm = document.getElementById('error_confirm');
-    var errorCaptcha = document.getElementById('error_captcha');
+    let errorNew = document.getElementById('error_new');
+    let errorConfirm = document.getElementById('error_confirm');
+    let errorCaptcha = document.getElementById('error_captcha');
     
     errorNew.textContent = '';
     errorConfirm.textContent = '';
     errorCaptcha.textContent = '';
     
-    var isValid = true;
+    let isValid = true;
     
     // if (newPass.length < 6) {
     //     errorNew.textContent = 'Mật khẩu phải có ít nhất 6 ký tự';

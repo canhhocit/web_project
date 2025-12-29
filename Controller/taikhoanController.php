@@ -394,20 +394,6 @@ class taikhoanController
             $new_password = trim($_POST['new_password'] ?? "");
             $confirm_password = trim($_POST['confirm_password'] ?? "");
 
-            if (empty($new_password) || empty($confirm_password)) {
-                echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); history.back();</script>";
-                exit;
-            }
-
-            if ($new_password !== $confirm_password) {
-                echo "<script>alert('Mật khẩu xác nhận không khớp!'); history.back();</script>";
-                exit;
-            }
-
-            // if (strlen($new_password) < 6) {
-            //     echo "<script>alert('Mật khẩu phải có ít nhất 6 ký tự!'); history.back();</script>";
-            //     exit;
-            // }
 
             if ($this->Adao->updateForgotpass($username, $new_password)) {
                 unset($_SESSION['reset_username']);
