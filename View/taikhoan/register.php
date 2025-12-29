@@ -22,7 +22,7 @@
         <i><span id="msg"></span></i>
       </div>
       <div class="btn">
-        <a href="login.php" id="btnBack">Back</a>
+        <button id="btnBack" onclick="history.back()">Back</button>
         <button type="submit" id="btnRegister">Register</button>
       </div>
     </form>

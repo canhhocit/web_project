@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
 }
+
 body {
     font-family: Arial, sans-serif;
     background: #f5f5f5;
@@ -14,7 +15,7 @@ body {
     background: #fff;
     padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -28,7 +29,8 @@ label {
     margin-top: 15px;
 }
 
-input,textarea {
+input,
+textarea {
     width: 100%;
     padding: 8px;
     margin-top: 6px;
@@ -48,9 +50,9 @@ textarea {
     margin-top: 8px;
 }
 
-/* label chung */
 .radio-group label {
-    display: inline-flex;      /* giữ trên 1 dòng */
+    display: inline-flex;
+    /* giữ cung dong */
     align-items: center;
     gap: 6px;
     font-weight: normal;
@@ -60,7 +62,7 @@ textarea {
 
 .radio-group input[type="radio"] {
     margin: 0;
-    width: auto;             
+    width: auto;
 }
 
 button {
@@ -102,31 +104,27 @@ button:hover {
     object-fit: cover;
 }
 
-/* ===== Nút xóa ảnh ===== */
+/* rv btn img*/
 .remove-btn {
     position: absolute;
     top: 0;
     right: 0;
-
-    transform: translate(5%, -80%); /* đẩy nút ra góc ngoài */
-    
+    margin: 2px;
     width: 18px;
     height: 18px;
 
-    background: rgba(255, 0, 0, 0.95);
-    color: white;
+    background: #ccc;
+    color: rgb(24, 18, 18);
 
     border: none;
     border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    
     font-size: 12px;
     font-weight: bold;
     cursor: pointer;
     padding: 0;
 }
-
-
+.remove-btn:hover{
+    background: #2b2929;
+    color: rgb(150, 137, 137);
+}
