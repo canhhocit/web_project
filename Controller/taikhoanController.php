@@ -189,13 +189,13 @@ class taikhoanController
     public function deleteAvatar()
     {
         if (!isset($_SESSION['idtaikhoan'])) {
-                echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
-                exit;
-            }
+            echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
+            exit;
+        }
 
-            $idtaikhoan = $_SESSION['idtaikhoan'];
-        if($this->Adao->delAvatar($idtaikhoan)){
-             echo "<script>alert('Xóa ảnh thành công!');
+        $idtaikhoan = $_SESSION['idtaikhoan'];
+        if ($this->Adao->delAvatar($idtaikhoan)) {
+            echo "<script>alert('Xóa ảnh thành công!');
               window.location='/web_project/index.php?controller=taikhoan&action=personal';</script>";
             exit;
         }
@@ -316,7 +316,7 @@ class taikhoanController
 
         $idtaikhoan = $_SESSION['idtaikhoan'];
         $thongtin = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
-        $defaultAvatar= $this->Adao->checkdefaultAvatar($idtaikhoan);
+        $defaultAvatar = $this->Adao->checkdefaultAvatar($idtaikhoan);
 
         //  selection = myvehicle
         $xeWithImages = [];
@@ -358,5 +358,67 @@ class taikhoanController
 
 
         include_once __DIR__ . "/../View/taikhoan/personal.php";
+    }
+
+    public function forgot()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['check_username'])) {
+            $username = trim($_POST['username'] ?? "");
+
+            if (empty($username)) {
+                echo "<script>alert('Vui lòng nhập username!'); history.back();</script>";
+                exit;
+            }
+
+            if ($this->Adao->checkUserforgot($username)) {
+                $_SESSION['reset_username'] = $username;
+                header("Location: /web_project/View/taikhoan/reset_password.php");
+                exit;
+            } else {
+                echo "<script>alert('Username không tồn tại!'); history.back();</script>";
+                exit;
+            }
+        }
+    }
+
+    public function resetPassword()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if (!isset($_SESSION['reset_username'])) {
+                echo "<script>alert('Phiên làm việc hết hạn!'); 
+            window.location.href='/web_project/View/taikhoan/forgot.php';</script>";
+                exit;
+            }
+
+            $username = $_SESSION['reset_username'];
+            $new_password = trim($_POST['new_password'] ?? "");
+            $confirm_password = trim($_POST['confirm_password'] ?? "");
+
+            if (empty($new_password) || empty($confirm_password)) {
+                echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); history.back();</script>";
+                exit;
+            }
+
+            if ($new_password !== $confirm_password) {
+                echo "<script>alert('Mật khẩu xác nhận không khớp!'); history.back();</script>";
+                exit;
+            }
+
+            // if (strlen($new_password) < 6) {
+            //     echo "<script>alert('Mật khẩu phải có ít nhất 6 ký tự!'); history.back();</script>";
+            //     exit;
+            // }
+
+            if ($this->Adao->updateForgotpass($username, $new_password)) {
+                unset($_SESSION['reset_username']);
+                echo "<script>
+                alert('Đổi mật khẩu thành công!');
+                window.location.href='/web_project/View/taikhoan/login.php';
+            </script>";
+            } else {
+                echo "<script>alert('Đổi mật khẩu thất bại!'); history.back();</script>";
+            }
+            exit;
+        }
     }
 }
