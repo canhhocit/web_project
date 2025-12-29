@@ -1,56 +1,3 @@
-<?php
-global $conn; 
-
-// if (session_status() === PHP_SESSION_NONE) {
-//     session_start();
-// }
-
-$idtaikhoan = $_SESSION['idtaikhoan']; 
-
-$data_from_db = [
-    1 => [], // Đang thuê
-    2 => []  // Đã thuê
-];
-
-if ($conn) {
-    $sql1 = "SELECT hd.idhoadon, x.tenxe, x.giathue 
-            FROM hoadon hd 
-            JOIN xe x ON hd.idxe = x.idxe 
-            WHERE hd.idtaikhoan = $idtaikhoan AND hd.trangthai = 0";
-    $res1 = mysqli_query($conn, $sql1);
-    while ($row = mysqli_fetch_assoc($res1)) {
-        $data_from_db[1][] = [
-            "idhoadon" => $row['idhoadon'],
-            "name" => $row['tenxe'],
-            "price" => number_format($row['giathue'], 0, ',', '.') . "đ / ngày",
-            "status" => "Đang thuê",
-            "statusClass" => "yellow",
-            "showReturn" => true
-        ];
-    }
-
-
-    $sql2 = "SELECT hd.idhoadon, x.tenxe, hd.tongtien 
-            FROM hoadon hd 
-            JOIN xe x ON hd.idxe = x.idxe 
-            WHERE hd.idtaikhoan = $idtaikhoan AND hd.trangthai = 1";
-    $res2 = mysqli_query($conn, $sql2);
-    while ($res2 && $row = mysqli_fetch_assoc($res2)) {
-        $data_from_db[2][] = [
-            "idhoadon" => $row['idhoadon'],
-            "name" => $row['tenxe'],
-            "price" => "Tổng: " . number_format($row['tongtien'], 0, ',', '.') . "đ",
-            "status" => "Đã trả xe",
-            "statusClass" => "green",
-            "showReturn" => false
-        ];
-    }
-}
-
-$jsonData = json_encode($data_from_db);
-?>
-
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -70,7 +17,7 @@ $jsonData = json_encode($data_from_db);
         <div class="container_table_quanly">
             <div class="tabs">
                 <div class="tab active" onclick="switchTab(1)">Đang thuê</div>
-                <div class="tab" onclick="switchTab(2)">Đã thuê</div>
+                <div id="id_content_tab" class="tab" onclick="switchTab(2)">Đã thuê</div>
             </div>
             <div class="content_container_quanly">
                 <div class="content" id="content"></div>
@@ -126,52 +73,24 @@ $jsonData = json_encode($data_from_db);
     <script src="/web_project/View/JS/nguyen_quanly.js"></script>
     <script src="/web_project/View/JS/thanhtoan.js"></script> 
     <script>
-        // Đổ dữ liệu thật từ PHP vào biến JS
-        const data = <?php echo $jsonData; ?>;
 
         function switchTab(tabIndex) {
-        // UI Tabs
+            // UI Tabs
             document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
             const tabs = document.querySelectorAll(".tab");
             if(tabs[tabIndex-1]) tabs[tabIndex-1].classList.add("active");
-
             const content = document.getElementById("content");
             content.innerHTML = "";
-
-            if (!data[tabIndex] || data[tabIndex].length === 0) {
-                content.innerHTML = "<div class='text-center p-4'>Bạn không có lịch sử giao dịch nào ở mục này.</div>";
-                return;
-            }
-            if(tabIndex === 1){
-                if (typeof renderTab1 === "function") {
-                    renderTab1(1); 
-                    console.log("1111111111111111");
-                } else {
-                    console.error("Chưa load được file nguyen_quanly.js");
-                }
-                return;
-            }
             
-            data[tabIndex].forEach((item) => {
-                        content.innerHTML += `
-                        <div class="row">
-                            <div class="image">
-                                <img src="View/image/car_default.png" alt=""> 
-                            </div>
-                            <div class="info">
-                                <div class="name">${item.name} (Mã HĐ: ${item.idhoadon})</div>
-                                <div class="price">${item.price}</div>
-                                <span class="status ${item.statusClass}">${item.status}</span>
-                            </div>
-                            <div class="actions">
-                                <button class="btn-view">Chi tiết</button>
-                                ${item.showReturn ? `<button class="btn-return" onclick="showModal(${item.idhoadon})">Trả xe</button>` : ''}
-                            </div>
-                        </div>`;
-                    });
-                }
-
-    window.onload = () => switchTab(1);
+            // Gọi JS fetch cho cả tab 1 và tab 2
+            if (typeof renderTab === "function") {
+                renderTab(tabIndex);
+            } else {
+                console.error("Chưa load được file nguyen_quanly.js");
+            }
+        }
+        
+        window.onload = () => switchTab(1);
     </script>
 </body>
 </html>
