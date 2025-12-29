@@ -101,11 +101,11 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
                                 <!-- Thông tin cá nhân -->
                                 <li>
                                     <a class="dropdown-item" href="index.php?controller=taikhoan&action=personal">
-                                        <i class="fa-solid fa-user me-2"></i> Thông tin cá nhân
+                                        <i class="fa-solid fa-user me-2"></i> Cá nhân hóa
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="index.php?controller=taikhoan&action=personal&selection=cars">
+                                    <a class="dropdown-item" href="index.php?controller=taikhoan&action=personal&selection=myvehicle">
                                         <i class="fa-solid fa-car me-2"></i> Quản lý xe của tôi
                                     </a>
                                 </li>
