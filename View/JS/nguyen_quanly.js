@@ -110,7 +110,7 @@ function xemChiTietHoaDon(idhoadon) {
     const existingModal = document.getElementById("modalOverlay_xemhd");
 
     if (!existingModal) {
-        fetch("/web_project/components/nguyen_modal_xemhd12.html")
+        fetch("/web_project/components/nguyen_modal_xemhd1.html")
             .then((res) => {
                 if (!res.ok) throw new Error("Không tải được file modal");
                 return res.text();
@@ -240,6 +240,9 @@ function loadProductData(idhoadon) {
                 : thanhtoan;
 
             if (currentTab === 2) {
+                realRentRow.classList.remove("hidden");
+
+                console.log("đã vào dduoj if tab2");
                 realRentLabel.innerText = "Ngày trả thực tế";
                 realRentDate.innerText = formatDate(tt?.ngaythanhtoan);
                 sumLabel.innerText = "Tổng tiền";
