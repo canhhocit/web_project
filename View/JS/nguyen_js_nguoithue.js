@@ -1,112 +1,128 @@
-let currentTab = 1;
+console.log("liên kết file thành công");
 
-async function renderTab(tabIndex) {
-    // =========================== title_here ==================================================
-    // document.getElementById("id_content_tab").dataset.tab = tabIndex;
-    currentTab = tabIndex;
-    console.log("tab hiện tại:" + currentTab);
-    // =========================================================================================
+async function renderTabNguoiThue() {
     const content = document.getElementById("content");
+    const emptyState = document.getElementById("emptyState");
+
     content.innerHTML =
         "<div style='padding:20px;text-align:center'>Đang tải dữ liệu...</div>";
+    if (emptyState) emptyState.style.display = "none";
 
     try {
-        const list = await fetchDataTab(tabIndex);
-        console.log("dữ liệu thật của list:" + list);
-        if (list && list.status === "error") {
-            content.innerHTML = `<div style='color:red;text-align:center'>${list.message}</div>`;
+        const data = await fetchNguoiThue();
+        console.log("API trả về:", data);
+        if (!data?.success) {
+            content.innerHTML = `<div style='color:red;text-align:center'>${
+                data?.message || "Không lấy được dữ liệu"
+            }</div>`;
+            if (emptyState) emptyState.style.display = "none";
             return;
         }
 
-        renderList(list, tabIndex);
+        const list = data.data;
+        renderListNguoiThue(list);
     } catch (err) {
         console.error(err);
-
-        content.innerHTML =
+        document.getElementById("content").innerHTML =
             "<div style='color:red;text-align:center'>Lỗi kết nối server</div>";
     }
 }
 
-async function fetchDataTab(tabIndex) {
+async function fetchNguoiThue() {
     const response = await fetch(
-        "/web_project/Controller/nguyen_quanly_Controller.php",
+        "/web_project/Controller/nguyen_thueXe_Controller.php",
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ tab: tabIndex }),
+            body: JSON.stringify({ action: "laythongtinnguoithue" }),
         }
     );
     return await response.json();
 }
 
-function renderList(list, tabIndex) {
+function renderListNguoiThue(list) {
     const content = document.getElementById("content");
     content.innerHTML = "";
 
     if (!Array.isArray(list) || list.length === 0) {
-        content.innerHTML =
-            "<div style='padding:20px;text-align:center'>Bạn không có lịch sử giao dịch nào ở mục này.</div>";
+        if (emptyState) emptyState.style.display = "block";
         return;
     }
 
-    list.forEach((item) => {
-        console.log("item hiện tại:", item);
-        content.insertAdjacentHTML("beforeend", renderRow(item, tabIndex));
+    if (emptyState) emptyState.style.display = "none";
+
+    // Map từ cấu trúc
+    list.forEach((raw) => {
+        const hd = raw.hoadon || {};
+        const xe0 = Array.isArray(raw.xe) ? raw.xe[0] : raw.xe; // trả xe là mảng 1 phần tử
+        const img0 = Array.isArray(raw.anhxe) ? raw.anhxe[0] : raw.anhxe;
+
+        const item = {
+            idhoadon: raw.idhoadon ?? hd.idhoadon,
+            idxe: raw.idxe ?? raw.idxe ?? hd.idxe ?? raw.idxe,
+            name: xe0?.tenxe ?? `Xe #${raw.idxe ?? raw.idxe ?? raw.idxe ?? ""}`,
+            image: img0?.duongdan
+                ? `/web_project/View/image/${img0.duongdan}`
+                : "/web_project/View/image/none_image.png",
+            price: hd.tongtien ?? 0,
+            status: Number(hd.trangthai) === 0 ? "Đang thuê" : "Đã trả",
+            statusClass: Number(hd.trangthai) === 0 ? "yellow" : "green",
+        };
+
+        content.insertAdjacentHTML("beforeend", renderRow(item));
     });
 }
 
-function renderRow(item, tabIndex) {
-    const showReturn = tabIndex === 1;
-
+function renderRow(item) {
     const priceText = item.priceText ?? formatVND(item.price);
 
     return `
     <div class="row" data-idhoadon="${item.idhoadon}">
         <div class="image">
-        <img
-            src="${item.image}"
-            alt="${item.name}"
-            onerror="this.onerror=null; this.src='/web_project/View/image/none_image.png'"
-        >
+            <img
+                src="${item.image}"
+                alt="${item.name}"
+                onerror="this.onerror=null; this.src='/web_project/View/image/none_image.png'"
+            >
         </div>
 
         <div class="info">
-        <div class="name" style="font-weight:bold">${item.name}</div>
-        <div class="sub-info" style="font-size:0.9em; color:#666">
-            Mã HĐ: ${item.idhoadon}
+            <div class="name" style="font-weight:bold">${item.name}</div>
+            <div class="sub-info" style="font-size:0.9em; color:#666">
+                Mã HĐ: ${item.idhoadon}
+            </div>
+            <div class="price" style="color:red; font-weight:bold">${priceText}</div>
+            <span class="status ${item.statusClass}">${item.status}</span>
+            
         </div>
-        <div class="price" style="color:red; font-weight:bold">${priceText}</div>
-        <span class="status ${item.statusClass}">${item.status}</span>
-        </div>
-
-        <div class="actions">
-        <button class="btn-view" style="margin-right:5px">Chi tiết</button>
-        ${showReturn ? `<button class="btn-return">Trả xe</button>` : ``}
-        </div>
+            <div class="actions">
+            <button class="btn-view" style="margin-right:5px">Chi tiết</button>
+            </div>
     </div>
     `;
 }
 
+// =========================== title_here ==================================================
 document.addEventListener("DOMContentLoaded", () => {
+    renderTabNguoiThue();
+
     document.getElementById("content").addEventListener("click", (e) => {
         const row = e.target.closest(".row");
         if (!row) return;
 
         const idhoadon = row.dataset.idhoadon;
 
-        if (e.target.classList.contains("btn-return")) {
-            showModal(idhoadon);
-            return;
-        }
-
+        // Trang này chỉ cần xem chi tiết
         if (e.target.classList.contains("btn-view")) {
-            xemChiTietHoaDon(idhoadon);
+            console.log("Xem chi tiết hóa đơn thuê xe ID:", idhoadon);
+
+            xemChiTietHoaDonthue(idhoadon);
         }
     });
 });
 
-function xemChiTietHoaDon(idhoadon) {
-    console.log("Xem chi tiết hoá đơn:", idhoadon);
+function xemChiTietHoaDonthue(idhoadon) {
+    console.log("Xem chi tiết hóa đơn thuê xe ID:", idhoadon);
 
     const existingModal = document.getElementById("modalOverlay_xemhd");
 
@@ -126,10 +142,6 @@ function xemChiTietHoaDon(idhoadon) {
         openModal(idhoadon);
     }
 }
-// bên dưới là logic hiển thị ở nguyen_test khi nhấn thuê thì hiện model
-// ở đây là xem chi tiết khi nhấn xem chi tiết khi đang thuê và đã thuê
-
-// =========================== title_here ==================================================
 function initModal(idhoadon) {
     const modal = document.getElementById("modalOverlay_xemhd");
     const btnClose = document.getElementById("closeModal_xemhd");
@@ -158,13 +170,11 @@ function closeModal() {
     modal.classList.remove("active");
     document.body.style.overflow = "auto";
 }
-
 function loadProductData(idhoadon) {
     // =========================== title_here ==================================================
     // const tab = Number(
     //     document.getElementById("id_content_tab").dataset.tab || -1
     // );
-    console.log("hiện tab:", currentTab);
     // =========================================================================================
     fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
@@ -244,27 +254,30 @@ function loadProductData(idhoadon) {
             if (realRentLabel) realRentLabel.innerText = "";
             if (realRentDate) realRentDate.innerText = "";
 
-            // lấy bản ghi thanh toán đầu tiên
+            // =========================== title_here ==================================================
+            const isDaTra = Number(hd.trangthai) === 1;
             const tt = Array.isArray(thanhtoan)
                 ? thanhtoan[0] || null
-                : thanhtoan;
+                : thanhtoan || null;
 
-            if (currentTab === 2) {
-                realRentRow.classList.remove("hidden");
+            if (isDaTra && tt?.ngaythanhtoan) {
+                if (realRentRow) realRentRow.classList.remove("hidden");
 
-                console.log("đã vào dduoj if tab2");
                 realRentLabel.innerText = "Ngày trả thực tế";
-                realRentDate.innerText = formatDate(tt?.ngaythanhtoan);
-                sumLabel.innerText = "Tổng tiền";
+                realRentDate.innerText = formatDate(tt.ngaythanhtoan);
+                if (sumLabel) sumLabel.innerText = "Tổng tiền";
 
                 days = Math.ceil(
                     (new Date(tt.ngaythanhtoan) - new Date(hd.ngaymuon)) /
                         (1000 * 60 * 60 * 24)
                 );
             } else {
+                // đang thuê / chưa có thanh toán
+                if (realRentRow) realRentRow.classList.add("hidden");
                 if (sumLabel) sumLabel.innerText = "Chi phí dự kiến";
             }
 
+            // =========================================================================================
             document.getElementById("songaythue_xemhd").innerText = days;
 
             disableInputs();
@@ -273,10 +286,9 @@ function loadProductData(idhoadon) {
         .catch((err) => console.error("Fetch lỗi:", err));
 }
 
-function formatVND(number) {
-    const n = Number(number);
-    if (!Number.isFinite(n)) return `${number ?? ""}`;
-    return n.toLocaleString("vi-VN") + " đ";
+function formatVND(amount) {
+    const n = Number(amount ?? 0);
+    return n.toLocaleString("vi-VN") + " ₫";
 }
 
 function disableInputs() {
@@ -313,5 +325,4 @@ function adjustUIForViewMode() {
         btnPay.onclick = closeModal;
     }
 }
-
-// =========================================================================================
+// =============================================================================

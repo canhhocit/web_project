@@ -313,7 +313,7 @@
     </div>
 </div>
 
-<!-- ========== JAVASCRIPT ========== -->
+// =========================== title_here ==================================================
 <script>
 var RENT_PRICE = 0;
 var MAINTAIN_FEE = 0;
@@ -383,8 +383,8 @@ function loadProductData(xeId) {
         // window.CURRENT_USER_INFO = data.user; 
 
         RENT_PRICE = data.xe.price;
-        MAINTAIN_FEE = data.xe.type === "car" ? 100000 : 50000;
-        INSURANCE_FEE = data.xe.type === "car" ? 100000 : 50000;
+        MAINTAIN_FEE = data.xe.type === "Xe máy điện" ? 100000 : 50000;
+        INSURANCE_FEE = data.xe.type === "Xe máy điện" ? 100000 : 50000;
         TOTAL_COST = RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
         
         document.getElementById("feeBaoHiem_thuexe").innerText = formatVND(INSURANCE_FEE);

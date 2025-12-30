@@ -109,6 +109,11 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
                                         <i class="fa-solid fa-car me-2"></i> Quản lý xe của tôi
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="index.php?controller=thuexe&action=uinguoithue">
+                                        <i class="fa-solid fa-car me-2"></i> Xem thông tin người thuê xe
+                                    </a>
+                                </li>
                                 
                                 <li><hr class="dropdown-divider"></li>
 

@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <title>Quản lý thuê xe</title>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="View/CSS/thanhtoan.css" />
     <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
     <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_quanly.css" />
@@ -69,7 +67,6 @@
         </div>
     </div>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <script src="/web_project/View/JS/nguyen_quanly.js"></script>
     <script src="/web_project/View/JS/thanhtoan.js"></script> 
     <script>

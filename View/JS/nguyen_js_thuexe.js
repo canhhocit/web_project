@@ -67,7 +67,7 @@ function initModalXacNhan() {
         })
             .then((res) => res.json())
             .then((result) => {
-                console.log("✅ Kết quả cuối cùng:", result); // In kết quả đã xử lý
+                console.log(" Kết quả cuối cùng:", result);
                 if (result.success) {
                     alert("Thuê xe thành công!");
                     resetForm();
@@ -200,7 +200,7 @@ function formatVND(number) {
 }
 
 function resetForm() {
-    // 1. Reset input text & date
+    //  input text & date
     const INPUT_IDS = [
         "pickup_thuexe",
         "dropoff_thuexe",
@@ -218,18 +218,18 @@ function resetForm() {
         if (el) el.value = "";
     });
 
-    // 2. Reset checkbox
+    //  checkbox
     const CHECKBOX_IDS = ["terms_thuexe", "policy_thuexe"];
     CHECKBOX_IDS.forEach((id) => {
         const cb = document.getElementById(id);
         if (cb) cb.checked = false;
     });
 
-    // 3. Reset hiển thị ngày thuê & tiền
+    // ngày thuê & tiền
     document.getElementById("songaythue_thuexe").innerText = "0";
     document.getElementById("sumprice_thuexe").innerText = formatVND(0);
 
-    // 4. Reset biến global
+    // biến global
     TOTAL_COST = 0;
 }
 

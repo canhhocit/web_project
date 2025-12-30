@@ -33,7 +33,7 @@ if ($tab === 1) {
             FROM hoadon hd 
             JOIN xe x ON hd.idxe = x.idxe 
             WHERE hd.idtaikhoan = $idtaikhoan 
-            AND hd.trangthai = 0"; // Chỉ lấy xe chưa trả
+            AND hd.trangthai = 0"; 
 
     $res = mysqli_query($conn, $sql);
 

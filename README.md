@@ -42,7 +42,7 @@ website tương tác giữa người dùng với người dùng
 -   Phần lịch sử giao dịch: Hiển thị danh sách các hóa đơn đã thanh toán thành công.
 
 4. TRẦN TRUNG NGUYÊN
-    - ăn rồi lọ
+    - ăn rồi lọ...
 
 -   Phần tài khoản
     -   Đăng ký, đăng nhập, đăng xuất
