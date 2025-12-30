@@ -8,7 +8,8 @@
 body {
     height: 100vh;
     /* background-color:	rgb(237, 196, 164) ; */
-    background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url("https://wallpapers.com/images/hd/pretty-purple-1920-x-1080-background-tcqxrh4icc58kbyb.jpg") no-repeat center center fixed;
+    background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url("https://img5.thuthuatphanmem.vn/uploads/2021/12/07/anh-nen-cong-nghe-so-3d_012723200.jpg") 
+    no-repeat center center fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
