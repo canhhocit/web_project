@@ -84,7 +84,7 @@
                 <div class="d-grid gap-2">
                     <?php if (!isset($_SESSION['idtaikhoan'])): ?>
                         <!-- Chưa đăng nhập -->
-                        <a href="index.php?controller=taikhoan&action=login" class="btn btn-warning btn-lg fw-bold">
+                        <a href="index.php?controller=vehicle&action=checkLogin" class="btn btn-warning btn-lg fw-bold">
                             <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập để thuê xe
                         </a>
                     <?php elseif (isset($isOwner) && $isOwner): ?>

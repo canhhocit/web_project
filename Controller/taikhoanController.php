@@ -32,7 +32,10 @@ class taikhoanController
     public function index()
     {
         //$vehicles = $this->dao->getAll();
-        include_once "../View/vehicle/index.php";
+        echo "<script>
+                    alert('Nếu vào được đây thì lỗi rồi đấy:)))');
+                    </script>";
+        exit;
     }
     public function add()
     {
