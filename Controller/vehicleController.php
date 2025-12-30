@@ -190,8 +190,6 @@ class vehicleController
             exit;
         }
 
-        //sẽ check ở đây
-
         try {
             $listImgV = $this->Vdao->getAnhxebyIdxe($idxe);
             foreach ($listImgV as $anhxe) {

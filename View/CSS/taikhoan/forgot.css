@@ -36,6 +36,17 @@ button {
 button:hover {
   background: #2b2d2f;
 }
+button:focus{
+  animation: rung 0.8s ease-in-out 1;
+}
+
+@keyframes rung{
+   0%   { transform: translateX(0); }
+  25%  { transform: translateX(-5px); }
+  50%  { transform: translateX(5px); }
+  75%  { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
 
 .back-login {
   text-align: center;
@@ -57,7 +68,25 @@ button:hover {
   margin-top: 5px;
   text-align: center;
 }
+
 .boxcapcha {
   display: flex;
   justify-content: center;
+}
+
+#error_captcha {
+  color: chocolate;
+  font-size: 20px;
+  animation: append 1.2s linear infinite;
+
+}
+
+@keyframes append {
+  from {
+    opacity: 0.1;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

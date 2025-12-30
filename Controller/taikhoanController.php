@@ -90,7 +90,8 @@ class taikhoanController
                     $kq = $this->Adao->addThongTinTaiKhoan($idtaikhoan, $anhdaidien);
                     if (!$kq) {
                         echo "<script>alert('Lỗi tkController dòng 86!'); 
-        window.location='/web_project/View/taikhoan/login.php';</script>";
+                        window.location='/web_project/View/taikhoan/login.php';
+                        </script>";
                         exit;
                     }
                 }
@@ -140,8 +141,8 @@ class taikhoanController
                 $anhdaidien = $thongtinCu->get_anhdaidien();
             }
 
-            if (isset($_FILES['anhdaidien']) && $_FILES['anhdaidien']['error'] === UPLOAD_ERR_OK) {
-                //xoa anh cu tru mac dinh
+            if (isset($_FILES['anhdaidien']) && $_FILES['anhdaidien']['error'] === 0) {
+                //xoa anh cu - mac dinh
                 if ($anhdaidien != "default-avt.jpg") {
                     $oldImagePath = __DIR__ . "/../View/image/" . $anhdaidien;
                     if (file_exists($oldImagePath)) {
@@ -176,12 +177,7 @@ class taikhoanController
                         echo "<script>alert('Cập nhật thất bại!'); history.back();</script>";
                     }
                 } else {
-                    // if ($this->Adao->addThongTinTaiKhoan($thongtin)) {
-                    //     header("Location: /web_project/index.php");
-                    //     exit;
-                    // } else {
                     echo "<script>alert('Update thất bại!'); history.back();</script>";
-                    //}
                 }
             } catch (Exception $e) {
                 echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
