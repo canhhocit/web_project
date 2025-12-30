@@ -285,8 +285,8 @@ function disableInputs() {
     );
     inputs.forEach((input) => {
         input.disabled = true;
-        input.style.backgroundColor = "#2a2a2a";
-        input.style.color = "#bbbbbb";
+        input.style.backgroundColor = "#fefeff";
+        input.style.color = "#828282ff";
     });
 }
 
@@ -309,7 +309,7 @@ function adjustUIForViewMode() {
     if (btnPay) {
         btnPay.innerText = "Quay về";
         btnPay.style.display = "block";
-        btnPay.style.backgroundColor = "#6c757d";
+        btnPay.style.backgroundColor = "#abababff";
         btnPay.onclick = closeModal;
     }
 }

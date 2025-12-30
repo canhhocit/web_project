@@ -124,7 +124,7 @@
     <div class="container_modalThuexe">
         <span id="closeModal" class="close-btn">&times;</span>
         <div class="container_contentLeft_mdThuexe">
-            <h2 class="section-title" id="title_xe_thuexe">
+            <h2 class="section-title h2" id="title_xe_thuexe">
                 Totoro my's neighborhood
             </h2>
             <hr />
@@ -372,7 +372,7 @@ function loadProductData(xeId) {
     })
     .then(res => res.json())
     .then(data => {
-        document.getElementById("title_xe_thuexe").innerText = data.xe.name + " - " + xeId;
+        document.getElementById("title_xe_thuexe").innerText = data.xe.name;
         document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
         document.getElementById("anhxe_thuexe").src = "/web_project/View/image/" + data.anhxe.duongdan;
 
