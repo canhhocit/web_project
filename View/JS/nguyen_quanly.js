@@ -164,7 +164,7 @@ function loadProductData(idhoadon) {
     // const tab = Number(
     //     document.getElementById("id_content_tab").dataset.tab || -1
     // );
-    console.log("hiện tab:", currentTab);
+    console.log("hiện id:", idhoadon);
     // =========================================================================================
     fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
