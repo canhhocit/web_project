@@ -121,10 +121,6 @@ class vehicleController
             echo "<script>alert('Không có quyền sửa xe này!'); history.back();</script>";
             exit;
         }
-        // if($this->Vdao->checktrangthaithue($idxe)){
-        //     echo "<script>alert('Xe đang được thuê rồi!'); history.back();</script>";
-        //     exit;
-        // }
 
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return [
@@ -176,7 +172,7 @@ class vehicleController
                     }
                 }
 
-                echo "<script>alert('Cập nhật xe thành công!'); window.location='/web_project/index.php?controller=taikhoan&action=personal&selection=cars';</script>";
+                echo "<script>alert('Cập nhật xe thành công!'); window.location='/web_project/index.php?controller=taikhoan&action=personal&selection=myvehicle';</script>";
             } catch (Exception $e) {
                 echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
             }
@@ -194,8 +190,6 @@ class vehicleController
             exit;
         }
 
-        //sẽ check ở đây
-
         try {
             $listImgV = $this->Vdao->getAnhxebyIdxe($idxe);
             foreach ($listImgV as $anhxe) {
@@ -208,7 +202,7 @@ class vehicleController
             $this->Vdao->deleteAnhxebyIdXe($idxe);
 
             if ($this->Vdao->deleteXe($idxe)) {
-                echo "<script>alert('Xóa thành công!'); window.location='/web_project/index.php?controller=taikhoan&action=personal&selection=cars';</script>";
+                echo "<script>alert('Xóa thành công!'); window.location='/web_project/index.php?controller=taikhoan&action=personal&selection=myvehicle';</script>";
             } else {
                 throw new Exception("Xóa xe thất bại!");
             }

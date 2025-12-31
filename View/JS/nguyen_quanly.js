@@ -12,7 +12,7 @@ async function renderTab(tabIndex) {
 
     try {
         const list = await fetchDataTab(tabIndex);
-
+        console.log("dữ liệu thật của list:" + list);
         if (list && list.status === "error") {
             content.innerHTML = `<div style='color:red;text-align:center'>${list.message}</div>`;
             return;
@@ -50,6 +50,7 @@ function renderList(list, tabIndex) {
     }
 
     list.forEach((item) => {
+        console.log("item hiện tại:", item);
         content.insertAdjacentHTML("beforeend", renderRow(item, tabIndex));
     });
 }
@@ -86,7 +87,6 @@ function renderRow(item, tabIndex) {
     `;
 }
 
-// Event delegation: xử lý click cho cả tab1/tab2
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("content").addEventListener("click", (e) => {
         const row = e.target.closest(".row");
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const idhoadon = row.dataset.idhoadon;
 
         if (e.target.classList.contains("btn-return")) {
-            showModal(idhoadon); // từ thanhtoan.js
+            showModal(idhoadon);
             return;
         }
 
@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
 function xemChiTietHoaDon(idhoadon) {
     console.log("Xem chi tiết hoá đơn:", idhoadon);
 
@@ -127,7 +128,8 @@ function xemChiTietHoaDon(idhoadon) {
 }
 // bên dưới là logic hiển thị ở nguyen_test khi nhấn thuê thì hiện model
 // ở đây là xem chi tiết khi nhấn xem chi tiết khi đang thuê và đã thuê
-// =========================== logic mới ==================================================
+
+// =========================== title_here ==================================================
 function initModal(idhoadon) {
     const modal = document.getElementById("modalOverlay_xemhd");
     const btnClose = document.getElementById("closeModal_xemhd");
@@ -162,7 +164,7 @@ function loadProductData(idhoadon) {
     // const tab = Number(
     //     document.getElementById("id_content_tab").dataset.tab || -1
     // );
-    console.log("hiện tab:", currentTab);
+    console.log("hiện id:", idhoadon);
     // =========================================================================================
     fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
         method: "POST",
@@ -206,6 +208,14 @@ function loadProductData(idhoadon) {
             document.getElementById("unrent_date_xemhd").innerText = formatDate(
                 hd.ngaytra
             );
+
+            const baohiem = xe.loai === "Xe máy điện" ? 100000 : 50000;
+            const baotri = xe.loai === "Xe máy điện" ? 100000 : 50000;
+            console.log(baohiem, baotri);
+            document.getElementById("feeMaintain_xemhd").innerText =
+                formatVND(baotri);
+            document.getElementById("feeInsurance_xemhd").innerText =
+                formatVND(baohiem);
 
             let days = Math.ceil(
                 (new Date(hd.ngaytra) - new Date(hd.ngaymuon)) /
@@ -275,8 +285,8 @@ function disableInputs() {
     );
     inputs.forEach((input) => {
         input.disabled = true;
-        input.style.backgroundColor = "#2a2a2a";
-        input.style.color = "#bbbbbb";
+        input.style.backgroundColor = "#fefeff";
+        input.style.color = "#828282ff";
     });
 }
 
@@ -299,7 +309,7 @@ function adjustUIForViewMode() {
     if (btnPay) {
         btnPay.innerText = "Quay về";
         btnPay.style.display = "block";
-        btnPay.style.backgroundColor = "#6c757d";
+        btnPay.style.backgroundColor = "#abababff";
         btnPay.onclick = closeModal;
     }
 }

@@ -163,6 +163,14 @@ switch ($controller) {
         }
         break;
 
+    case 'thuexe':
+        require_once "Controller/nguyen_nguoithue_Controller.php";
+        $thuexe = new nguyen_nguoithue_Controller();
+
+        if (method_exists($thuexe, $action)) {
+            $thuexe->$action();
+        }
+        break;
     case 'thongke':
         require_once "Controller/ThongKeController.php";
         $thongke = new ThongKeController($conn);

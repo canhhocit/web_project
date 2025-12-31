@@ -36,33 +36,35 @@ class nguyen_hoadonDAO {
         return $list;
     }
 
-    public function gethoadonById($idhoadon) {
-        $sql = "SELECT * FROM hoadon WHERE idhoadon = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $idhoadon);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+public function gethoadonById($idhoadon) {
+    $sql = "SELECT * FROM hoadon WHERE idhoadon = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $idhoadon);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
 
-        if ($row) {
-            return new nguyen_hoadon(
-                $row['idhoadon'],
-                $row['idtaikhoan'],
-                $row['idxe'],
-                $row['diemlay'],
-                $row['diemtra'],
-                $row['ngaymuon'],
-                $row['ngaytra'],
-                $row['hoten'],
-                $row['email'],
-                $row['sdt'],
-                $row['cccd'],
-                $row['ghichu'],
-                $row['tongtien']
-            );
-        }
-        return null;
+    if ($row) {
+        return new nguyen_hoadon(
+            $row['idhoadon'],
+            $row['idtaikhoan'],
+            $row['idxe'],
+            $row['diemlay'],
+            $row['diemtra'],
+            $row['ngaymuon'],
+            $row['ngaytra'],
+            $row['hoten'],
+            $row['email'],
+            $row['sdt'],
+            $row['cccd'],
+            $row['trangthai'],   
+            $row['ghichu'],
+            $row['tongtien']
+        );
     }
+    return null;
+}
+
 
     public function insert(nguyen_hoadon $hd)
 {
@@ -95,7 +97,7 @@ class nguyen_hoadonDAO {
     $email      = $hd->get_email();
     $sdt        = $hd->get_sdt();
     $cccd       = $hd->get_cccd();
-    $trangthai  = 0;
+    $trangthai  = $hd->get_trangthai();
     $ghichu     = $hd->get_ghichu();
     $tongtien   = $hd->get_tongtien();
 
@@ -115,7 +117,12 @@ class nguyen_hoadonDAO {
         $ghichu,
         $tongtien
     );
-    return $stmt->execute();
+    $ok = $stmt->execute();
+if (!$ok) {
+    die("SQL error: " . $stmt->error);
+}
+return $ok;
+
 }
 
     public function update(nguyen_hoadon $hd) {
@@ -187,4 +194,26 @@ class nguyen_hoadonDAO {
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function gethoadonnguoithue($idChuXe) {
+        $sql = "
+            SELECT x.idxe, hd.idhoadon
+            FROM xe x
+            JOIN hoadon hd ON hd.idxe = x.idxe
+            WHERE x.idchuxe = ?
+            ORDER BY hd.trangthai ASC, hd.idhoadon DESC
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $idChuXe);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $list = [];
+        while ($row = $result->fetch_assoc()) {
+            $list[] = $row;
+        }
+        return $list;
+    }
+
 }

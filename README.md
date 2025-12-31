@@ -42,14 +42,6 @@ website tương tác giữa người dùng với người dùng
 -   Phần lịch sử giao dịch: Hiển thị danh sách các hóa đơn đã thanh toán thành công.
 
 4. TRẦN TRUNG NGUYÊN
-    - ăn rồi lọ
-
--   Phần tài khoản
-    -   Đăng ký, đăng nhập, đăng xuất
-    -   Thêm/Cập nhật thông tin cá nhân
-    -   Xóa tài khoản
--   Phần xe:
-
-    -   Kiểm tra đăng nhập + thông tin trước khi đăng
-    -   Thêm xe + upload nhiều ảnh
-    -   Lịch sử xe đã đăng
+    - Chức năng thuê xe
+    - Hiển thị trạng thái, lịch sử đi thuê
+    - Hiển thị trạng thái, lịch sử cho thuê

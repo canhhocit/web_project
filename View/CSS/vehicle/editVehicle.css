@@ -124,32 +124,25 @@ form input[type="file"] {
     background: #2b2929;
     color: rgb(150, 137, 137);
 }
-
-form button[type="submit"] {
-    padding: 12px;
-    background: #007bff;
+form button{
+    padding: 10px;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
 }
+form button[type="submit"] {
+    background: #007bff;
+}
 
 form button[type="submit"]:hover {
     background: #0056b3;
 }
-
-/* btn giả*/
-form a {
-    padding: 12px;
-    background: #6c757d;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-    display: inline-block;
+form button[type="button"] {
+    background: #505458;
 }
 
-form a:hover {
-    background: #5a6268;
+form button[type="button"]:hover {
+    background: #292b2d;
 }

@@ -8,19 +8,15 @@ class ThongKeModel {
         $this->thongKeDAO = new ThongKeDAO($db);
     }
     
-    // Kiểm tra quyền truy cập
     public function checkPermission($idtaikhoan) {
         return $this->thongKeDAO->isChuXe($idtaikhoan);
     }
     
-    // Lấy role của user
     public function getUserRole($idtaikhoan) {
         return $this->thongKeDAO->getUserRole($idtaikhoan);
     }
     
-    // Lấy tất cả thống kê
     public function getAllStatistics($idtaikhoan) {
-        // Kiểm tra quyền
         if (!$this->checkPermission($idtaikhoan)) {
             return [
                 'success' => false,
@@ -30,7 +26,6 @@ class ThongKeModel {
         }
         
         try {
-            // Lấy tất cả dữ liệu thống kê
             $tongDoanhThu = $this->thongKeDAO->getTongDoanhThu($idtaikhoan);
             $doanhThuThang = $this->thongKeDAO->getDoanhThuThang($idtaikhoan);
             $tyLeLoaiXe = $this->thongKeDAO->getTyLeLoaiXe($idtaikhoan);
@@ -54,7 +49,6 @@ class ThongKeModel {
         }
     }
     
-    // Các phương thức riêng lẻ nếu cần
     public function getTongDoanhThuData($idtaikhoan) {
         return $this->thongKeDAO->getTongDoanhThu($idtaikhoan);
     }

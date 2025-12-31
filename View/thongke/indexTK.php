@@ -14,7 +14,6 @@
         <i class="fas fa-user-chart me-2"></i>Báo cáo doanh thu cá nhân
     </h2>
     
-    <!-- Hiển thị lỗi nếu có -->
     <?php if (isset($error) && $error): ?>
         <div class="alert alert-danger">
             <i class="fas fa-exclamation-triangle me-2"></i>
@@ -22,7 +21,6 @@
         </div>
     <?php endif; ?>
     
-    <!-- Cards thống kê -->
     <div class="row g-3 mb-4">
         <div class="col-md-4">
             <div class="card bg-primary text-white p-3 shadow-sm h-100">
@@ -48,7 +46,6 @@
         </div>
     </div>
 
-    <!-- Biểu đồ -->
     <div class="row mb-5">
         <div class="col-md-8">
             <div class="card shadow-sm p-4 h-100 bg-white">
@@ -66,7 +63,6 @@
 </div>
 
 <script>
-// Biểu đồ cột - Doanh thu theo tháng
 const barCtx = document.getElementById('barChart').getContext('2d');
 new Chart(barCtx, {
     type: 'bar',
@@ -98,7 +94,6 @@ new Chart(barCtx, {
     }
 });
 
-// Biểu đồ tròn - Tỷ lệ loại xe
 const pieCtx = document.getElementById('pieChart').getContext('2d');
 new Chart(pieCtx, {
     type: 'doughnut',

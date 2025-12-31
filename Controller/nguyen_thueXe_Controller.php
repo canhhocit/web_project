@@ -11,7 +11,7 @@ require_once __DIR__ . "/../Model/Object/nguyen_hoadon.php";
 require_once __DIR__ . "/../Model/DAO/vehicleDAO.php";
 require_once __DIR__ . "/../Model/Object/xe.php";
 require_once __DIR__ . "/../Model/DAO/taikhoanDAO.php";
-    
+
 class nguyen_thueXe_Controller
 {
     private $vehicle_dao;
@@ -48,7 +48,7 @@ class nguyen_thueXe_Controller
                     $anhxe_arr[] = [
                         "id"     => $item->get_idanh(),
                         "idxe"   => $item->get_idxe(),
-                        "duongdan"   => $item->get_duongdan() 
+                        "duongdan"   => $item->get_duongdan()
                     ];
                 }
 
@@ -72,9 +72,9 @@ class nguyen_thueXe_Controller
                     "infouser" => $user_info
                 ]);
                 exit;
-            case 'taohoadon': 
+            case 'taohoadon':
                 $data = $data_post['data'] ?? [];
-                
+
                 $hoadon = new nguyen_hoadon(
                     null,
                     $data['idtaikhoan'] ?? 0,
@@ -89,7 +89,7 @@ class nguyen_thueXe_Controller
                     $data['email'] ?? '',
                     $data['phone'] ?? '',
                     $data['cccd'] ?? '',
-
+                    0,
                     $data['comment'] ?? '',
                     $data['totalCost'] ?? 0
                 );
@@ -102,13 +102,13 @@ class nguyen_thueXe_Controller
                 exit;
             case 'layhoadon':
 
-                $item = $this->layhoadon($data_post['idhoadon']); 
+                $item = $this->layhoadonbyid($data_post['idhoadon']);
 
                 if (!$item) {
                     echo json_encode(["success" => false, "message" => "Không tìm thấy hóa đơn"]);
                     exit;
                 }
-            
+
                 $hoadon_arr = [
                     "idhoadon"   => $item->get_idhoadon(),
                     "idtaikhoan" => $item->get_idtaikhoan(),
@@ -132,7 +132,7 @@ class nguyen_thueXe_Controller
                 $anhxe_arr = [
                     "id"     => $item_anhxe->get_idanh(),
                     "idxe"   => $item_anhxe->get_idxe(),
-                    "duongdan"   => "/web_project/View/image/" . $item_anhxe->get_duongdan() 
+                    "duongdan"   => "/web_project/View/image/" . $item_anhxe->get_duongdan()
                 ];
 
                 $anhxe = $this->vehicle_dao->getAnhxebyIdxe($item->get_idxe());
@@ -162,6 +162,79 @@ class nguyen_thueXe_Controller
                     "isRented" => $state
                 ]);
                 exit;
+            case 'laythongtinnguoithue':
+            
+                $curentUserID = $_SESSION['idtaikhoan'] ?? 0;
+                $thongtin = $this->getthongtinhoadonnguoithue($curentUserID);
+            
+                $result = [];
+            
+                foreach ($thongtin as $row) {
+                    $idhoadon = $row['idhoadon'];
+                    $idxe     = $row['idxe'];
+                
+                    $hd = $this->layhoadonbyid($idhoadon); // object nguyen_hoadon
+                    $xeImages = $this->layanhxe($idxe);   // array object ảnh
+                    $xe = $this->layxe($idxe);           //  array object xe
+
+                    $anhxe_arr = [];
+                    if (is_array($xeImages)) {
+                        foreach ($xeImages as $img) {
+                            $anhxe_arr[] = [
+                                "id"       => (int)$img->get_idanh(),
+                                "idxe"     => (int)$img->get_idxe(),
+                                "duongdan" => $img->get_duongdan(),
+                            ];
+                        }
+                    }
+                
+                    $xe_arr = [];
+                    if (is_array($xe)) {
+                        foreach ($xe as $item) {
+                            $xe_arr[] = [
+                                "giathue"     => $item->get_giathue(),
+                                "tenxe"     => $item->get_tenxe(),
+                                "loai"   => $item->get_loaixe()
+                            ];
+                        }
+                    }
+                    $hd_arr = null;
+                    if ($hd) {
+                        $hd_arr = [
+                            "idhoadon"   => $hd->get_idhoadon(),
+                            "idtaikhoan" => $hd->get_idtaikhoan(),
+                            "idxe"       => $hd->get_idxe(),
+                            "diemlay"    => $hd->get_diemlay(),
+                            "diemtra"    => $hd->get_diemtra(),
+                            "ngaymuon"   => $hd->get_ngaymuon(),
+                            "ngaytra"    => $hd->get_ngaytra(),
+                            "hoten"      => $hd->get_hoten(),
+                            "email"      => $hd->get_email(),
+                            "sdt"        => $hd->get_sdt(),
+                            "cccd"       => $hd->get_cccd(),
+                            "trangthai"  => $hd->get_trangthai(),
+                            "ghichu"     => $hd->get_ghichu(),
+                            "tongtien"   => $hd->get_tongtien()
+                        ];
+                    }
+                
+                    //  push item 
+                    $result[] = [
+                        "idhoadon" => $idhoadon,
+                        "idxe"     => $idxe,
+                        "hoadon"   => $hd_arr,
+                        "anhxe"    => $anhxe_arr,
+                        "xe"       => $xe_arr
+                    ];
+                }
+            
+                echo json_encode([
+                    "success" => true,
+                    "data" => $result,
+                    "debug_id" => $curentUserID
+                ]);
+                exit;
+
             default:
                 http_response_code(400);
                 echo json_encode(["error" => "Hành động không hợp lệ"]);
@@ -169,7 +242,8 @@ class nguyen_thueXe_Controller
         }
     }
 
-    function layxe($idxe){
+    function layxe($idxe)
+    {
         if ($idxe <= 0) {
             http_response_code(400);
             echo json_encode(["error" => "ID xe không hợp lệ"]);
@@ -179,7 +253,8 @@ class nguyen_thueXe_Controller
         return $xe;
     }
 
-    function layanhxe($idxe){
+    function layanhxe($idxe)
+    {
         if ($idxe <= 0) {
             http_response_code(400);
             echo json_encode(["error" => "ID xe không hợp lệ"]);
@@ -189,7 +264,8 @@ class nguyen_thueXe_Controller
         return $anhxe;
     }
 
-    function layhoadonbyidtaikhoan(){
+    function layhoadonbyidtaikhoan()
+    {
         $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0;
         if ($idtaikhoan <= 0) {
             http_response_code(400);
@@ -200,12 +276,14 @@ class nguyen_thueXe_Controller
         return $hoadon;
     }
 
-    function layhoadon($idhoadon){
+    function layhoadonbyid($idhoadon)
+    {
         $hoadon = $this->hoadon_dao->gethoadonById($idhoadon);
         return $hoadon;
     }
 
-    function laythongtinnguoidung($curentUserID){
+    function laythongtinnguoidung($curentUserID)
+    {
         // $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0; cho sang bên kia đê
         if ($curentUserID <= 0) {
             http_response_code(400);
@@ -217,12 +295,18 @@ class nguyen_thueXe_Controller
         return $user_info;
     }
 
-    function laythanhtoanbyidhoadon($idhoadon){
+    function laythanhtoanbyidhoadon($idhoadon)
+    {
         $thanhtoan = $this->hoadon_dao->getthanhtoanbyidhoadon($idhoadon);
         return $thanhtoan;
+    }
+
+    function getthongtinhoadonnguoithue($idtaikhoan)
+    {
+        $list = $this->hoadon_dao->gethoadonnguoithue($idtaikhoan);
+        return $list;
     }
 }
 
 $controller = new nguyen_thueXe_Controller();
 $controller->handleRequest($action, $data_post);
-?>

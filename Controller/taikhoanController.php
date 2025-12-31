@@ -31,7 +31,12 @@ class taikhoanController
 
     public function index()
     {
-        header("Location: /web_project/View/taikhoan/login.php");
+
+        //$vehicles = $this->dao->getAll();
+        echo "<script>
+                    alert('Nếu vào được đây thì lỗi rồi đấy:)))');
+                    </script>";
+
         exit;
     }
     public function add()
@@ -87,7 +92,8 @@ class taikhoanController
                     $kq = $this->Adao->addThongTinTaiKhoan($idtaikhoan, $anhdaidien);
                     if (!$kq) {
                         echo "<script>alert('Lỗi tkController dòng 86!'); 
-        window.location='/web_project/View/taikhoan/login.php';</script>";
+                        window.location='/web_project/View/taikhoan/login.php';
+                        </script>";
                         exit;
                     }
                 }
@@ -137,8 +143,8 @@ class taikhoanController
                 $anhdaidien = $thongtinCu->get_anhdaidien();
             }
 
-            if (isset($_FILES['anhdaidien']) && $_FILES['anhdaidien']['error'] === UPLOAD_ERR_OK) {
-                //xoa anh cu tru mac dinh
+            if (isset($_FILES['anhdaidien']) && $_FILES['anhdaidien']['error'] === 0) {
+                //xoa anh cu - mac dinh
                 if ($anhdaidien != "default-avt.jpg") {
                     $oldImagePath = __DIR__ . "/../View/image/" . $anhdaidien;
                     if (file_exists($oldImagePath)) {
@@ -173,12 +179,7 @@ class taikhoanController
                         echo "<script>alert('Cập nhật thất bại!'); history.back();</script>";
                     }
                 } else {
-                    // if ($this->Adao->addThongTinTaiKhoan($thongtin)) {
-                    //     header("Location: /web_project/index.php");
-                    //     exit;
-                    // } else {
                     echo "<script>alert('Update thất bại!'); history.back();</script>";
-                    //}
                 }
             } catch (Exception $e) {
                 echo "<script>alert('Lỗi: " . $e->getMessage() . "'); history.back();</script>";
@@ -394,20 +395,6 @@ class taikhoanController
             $new_password = trim($_POST['new_password'] ?? "");
             $confirm_password = trim($_POST['confirm_password'] ?? "");
 
-            if (empty($new_password) || empty($confirm_password)) {
-                echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); history.back();</script>";
-                exit;
-            }
-
-            if ($new_password !== $confirm_password) {
-                echo "<script>alert('Mật khẩu xác nhận không khớp!'); history.back();</script>";
-                exit;
-            }
-
-            // if (strlen($new_password) < 6) {
-            //     echo "<script>alert('Mật khẩu phải có ít nhất 6 ký tự!'); history.back();</script>";
-            //     exit;
-            // }
 
             if ($this->Adao->updateForgotpass($username, $new_password)) {
                 unset($_SESSION['reset_username']);

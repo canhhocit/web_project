@@ -10,7 +10,7 @@
         <form action="/web_project/index.php?controller=vehicle&action=editV&id=<?php echo $xe->get_idxe(); ?>"
             method="post" enctype="multipart/form-data">
             <input type="hidden" name="idxe" value="<?php echo $xe->get_idxe(); ?>">
-            
+
             <label>Tên xe<span style="color: red">*</span></label>
             <input type="text" name="tenxe" value="<?php echo $xe->get_tenxe(); ?>" required>
 
@@ -46,8 +46,12 @@
 
             <div style="margin-top: 20px; display: flex; gap: 10px;">
                 <button type="submit" style="flex: 1;">Cập nhật</button>
-                <a href="/web_project/index.php?controller=taikhoan&action=personal&selection=myvehicle"
-                    style="flex: 1; text-align: center; padding: 10px; background: #6c757d; color: white; text-decoration: none; border-radius: 5px;">Hủy</a>
+                <button
+                    type="button"
+                    onclick="location.href='/web_project/index.php?controller=taikhoan&action=personal&selection=myvehicle'"
+                    style="flex: 1;">
+                    Hủy
+                </button>
             </div>
         </form>
     </div>

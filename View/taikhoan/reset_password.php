@@ -28,7 +28,7 @@ $username = $_SESSION['reset_username'];
         <h2>Đổi Mật Khẩu</h2>
 
         <form action="/web_project/index.php?controller=taikhoan&action=resetPassword" method="post" id="resetPasswordForm">
-            <p style="text-align: center; color: #666; font-size: 14px;">
+            <p style="text-align: center; color: #666; font-size: 15px;">
                 Nhập mật khẩu mới cho: <strong><?php echo $username; ?></strong>
             </p>
 

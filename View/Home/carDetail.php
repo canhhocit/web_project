@@ -84,7 +84,7 @@
                 <div class="d-grid gap-2">
                     <?php if (!isset($_SESSION['idtaikhoan'])): ?>
                         <!-- Chưa đăng nhập -->
-                        <a href="index.php?controller=taikhoan&action=login" class="btn btn-warning btn-lg fw-bold">
+                        <a href="index.php?controller=vehicle&action=checkLogin" class="btn btn-warning btn-lg fw-bold">
                             <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập để thuê xe
                         </a>
                     <?php elseif (isset($isOwner) && $isOwner): ?>
@@ -126,7 +126,7 @@
     <div class="container_modalThuexe">
         <span id="closeModal" class="close-btn">&times;</span>
         <div class="container_contentLeft_mdThuexe">
-            <h2 class="section-title" id="title_xe_thuexe">
+            <h2 class="section-title h2" id="title_xe_thuexe">
                 Totoro my's neighborhood
             </h2>
             <hr />
@@ -315,7 +315,6 @@
     </div>
 </div>
 
-<!-- ========== JAVASCRIPT ========== -->
 <script>
 var RENT_PRICE = 0;
 var MAINTAIN_FEE = 0;
@@ -375,7 +374,7 @@ function loadProductData(xeId) {
     })
     .then(res => res.json())
     .then(data => {
-        document.getElementById("title_xe_thuexe").innerText = data.xe.name + " - " + xeId;
+        document.getElementById("title_xe_thuexe").innerText = data.xe.name;
         document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
         document.getElementById("anhxe_thuexe").src = "/web_project/View/image/" + data.anhxe.duongdan;
 
@@ -385,8 +384,8 @@ function loadProductData(xeId) {
         // window.CURRENT_USER_INFO = data.user; 
 
         RENT_PRICE = data.xe.price;
-        MAINTAIN_FEE = data.xe.type === "car" ? 100000 : 50000;
-        INSURANCE_FEE = data.xe.type === "car" ? 100000 : 50000;
+        MAINTAIN_FEE = data.xe.type === "Xe máy điện" ? 100000 : 50000;
+        INSURANCE_FEE = data.xe.type === "Xe máy điện" ? 100000 : 50000;
         TOTAL_COST = RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
         
         document.getElementById("feeBaoHiem_thuexe").innerText = formatVND(INSURANCE_FEE);
