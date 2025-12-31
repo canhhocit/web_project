@@ -10,7 +10,7 @@
         
         public function __construct(){
             global $conn;
-            $this->vehicleDAO = new VehicleDAO($conn);
+            $this->vehicleDAO = new vehicleDAO($conn);
             $this->hoadonDAO = new nguyen_hoadonDAO($conn);
         }
         public function index(){

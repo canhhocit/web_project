@@ -31,8 +31,8 @@ class taikhoanController
 
     public function index()
     {
-        //$vehicles = $this->dao->getAll();
-        include_once "../View/vehicle/index.php";
+        header("Location: /web_project/View/taikhoan/login.php");
+        exit;
     }
     public function add()
     {

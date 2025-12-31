@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active" aria-current="page"><?php echo $xe['tenxe']; ?></li>
         </ol>
     </nav>
-
+ 
     <div class="row">
         <div class="col-md-7">
             <div class="card border-0 shadow-sm">
@@ -118,6 +118,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!-- ========== MODAL THUÊ XE (Tách riêng ở đây) ========== -->
 <div class="modal-overlay" id="modalOverlay">

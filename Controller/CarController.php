@@ -15,9 +15,10 @@
     }
 
     public function detail(){
+        // lấy id xe từ 
         if(isset($_GET["id"])){
-
             $idxe = $_GET['id'];
+
             $xe = $this->vehicleDAO->getChiTietXe($idxe);
             //canh: ktra tontai trong DB
             $exists = false;
@@ -26,6 +27,9 @@
                 $exists = true;
             }
             //het canh
+
+
+            // kiểm tra quyền chủ xe 
 
             if ($xe){
                 $currentUserId = isset($_SESSION['idtaikhoan']) ? $_SESSION['idtaikhoan'] : 0;
@@ -37,9 +41,6 @@
             }
         }
     }
-    
-    // public function mycars(){
-    //      header("Location: index.php?controller=taikhoan&action=personal&selection=cars");
-    // }
+
 }
 ?>

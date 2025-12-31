@@ -1,3 +1,14 @@
+<!-- <?php
+    echo "<pre style='background: #000; color: #0f0; padding: 10px; z-index:9999; position:relative;'>";
+    echo "=== DEMO DATA XE TỪ DATABASE === <br>";
+        if(isset($listCar[0])) {
+        var_dump($listCar[0]); 
+    } else {
+        echo "Không có xe nào.";
+    }
+    echo "</pre>";
+?> -->
+
 <div class="row">
     <div class="col-12">
         <form action="index.php" method="GET" class="mb-4">

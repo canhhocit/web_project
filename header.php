@@ -165,6 +165,10 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
         </div>
     </nav>
 
+    <?php
+        var_dump($_SESSION);
+        var_dump($_COOKIE); 
+    ?>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const btnTaiChinh = document.querySelector('[href="#submenuTaiChinh"]');
