@@ -1,11 +1,5 @@
 <?php
 session_start();
-// phải gọi ở trên cùng của file index.php
-// cơ chế lưu thông tin người dùng ở phía server
-// tạo 1 session id duy nhất cho mỗi phiên làm việc
-// gửi session này về trình duyệt dưới dạng cookie
-// mỗi lần trình duyệt gửi request lên server sẽ kèm theo cookie này
-
 
 define('ACCESSED_FROM_CONTROLLER', true); // ngăn chặn truy cập trực tiếp từ trình duyệt
 define('ACCESS_HOPLE', true);
