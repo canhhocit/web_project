@@ -23,7 +23,7 @@ case 'chat':
 
 ---
 
-## 6. GIẢI THÍCH QUAN TRỌNG
+##  QUAN TRỌNG
 
 ### ❓ Tại sao phải tách xử lý TRƯỚC và SAU header?
 ```

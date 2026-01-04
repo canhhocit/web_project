@@ -12,7 +12,11 @@ website tương tác giữa người dùng với người dùng
     -   Thêm xe + upload ảnh
     -   Lịch sử xe đã đăng, sửa xóa thông tin về bài đăng
     -   Thêm, xóa xe yêu thích
-
+-   Chat với chủ xe:
+    -   Thêm đoạn chat mới/ khôi phục đoạn chat khi bị xóa ở 1 bên
+    -   Xóa/ đoạn chat
+    -   Hiển thị thông tin đoạn chat về: tin nhắn, thời gian gửi, lần cập nhật cuối,
+         số tin nhắn chưa đọc, thông tin về xe đang nhắn.
 2. ĐẶNG VĂN MINH
 
     - Giao diện trang chủ:
