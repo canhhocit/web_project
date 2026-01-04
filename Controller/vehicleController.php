@@ -44,10 +44,10 @@ class vehicleController
             </script>";
             exit;
         }
-
-        echo "<script>
-            window.location='/web_project/View/xe/addVehicle.php';
-        </script>";
+        include_once __DIR__.'/../View/xe/addVehicle.php';
+        // echo "<script>
+        //     window.location='/web_project/View/xe/addVehicle.php';
+        // </script>";
     }
 
     public function add()

@@ -72,6 +72,9 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?controller=about">Về Chúng Tôi</a>
                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="index.php?controller=chat&action=index">Tin nhắn</a>
+                    </li>
                 </ul>
 
                 <ul class="navbar-nav ms-auto">

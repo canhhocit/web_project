@@ -32,6 +32,20 @@ if ($controller === 'thanhtoan' && ($action === 'getChiTietHoaDon' || $action ==
     }
     exit();
 }
+if ($controller === 'chat') {
+    if (!isset($_SESSION['idtaikhoan'])) {
+        echo "<script>alert('Vui lòng đăng nhập!'); window.location='/web_project/View/taikhoan/login.php';</script>";
+        exit;
+    }
+
+    require_once "Controller/chatController.php";
+    $chat = new chatController();
+
+     if ($action === 'openChat' || $action === 'sendMessage' || $action === 'delete') {
+        $chat->$action();
+        exit();
+    }
+}
 
 
 include "header.php";
@@ -132,7 +146,7 @@ switch ($controller) {
 
                 include_once "View/xe/editVehicle.php";
             } else {
-                $vehicle->$action(); 
+                $vehicle->$action();
             }
         } else {
             $vehicle->index();
@@ -170,7 +184,7 @@ switch ($controller) {
         $thongke = new ThongKeController($conn);
         $allowedActions = ['index', 'apiGetStatistics'];
         $action = in_array($action, $allowedActions) ? $action : 'index';
-        
+
         if (method_exists($thongke, $action)) {
             $thongke->$action();
         } else {
@@ -191,6 +205,12 @@ switch ($controller) {
             $about->addWork();
         } else {
             $about->index();
+        }
+        break;
+    case 'chat':
+        $chat = new chatController();
+        if ($action === 'index' || $action === 'view') {
+            $chat->$action();
         }
         break;
 
