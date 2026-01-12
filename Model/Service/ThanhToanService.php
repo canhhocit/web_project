@@ -21,11 +21,21 @@ class ThanhToanService {
         
         $ngay_thue_du_kien = $hoadon['ngay_thue_du_kien'] ?? 0;
         $don_gia = $hoadon['giathue'] ?? 0;
-        $tong_tien = ($ngay_thue_du_kien + $ngay_qua_han) * $don_gia;
+
+        $phi_thue = ($ngay_thue_du_kien + $ngay_qua_han) * $don_gia;
+        
+        $loai_xe = $hoadon['loaixe'] ?? ''; 
+        $phi_bao_hiem = ($loai_xe === 'Xe máy điện') ? 100000 : 50000;
+        $phi_bao_tri = ($loai_xe === 'Xe máy điện') ? 100000 : 50000;
+        
+        $tong_tien = $phi_thue + $phi_bao_hiem + $phi_bao_tri;
         
         return [
             'ngay_qua_han' => $ngay_qua_han,
-            'tong_tien' => $tong_tien
+            'tong_tien' => $tong_tien,
+            'phi_thue' => $phi_thue,
+            'phi_bao_hiem' => $phi_bao_hiem,
+            'phi_bao_tri' => $phi_bao_tri
         ];
     }
     

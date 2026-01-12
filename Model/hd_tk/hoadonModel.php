@@ -20,7 +20,7 @@ class HoaDonModel {
     }
 
     public function getChiTietHoaDon($idhoadon) {
-        $query = "SELECT hd.*, x.tenxe, x.giathue, DATEDIFF(hd.ngaytra, hd.ngaymuon) as ngay_thue_du_kien
+        $query = "SELECT hd.*, x.tenxe, x.giathue, x.loaixe, DATEDIFF(hd.ngaytra, hd.ngaymuon) as ngay_thue_du_kien
                   FROM hoadon hd JOIN xe x ON hd.idxe = x.idxe
                   WHERE hd.idhoadon = ?";
         
