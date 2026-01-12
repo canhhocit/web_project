@@ -48,23 +48,41 @@
                         <i class="fa-solid fa-images"></i>
                         <?php echo count($images); ?> ảnh
                     </small>
-                        
+
                     <div class="btn_tim">
-                        <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $xe->get_idxe() ?>&option=1" 
+                        <a href="/web_project/index.php?controller=taikhoan&action=favoriteVehicle&id=<?= $xe->get_idxe() ?>&option=1"
                             class="heart-btn"
                             title="Bỏ yêu thích xe">
-                            <span class="heart-icon">
-                                <?php
-                                echo "❤️";
-                                 ?>
-                            </span>
+                            <span class="heart-icon">❤️</span>
                         </a>
                     </div>
-
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
+
+    <?php if ($totalPages > 1): ?>
+        <div class="pagination">
+            <?php if ($currentPage > 1): ?>
+                <a href="?controller=taikhoan&action=personal&selection=favorite&page=<?= $currentPage - 1 ?>" class="page-btn">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="?controller=taikhoan&action=personal&selection=favorite&page=<?= $i ?>"
+                    class="page-btn <?= $i === $currentPage ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($currentPage < $totalPages): ?>
+                <a href="?controller=taikhoan&action=personal&selection=favorite&page=<?= $currentPage + 1 ?>" class="page-btn">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
     <script src="/web_project/View/JS/taikhoan/personal/myvehicle.js"></script>
 <?php endif; ?>

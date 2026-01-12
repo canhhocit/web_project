@@ -14,12 +14,24 @@
             $this->hoadonDAO = new nguyen_hoadonDAO($conn);
         }
         public function index(){
+            $limit = 15;
+            $page = isset($_GET['page']) ? $_GET['page'] : 1;
+            $page = (int)$page; 
+            $offset = ($page -1) * $limit; 
+
+            $tongSoXe = $this->vehicleDAO->countXe();
+            $tongTrang = ceil($tongSoXe / $limit);
+
             // timf kiem xe 
             if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
                 $keyword = $_GET['keyword'];
                 $searchList = $this->vehicleDAO->timKiemXe($keyword);
+                $listCar = $searchList;
+                $tongTrang = 1; // Giới hạn kết quả tìm kiếm chỉ trong 1 trang
+
             } else {
-                $searchList = $this->vehicleDAO->getAllXe();
+                $searchList = $this->vehicleDAO->PhanTrang($offset, $limit);
+                $listCar = $searchList;
             }
             $curentUserID = isset($_SESSION['idtaikhoan']) ? $_SESSION['idtaikhoan'] : 0;
             $listCar = [];

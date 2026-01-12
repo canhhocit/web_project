@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
 <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_popupXacNhan.css" />
 
@@ -67,19 +66,32 @@
                 </div>
 
                 <hr>
-
-                <div class="thong-tin-chu-xe mb-4">
-                    <p class="fw-bold mb-1">Chủ xe:</p>
-                    <div class="d-flex align-items-center">
-                        <div class="bg-secondary rounded-circle d-flex justify-content-center align-items-center text-white" style="width: 40px; height: 40px;">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div class="ms-2">
-                            <h6 class="mb-0"><?php echo !empty($xe['tenchuxe']) ? $xe['tenchuxe'] : 'Ẩn danh'; ?></h6>
-                            <small class="text-muted">SĐT: <?php echo !empty($xe['sdt']) ? $xe['sdt'] : '***'; ?></small>
+                <div class="infor" style="display: flex;">
+                    <div class="thong-tin-chu-xe mb-4">
+                        <p class="fw-bold mb-1">Chủ xe:</p>
+                        <div class="d-flex align-items-center">
+                            <div class="bg-secondary rounded-circle d-flex justify-content-center align-items-center text-white" style="width: 40px; height: 40px;">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="ms-2">
+                                <h6 class="mb-0"><?php echo !empty($xe['tenchuxe']) ? $xe['tenchuxe'] : 'Ẩn danh'; ?></h6>
+                                <small class="text-muted">SĐT: <?php echo !empty($xe['sdt']) ? $xe['sdt'] : '***'; ?></small>
+                            </div>
                         </div>
                     </div>
+                    <!-- Canh -->
+                    <?php if (isset($_SESSION['idtaikhoan']) &&isset($isOwner) && !$isOwner ): ?>
+                        <div class="chat-Owner" style="margin-left: auto; margin-top: 15px;">
+                            <a href="/web_project/index.php?controller=chat&action=openChat&idxe=<?php echo $xe['idxe']; ?>&idchuxe=<?php echo $xe['idchuxe']; ?>"
+                                class="btn btn-outline-primary btn-sm rounded-circle p-2"
+                                title="Nhắn tin cho <?php echo !empty($xe['tenchuxe']) ? $xe['tenchuxe'] : 'chủ xe'; ?>">
+                                <i class="fa-solid fa-comment-dots" style="font-size: 20px;"></i>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                    <!-- /end Canh -->
                 </div>
+
 
                 <div class="d-grid gap-2">
                     <?php if (!isset($_SESSION['idtaikhoan'])): ?>
@@ -147,8 +159,7 @@
                         <input
                             type="date"
                             id="pickup_date_thuexe"
-                            placeholder=" "
-                        />
+                            placeholder=" " />
                         <label for="pickup_date_thuexe">Thời gian lấy xe</label>
                     </div>
                 </div>
@@ -167,8 +178,7 @@
                         <input
                             type="date"
                             id="return_date_thuexe"
-                            placeholder=" "
-                        />
+                            placeholder=" " />
                         <label for="return_date_thuexe">Thời gian trả xe</label>
                     </div>
                 </div>
@@ -187,8 +197,7 @@
                         id="fullname_modalThuexe"
                         class="input-field"
                         placeholder=" "
-                        autocomplete="off"
-                    />
+                        autocomplete="off" />
                     <label for="fullname_modalThuexe">Full name*</label>
                 </div>
                 <div class="input-group">
@@ -200,8 +209,7 @@
                         type="tel"
                         id="phone_modalThuexe"
                         placeholder=" "
-                        autocomplete="tel"
-                    />
+                        autocomplete="tel" />
                     <label for="phone_modalThuexe">Contact phone number*</label>
                 </div>
                 <div class="input-group">
@@ -210,8 +218,7 @@
                         id="cccd_modalThuexe"
                         class="input-field"
                         placeholder=" "
-                        autocomplete="off"
-                    />
+                        autocomplete="off" />
                     <label for="cccd_modalThuexe">Cccd*</label>
                 </div>
                 <div class="input-group" style="margin-top: 20px">
@@ -219,30 +226,21 @@
                         id="note_modalThuexe"
                         class="input-field"
                         placeholder=" "
-                        rows="4"
-                    ></textarea>
+                        rows="4"></textarea>
                     <label for="note_modalThuexe">Comment</label>
                 </div>
                 <div class="terms-container">
                     <label class="custom-check-row">
                         <input type="checkbox" id="terms_thuexe" />
                         <span class="checkmark"></span>
-                        <span
-                            >I accept
-                            <a href="#" class="link-highlight"
-                                >the Terms of use</a
-                            ></span
-                        >
+                        <span>I accept
+                            <a href="#" class="link-highlight">the Terms of use</a></span>
                     </label>
                     <label class="custom-check-row">
                         <input type="checkbox" id="policy_thuexe" />
                         <span class="checkmark"></span>
-                        <span
-                            >I have read
-                            <a href="#" class="link-highlight"
-                                >the Privacy policy</a
-                            ></span
-                        >
+                        <span>I have read
+                            <a href="#" class="link-highlight">the Privacy policy</a></span>
                     </label>
                     <div class="scroll-spacer"></div>
                 </div>
@@ -253,8 +251,7 @@
                 <img
                     id="anhxe_thuexe"
                     src="../image/camera.png"
-                    alt="Car Image"
-                />
+                    alt="Car Image" />
             </div>
             <div class="sticky-wrapper">
                 <h3 class="sub-title">Thời gian</h3>
@@ -285,14 +282,10 @@
                     <span id="feeBaoHiem_thuexe">0đ</span>
                 </div>
                 <div class="cost-row">
-                    <span style="color: red; font-size: 16px; font-weight: bold"
-                        >Chi phí dự kiến</span
-                    >
+                    <span style="color: red; font-size: 16px; font-weight: bold">Chi phí dự kiến</span>
                     <span
                         id="sumprice_thuexe"
-                        style="color: red; font-size: 16px; font-weight: bold"
-                        >0đ</span
-                    >
+                        style="color: red; font-size: 16px; font-weight: bold">0đ</span>
                 </div>
                 <div class="btn_pay_container">
                     <button id="btnthue_thuexe" type="button" class="btn-pay">
@@ -316,108 +309,118 @@
 </div>
 
 <script>
-var RENT_PRICE = 0;
-var MAINTAIN_FEE = 0;
-var INSURANCE_FEE = 0;
-var TOTAL_COST = 0;
-var CURENTUSERID = 0;
-var INFORUSER;
-// Mở modal
-async function openRentalModal(xeId) {
-    const isRented = await checkVehicleRented(xeId);
-    if(isRented) {
-        const btnClose = document.getElementById("btnhuy_xacnhan");
-        const btnConfirm = document.getElementById("btnxacnhan_xacnhan");
-        const modal_xacnhan = document.getElementById("container_xacnhanthanhtoan");
-        document.getElementById("title_xacnhan").innerText =
-        "Xe này đã thuê, có muốn thuê tiếp?";
-        document.getElementById("btnxacnhan_xacnhan").innerText = "Thuê tiếp";
-        modal_xacnhan.classList.add("active");
-        btnClose.onclick = () => {
-            modal_xacnhan.classList.remove("active");
-            return;
-        };
+    var RENT_PRICE = 0;
+    var MAINTAIN_FEE = 0;
+    var INSURANCE_FEE = 0;
+    var TOTAL_COST = 0;
+    var CURENTUSERID = 0;
+    var INFORUSER;
+    // Mở modal
+    async function openRentalModal(xeId) {
+        const isRented = await checkVehicleRented(xeId);
+        if (isRented) {
+            const btnClose = document.getElementById("btnhuy_xacnhan");
+            const btnConfirm = document.getElementById("btnxacnhan_xacnhan");
+            const modal_xacnhan = document.getElementById("container_xacnhanthanhtoan");
+            document.getElementById("title_xacnhan").innerText =
+                "Xe này đã thuê, có muốn thuê tiếp?";
+            document.getElementById("btnxacnhan_xacnhan").innerText = "Thuê tiếp";
+            modal_xacnhan.classList.add("active");
+            btnClose.onclick = () => {
+                modal_xacnhan.classList.remove("active");
+                return;
+            };
 
-        btnConfirm.onclick = () => {
-            modal_xacnhan.classList.remove("active");
+            btnConfirm.onclick = () => {
+                modal_xacnhan.classList.remove("active");
+                init(xeId);
+            };
+        } else {
             init(xeId);
-        };
-    } else {
-        init(xeId);
+        }
     }
-}
-function init(xeId){
-    const modal = document.getElementById("modalOverlay");
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden";
-    console.log("Xe ID:", xeId);
-    modal.dataset.xeId = xeId
-    document.getElementById("closeModal").onclick = closeModal;
-    modal.onclick = function(e) {
-        if (e.target === modal) closeModal();
+
+    function init(xeId) {
+        const modal = document.getElementById("modalOverlay");
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+        console.log("Xe ID:", xeId);
+        modal.dataset.xeId = xeId
+        document.getElementById("closeModal").onclick = closeModal;
+        modal.onclick = function(e) {
+            if (e.target === modal) closeModal();
+        }
+        loadProductData(xeId);
     }
-    loadProductData(xeId);
-}
-// Đóng modal
-function closeModal() {
-    const modal = document.getElementById("modalOverlay");
-    modal.classList.remove("active");
-    document.body.style.overflow = "auto";
-}
+    // Đóng modal
+    function closeModal() {
+        const modal = document.getElementById("modalOverlay");
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
 
-// Load thông tin xe
-function loadProductData(xeId) {
-    fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "openModal", id: xeId })
-    })
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById("title_xe_thuexe").innerText = data.xe.name;
-        document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
-        document.getElementById("anhxe_thuexe").src = "/web_project/View/image/" + data.anhxe.duongdan;
+    // Load thông tin xe
+    function loadProductData(xeId) {
+        fetch("/web_project/Controller/nguyen_thueXe_Controller.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    action: "openModal",
+                    id: xeId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("title_xe_thuexe").innerText = data.xe.name;
+                document.getElementById("price_thuexe").innerText = formatVND(data.xe.price);
+                document.getElementById("anhxe_thuexe").src = "/web_project/View/image/" + data.anhxe.duongdan;
 
-        CURENTUSERID = data.curentUserID;//tìm cách lấy id uuser
-        console.log("Thông tin người dùng:" ,  data.infouser);    
-        INFORUSER = data.infouser;
-        // window.CURRENT_USER_INFO = data.user; 
+                CURENTUSERID = data.curentUserID; //tìm cách lấy id uuser
+                console.log("Thông tin người dùng:", data.infouser);
+                INFORUSER = data.infouser;
+                // window.CURRENT_USER_INFO = data.user; 
 
-        RENT_PRICE = data.xe.price;
-        MAINTAIN_FEE = data.xe.type === "Xe máy điện" ? 100000 : 50000;
-        INSURANCE_FEE = data.xe.type === "Xe máy điện" ? 100000 : 50000;
-        TOTAL_COST = RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
-        
-        document.getElementById("feeBaoHiem_thuexe").innerText = formatVND(INSURANCE_FEE);
-        document.getElementById("feeMaintain_thuexe").innerText = formatVND(MAINTAIN_FEE);
-        document.getElementById("sumprice_thuexe").innerText = formatVND(TOTAL_COST);
-    
-        initThueXeEvents();
-    })
-    .catch(err => console.error("Lỗi:", err));
-}
+                RENT_PRICE = data.xe.price;
+                MAINTAIN_FEE = data.xe.type === "Xe máy điện" ? 100000 : 50000;
+                INSURANCE_FEE = data.xe.type === "Xe máy điện" ? 100000 : 50000;
+                TOTAL_COST = RENT_PRICE + MAINTAIN_FEE + INSURANCE_FEE;
 
-function formatVND(number) {
-    return number.toLocaleString("vi-VN") + " đ";
-}
+                document.getElementById("feeBaoHiem_thuexe").innerText = formatVND(INSURANCE_FEE);
+                document.getElementById("feeMaintain_thuexe").innerText = formatVND(MAINTAIN_FEE);
+                document.getElementById("sumprice_thuexe").innerText = formatVND(TOTAL_COST);
 
-function checkVehicleRented(xeId) {
-    return fetch(`/web_project/Controller/nguyen_thueXe_Controller.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "checkRented", xeId })
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log("state:", data.isRented);
-        return data.isRented;
-    })
-    .catch(err => {
-        console.error("Lỗi khi kiểm tra xe đã thuê:", err);
-        return false;
-    });
-}
+                initThueXeEvents();
+            })
+            .catch(err => console.error("Lỗi:", err));
+    }
 
+    function formatVND(number) {
+        return number.toLocaleString("vi-VN") + " đ";
+    }
+
+    function checkVehicleRented(xeId) {
+        return fetch(`/web_project/Controller/nguyen_thueXe_Controller.php`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    action: "checkRented",
+                    xeId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("state:", data.isRented);
+                return data.isRented;
+            })
+            .catch(err => {
+                console.error("Lỗi khi kiểm tra xe đã thuê:", err);
+                return false;
+            });
+    }
 </script>
 
 <script src="/web_project/View/JS/nguyen_js_thuexe.js"></script>
