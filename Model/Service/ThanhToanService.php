@@ -56,7 +56,7 @@ class ThanhToanService {
         );
     }
     
-    public function getHoaDonChuaThanhToan() {
-        return $this->hoadonModel->getHoaDonChuaThanhToan();
+    public function getHoaDonChuaThanhToan($idtaikhoan) {
+        return $this->hoadonModel->getHoaDonChuaThanhToan($idtaikhoan);
     }
 }

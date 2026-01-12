@@ -9,11 +9,15 @@ class LichSuTTController {
     }
 
     public function index() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+        if (!isset($_SESSION['idtaikhoan'])) {
+            echo "<script>
+                alert('Vui lòng đăng nhập để xem lịch sử giao dịch!');
+                window.location.href='/web_project/View/taikhoan/login.php';
+            </script>";
+            exit();
         }
         
-        $idtaikhoan = $_SESSION['idtaikhoan'] ?? 0;
+        $idtaikhoan = $_SESSION['idtaikhoan'];
         
         $lichsu = $this->model->getLichSuThanhToan($idtaikhoan);
         

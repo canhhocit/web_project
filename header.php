@@ -121,41 +121,42 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
                                 <li><hr class="dropdown-divider"></li>
 
                                 <!-- Tài chính - Submenu -->
-                                <li>
-                                    <a class="dropdown-item d-flex justify-content-between align-items-center" 
-                                       data-bs-toggle="collapse" 
-                                       href="#submenuTaiChinh" 
-                                       role="button" 
-                                       aria-expanded="<?php echo $is_finance_active ? 'true' : 'false'; ?>">
-                                        <span><i class="fa-solid fa-wallet me-2"></i> Tài chính</span>
-                                        <i class="fa-solid fa-chevron-down fa-xs"></i>
-                                    </a>
 
-                                    <div class="collapse <?php echo $is_finance_active ? 'show' : ''; ?>" id="submenuTaiChinh">
-                                        <ul class="list-unstyled mb-0">
-                                            <li>
-                                                <a class="dropdown-item ps-5" href="index.php?controller=thanhtoan&action=index">
-                                                    <i class="fa-solid fa-file-invoice-dollar me-2"></i> Hóa đơn / Lịch sử
-                                                </a>
-                                            </li>
-                                          
-                                            <?php if ($is_chuxe): ?>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center" 
+                                        data-bs-toggle="collapse" 
+                                        href="#submenuTaiChinh" 
+                                        id="btnTaiChinh"
+                                        role="button" 
+                                        aria-expanded="<?php echo $is_finance_active ? 'true' : 'false'; ?>">
+                                            <span><i class="fa-solid fa-wallet me-2"></i> Tài chính</span>
+                                            <i class="fa-solid fa-chevron-down fa-xs"></i>
+                                        </a>
+
+                                        <div class="collapse <?php echo $is_finance_active ? 'show' : ''; ?>" id="submenuTaiChinh">
+                                            <ul class="list-unstyled mb-0">
                                                 <li>
-                                                    <a class="dropdown-item ps-5" href="index.php?controller=thongke&action=index"> 
-                                                    <i class="fa-solid fa-chart-line me-2"></i> Thống kê 
+                                                    <a class="dropdown-item ps-5" href="index.php?controller=thanhtoan&action=index">
+                                                        <i class="fa-solid fa-file-invoice-dollar me-2"></i> Hóa đơn / Lịch sử
                                                     </a>
                                                 </li>
+                                            
+                                                <?php if ($is_chuxe): ?>
+                                                    <li>
+                                                        <a class="dropdown-item ps-5" href="index.php?controller=thongke&action=index"> 
+                                                            <i class="fa-solid fa-chart-line me-2"></i> Thống kê 
+                                                        </a>
+                                                    </li>
                                                 <?php endif; ?>
 
-                                            <li>
-                                                <a class="dropdown-item ps-5" href="index.php?controller=lichsutt&action=index">
-                                                    <i class="fa-solid fa-clock-rotate-left me-2"></i> Lịch sử giao dịch
-                                                </a>
-                                             </li>
-
-                                        </ul>
-                                    </div>
-                                </li>
+                                                <li>
+                                                    <a class="dropdown-item ps-5" href="index.php?controller=lichsutt&action=index">
+                                                        <i class="fa-solid fa-clock-rotate-left me-2"></i> Lịch sử giao dịch
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
 
                                 <li><hr class="dropdown-divider"></li>
 
@@ -175,26 +176,18 @@ $is_finance_active = ($current_controller === 'thanhtoan' || $current_controller
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const btnTaiChinh = document.querySelector('[href="#submenuTaiChinh"]');
+        const btnTaiChinh = document.getElementById('btnTaiChinh');
         const submenu = document.getElementById('submenuTaiChinh');
 
-        if (btnTaiChinh && submenu) {
+        if (btnTaiChinh) {
             btnTaiChinh.addEventListener('click', function(e) {
-                e.preventDefault();
                 e.stopPropagation(); 
-                
-                const isShown = submenu.classList.contains('show');
-                if (isShown) {
-                    submenu.classList.remove('show');
-                    this.setAttribute('aria-expanded', 'false');
-                } else {
-                    submenu.classList.add('show');
-                    this.setAttribute('aria-expanded', 'true');
-                }
             });
+        }
 
+        if (submenu) {
             submenu.addEventListener('click', function(e) {
-                e.stopPropagation();
+                e.stopPropagation(); 
             });
         }
     });

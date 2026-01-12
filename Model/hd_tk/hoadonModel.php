@@ -10,9 +10,10 @@ class HoaDonModel {
         $query = "SELECT hd.*, x.tenxe, x.giathue, tt.hoten 
                   FROM hoadon hd JOIN xe x ON hd.idxe = x.idxe
                   JOIN thongtintaikhoan tt ON hd.idtaikhoan = tt.idtaikhoan
-                  WHERE hd.trangthai = 0";
+                  WHERE hd.trangthai = 0 AND hd.idtaikhoan =? " ;
 
         $stmt = mysqli_prepare($this->conn, $query);
+        mysqli_stmt_bind_param($stmt, "i", $idtaikhoan);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
