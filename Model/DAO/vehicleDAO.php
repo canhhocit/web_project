@@ -181,4 +181,27 @@ class vehicleDAO
             }
             return false;
         }
+        // minh
+        public function countXe(){
+            $sql =  "SELECT COUNT(*) as total FROM xe";
+            $result = mysqli_query($this->conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
+        }
+        public function PhanTrang($offset, $limit){
+            $sql = "SELECT x.*, x.hangxe AS tenhang, a.duongdan AS hinh_anh
+            FROM xe x 
+            LEFT JOIN (
+                SELECT * FROM anhxe GROUP BY idxe
+            ) a ON x.idxe = a.idxe 
+            ORDER BY x.idxe DESC
+            LIMIT $offset, $limit";
+            $result = mysqli_query($this->conn, $sql);
+            $list = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                return $this->fetchXeList($sql);
+            }
+            return $list;
+        }
+
 }
