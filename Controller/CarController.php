@@ -38,8 +38,5 @@
         }
     }
     
-    // public function mycars(){
-    //      header("Location: index.php?controller=taikhoan&action=personal&selection=cars");
-    // }
 }
 ?>
