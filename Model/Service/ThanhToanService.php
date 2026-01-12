@@ -24,7 +24,8 @@ class ThanhToanService {
 
         $phi_thue = ($ngay_thue_du_kien + $ngay_qua_han) * $don_gia;
         
-        $loai_xe = $hoadon['loaixe'] ?? ''; 
+        // Tính phí bảo hiểm và bảo trì dựa trên loại xe
+        $loai_xe = $hoadon['loaixe'] ?? ''; // Lấy từ DB
         $phi_bao_hiem = ($loai_xe === 'Xe máy điện') ? 100000 : 50000;
         $phi_bao_tri = ($loai_xe === 'Xe máy điện') ? 100000 : 50000;
         

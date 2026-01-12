@@ -61,7 +61,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="huyTT()">Hủy</button>
-                    <button type="button" class="btn btn-primary" onclick="xacNhanTraXe()">Xác nhận & Hoàn tất</button>
+                    <button type="button" class="btn btn-primary" onclick="xacNhanTraXe()">Đã thanh toán</button>
                 </div>
             </div>
         </div>
