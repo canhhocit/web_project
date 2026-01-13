@@ -59,7 +59,6 @@
     <!-- form sendMessage -->
     <form class="chatbox-input" id="formSendMessage" method="POST" 
           action="/web_project/index.php?controller=chat&action=sendMessage">
-        
         <input type="hidden" name="id_cuoc_tc" value="<?php echo $currentChatId; ?>">
         
         <textarea name="noi_dung" 
