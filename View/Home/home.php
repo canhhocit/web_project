@@ -57,8 +57,32 @@
                     </div>
                 </div>
             </div>
+
     <?php
         }
     }
     ?>
 </div>
+<?php if (isset($tongTrang) && $tongTrang > 1): ?>
+<div class="col-12 mt-4">
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                <a class="page-link" href="index.php?controller=home&page=<?php echo $page - 1; ?>">Trước</a>
+            </li>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                    <a class="page-link" href="index.php?controller=home&page=<?php echo $i; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
+
+            <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
+                <a class="page-link" href="index.php?controller=home&page=<?php echo $page + 1; ?>">Sau</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<?php endif; ?>

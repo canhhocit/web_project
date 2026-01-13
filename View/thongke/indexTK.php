@@ -11,7 +11,7 @@
 <body class="bg-light">
 <div class="container mt-4 pb-5">
     <h2 class="mb-4 text-primary fw-bold text-uppercase">
-        <i class="fas fa-user-chart me-2"></i>Báo cáo doanh thu cá nhân
+        <i class="fas fa-user-chart me-2"></i>Doanh thu cá nhân
     </h2>
     
     <?php if (isset($error) && $error): ?>
@@ -26,14 +26,14 @@
             <div class="card bg-primary text-white p-3 shadow-sm h-100">
                 <h6>Tổng doanh thu tích lũy</h6>
                 <h3><?= number_format($tongDoanhThu['tong_doanh_thu'] ?? 0) ?> đ</h3>
-                <i class="fas fa-money-bill-wave fa-3x stats-icon"></i>
+                <i class="fas fa-coins fa-3x stats-icon"></i>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card bg-success text-white p-3 shadow-sm h-100">
                 <h6>Doanh thu tháng <?= date('m/Y') ?></h6>
                 <h3><?= number_format($doanhThuThang['doanh_thu'] ?? 0) ?> đ</h3>
-                <i class="fas fa-calendar-check fa-3x stats-icon"></i>
+                <i class="fas fa-calendar-days fa-3x stats-icon"></i>
             </div>
         </div>
         <div class="col-md-4">
@@ -41,7 +41,7 @@
                 <h6>Tình trạng xe của tôi</h6>
                 <p class="mb-1">Đang thuê: <strong><?= $statsPhu['dang_thue'] ?></strong></p>
                 <p class="mb-0">Tổng số xe: <strong><?= $statsPhu['tong_xe'] ?></strong></p>
-                <i class="fas fa-car fa-3x stats-icon"></i>
+                <i class="fas fa-bicycle fa-3x stats-icon"></i>
             </div>
         </div>
     </div>
@@ -98,26 +98,36 @@ const pieCtx = document.getElementById('pieChart').getContext('2d');
 new Chart(pieCtx, {
     type: 'doughnut',
     data: {
-        labels: <?= json_encode(array_column($tyLeLoaiXe ?? [], 'loaixe')) ?>,
+        labels: ['Xe đạp', 'Xe máy điện'],
         datasets: [{
-            data: <?= json_encode(array_column($tyLeLoaiXe ?? [], 'so_luong')) ?>,
-            backgroundColor: ['#ffc107', '#17a2b8', '#dc3545', '#28a745', '#6f42c1', '#fd7e14']
+            data: <?= json_encode(array_map(
+                fn($t) => (int)$t['so_luong'],
+                $tyLeLoaiXe ?? []
+            )) ?>,
+            backgroundColor: [
+                '#ffc107',  '#fd3030'  
+            ],
+            borderWidth: 0
         }]
     },
     options: {
         responsive: true,
+        cutout: '65%', 
         plugins: {
             legend: {
-                position: 'bottom'
+                position: 'bottom',
+                labels: {
+                    boxWidth: 14
+                }
             },
             tooltip: {
                 callbacks: {
                     label: function(context) {
-                        let label = context.label || '';
-                        let value = context.raw || 0;
-                        let total = context.dataset.data.reduce((a, b) => a + b, 0);
-                        let percentage = Math.round((value / total) * 100);
-                        return `${label}: ${value} xe (${percentage}%)`;
+                        const label = context.label;
+                        const value = context.raw || 0;
+                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                        const percent = total ? Math.round((value / total) * 100) : 0;
+                        return `${label}: ${value} xe (${percent}%)`;
                     }
                 }
             }

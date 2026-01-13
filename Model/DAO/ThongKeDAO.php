@@ -106,14 +106,5 @@ class ThongKeDAO {
         return ($row && $row['lachuxe'] == 1);
     }
     
-    public function getUserRole($idtaikhoan) {
-        $query = "SELECT lachuxe, languoithue FROM taikhoan WHERE idtaikhoan = ?";
-        
-        $stmt = mysqli_prepare($this->conn, $query);
-        mysqli_stmt_bind_param($stmt, "i", $idtaikhoan);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        return mysqli_fetch_assoc($result);
-    }
 }
 ?>
