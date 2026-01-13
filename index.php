@@ -11,7 +11,6 @@ require_once "Model/DAO/vehicleDAO.php";
 $controller = $_GET['controller'] ?? 'home';
 $action = $_GET['action'] ?? 'index';
 
-
 if ($controller === 'taikhoan') {
     require_once "Controller/taikhoanController.php";
     require_once "Model/Object/taikhoan.php";
@@ -41,7 +40,7 @@ if ($controller === 'chat') {
     require_once "Controller/chatController.php";
     $chat = new chatController();
 
-     if ($action === 'openChat' || $action === 'sendMessage' || $action === 'delete') {
+    if ($action === 'openChat' || $action === 'sendMessage' || $action === 'delete' || $action === 'sendQuickQuestion') {
         $chat->$action();
         exit();
     }

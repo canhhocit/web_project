@@ -117,4 +117,46 @@ class chatController
         }
         exit;
     }
+
+    public function sendQuickQuestion(){
+        header('Content-Type: application/json; charset=utf-8');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['status' => 'invalid_method']);
+            exit;
+        }
+
+        $idCuocTC = $_POST['id_cuoc_tc'] ?? 0;
+        $key = $_POST['question_key'] ?? '';
+        $idNguoiGui = $_SESSION['idtaikhoan'] ?? 0;
+
+        $questionText = $_POST['question_text'] ?? '';
+        $answerText = $this->getAutoReply($key);
+
+        if (!$answerText) {
+            echo json_encode(['status' => 'no_answer', 'key' => $key]);
+            exit;
+        }
+
+        $ok1 = $this->dao->guiTinNhan($idCuocTC, $idNguoiGui, $questionText);
+        // sleep(1);
+        $idNguoiNhan = $this->dao->getIdNguoiConLai($idCuocTC, $idNguoiGui);
+        $ok2 = $this->dao->guiTinNhan($idCuocTC, $idNguoiNhan, $answerText);
+
+        echo json_encode(['status' => 'success', 'sent' => [$ok1, $ok2]]);
+        exit;
+}
+
+    public function getAutoReply($key)
+    {
+        $qa = [
+            'con_xe_khong' => 'Xe vẫn còn nhé bạn.',
+            'da_dang_ky' => 'Xe đã đăng ký đầy đủ giấy tờ.',
+            'thuong_luong' => 'Giá còn thương lượng trong mức hợp lý.',
+            'xem_hom_nay' => 'Bạn có thể qua xem xe hôm nay được nhé.'
+        ];
+
+        return $qa[$key] ?? null;
+    }
 }

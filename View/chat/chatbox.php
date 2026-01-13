@@ -1,5 +1,5 @@
 <?php if (isset($currentChatId) && isset($thongTinChat)): ?>
-<div class="chatbox">
+<div class="chatbox" data-chat-id="<?php echo $currentChatId; ?>">
     <!-- HEADER -->
     <div class="chatbox-header">
         <div class="d-flex align-items-center">
@@ -55,10 +55,24 @@
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
+    
+    <div class="quick-questions" id="quickQuestions">
+        <ul>
+            <li data-key="con_xe_khong">Bạn còn xe này không?</li>
+            <li data-key="da_dang_ky">Xe đã đăng ký chưa?</li>
+            <li data-key="thuong_luong">Giá còn thương lượng được không?</li>
+            <li data-key="xem_hom_nay">Có thể xem xe hôm nay không?</li>
 
+        </ul>
+    </div>
     <!-- form sendMessage -->
     <form class="chatbox-input" id="formSendMessage" method="POST" 
           action="/web_project/index.php?controller=chat&action=sendMessage">
+
+        <button type="button" class="btn-send" id="btnQuick">
+            <i class="fa-solid fa-list"></i>
+        </button>
+
         <input type="hidden" name="id_cuoc_tc" value="<?php echo $currentChatId; ?>">
         
         <textarea name="noi_dung" 
@@ -74,6 +88,9 @@
 </div>
 
 <script>
+    const CURRENT_CHAT_ID = document.querySelector('.chatbox')
+.dataset.chatId;
+
 // Tự động cuộn xuống tin nhắn mới nhất
 const chatMessages = document.getElementById('chatMessages');
 if (chatMessages) {
@@ -94,5 +111,38 @@ messageInput.addEventListener('keydown', function(e) {
         document.getElementById('formSendMessage').submit();
     }
 });
+
+const btnQuick = document.getElementById('btnQuick');
+const quickBox = document.getElementById('quickQuestions');
+
+btnQuick.addEventListener('click', function (e) {
+    quickBox.classList.toggle('show');
+});
+
+document.addEventListener('click', function (e) {
+    if (!quickBox.contains(e.target) && !btnQuick.contains(e.target)) {
+        quickBox.classList.remove('show');
+    }
+});
+
+document.querySelectorAll('#quickQuestions li').forEach(item => {
+    item.addEventListener('click', () => {
+        const key = item.dataset.key;
+        const text = item.innerText;
+        console.log(key, text);
+        fetch('/web_project/index.php?controller=chat&action=sendQuickQuestion', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({
+                id_cuoc_tc: CURRENT_CHAT_ID,
+                question_key: key,
+                question_text: text
+            })
+        })
+        .then(res => res.json())
+        .then(() => location.reload());
+    });
+});
+
 </script>
 <?php endif; ?>

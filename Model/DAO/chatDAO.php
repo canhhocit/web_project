@@ -341,5 +341,27 @@ class chatDAO
         mysqli_query($this->conn, $sql);
     }
 
-    
+    public function getIdNguoiConLai($idCuocTC, $idNguoiGui){
+    $sql = "
+        SELECT id_nguoi_thue, id_chu_xe
+        FROM cuoc_tro_chuyen
+        WHERE id_cuoc_tc = '$idCuocTC'
+        LIMIT 1
+    ";
+
+    $row = $this->executeQueryGetOne($sql);
+
+    if (!$row) return false;
+
+    if ($row['id_nguoi_thue'] == $idNguoiGui) {
+        return $row['id_chu_xe'];
+    }
+
+    if ($row['id_chu_xe'] == $idNguoiGui) {
+        return $row['id_nguoi_thue'];
+    }
+
+    return false;
+    }
+
 }
