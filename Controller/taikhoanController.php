@@ -306,73 +306,73 @@ class taikhoanController
     }
 
     public function personal()
-{
-    if (!isset($_SESSION['idtaikhoan'])) {
-        echo "<script>alert('Vui lòng đăng nhập!'); 
+    {
+        if (!isset($_SESSION['idtaikhoan'])) {
+            echo "<script>alert('Vui lòng đăng nhập!'); 
         window.location='/web_project/View/taikhoan/login.php';</script>";
-        exit;
-    }
+            exit;
+        }
 
-    $idtaikhoan = $_SESSION['idtaikhoan'];
-    $thongtin = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
-    $defaultAvatar = $this->Adao->checkdefaultAvatar($idtaikhoan);
+        $idtaikhoan = $_SESSION['idtaikhoan'];
+        $thongtin = $this->Adao->getThongTinTaiKhoanbyID($idtaikhoan);
+        $defaultAvatar = $this->Adao->checkdefaultAvatar($idtaikhoan);
 
-    // Phân trang
-    $itemsPerPage = 3;
-    $currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-    $offset = ($currentPage - 1) * $itemsPerPage;
+        // Phân trang
+        $itemsPerPage = 3;
+        $currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+        $offset = ($currentPage - 1) * $itemsPerPage;
 
-    // selection = myvehicle
-    $xeWithImages = [];
-    $totalPages = 0;
-    if (isset($_GET['selection']) && $_GET['selection'] === 'myvehicle') {
-        $danhsachxe = $this->Vdao->getXebyIdChuxe($idtaikhoan);
-        $totalItems = count($danhsachxe);
-        $totalPages = ceil($totalItems / $itemsPerPage);
-        
-        // Lấy xe theo trang
-        $danhsachxe = array_slice($danhsachxe, $offset, $itemsPerPage);
+        // selection = myvehicle
+        $xeWithImages = [];
+        $totalPages = 0;
+        if (isset($_GET['selection']) && $_GET['selection'] === 'myvehicle') {
+            $danhsachxe = $this->Vdao->getXebyIdChuxe($idtaikhoan);
+            $totalItems = count($danhsachxe);
+            $totalPages = ceil($totalItems / $itemsPerPage);
 
-        foreach ($danhsachxe as $xe) {
-            $idxe = $xe->get_idxe();
-            $anhxe = $this->Vdao->getAnhxebyIdxe($idxe);
-            $trangthai = 'Chưa có người thuê';
-            $status = false;
-            if ($this->Vdao->checktrangthaithue($idxe)) {
-                $trangthai = 'Đã được thuê';
-                $status = true;
+            // Lấy xe theo trang
+            $danhsachxe = array_slice($danhsachxe, $offset, $itemsPerPage);
+
+            foreach ($danhsachxe as $xe) {
+                $idxe = $xe->get_idxe();
+                $anhxe = $this->Vdao->getAnhxebyIdxe($idxe);
+                $trangthai = 'Chưa có người thuê';
+                $status = false;
+                if ($this->Vdao->checktrangthaithue($idxe)) {
+                    $trangthai = 'Đã được thuê';
+                    $status = true;
+                }
+                $xeWithImages[] = [
+                    'xe' => $xe,
+                    'images' => $anhxe,
+                    'trangthai' => $trangthai,
+                    'status' => $status
+                ];
             }
-            $xeWithImages[] = [
-                'xe' => $xe,
-                'images' => $anhxe,
-                'trangthai' => $trangthai,
-                'status' => $status
-            ];
         }
-    }
 
-    // selection = favorite
-    $favotiteCars = [];
-    if (isset($_GET['selection']) && $_GET['selection'] === 'favorite') {
-        $listFavorite = $this->Vdao->getFavoritebyIdChuxe($idtaikhoan);
-        $totalItems = count($listFavorite);
-        $totalPages = ceil($totalItems / $itemsPerPage);
-        
-        // Lấy xe theo trang
-        $listFavorite = array_slice($listFavorite, $offset, $itemsPerPage);
+        // selection = favorite
+        $favotiteCars = [];
+        if (isset($_GET['selection']) && $_GET['selection'] === 'favorite') {
+            $listFavorite = $this->Vdao->getFavoritebyIdChuxe($idtaikhoan);
+            $totalItems = count($listFavorite);
+            $totalPages = ceil($totalItems / $itemsPerPage);
 
-        foreach ($listFavorite as $xe) {
-            $idxe = $xe->get_idxe();
-            $imgs = $this->Vdao->getAnhxebyIdxe($idxe);
-            $favotiteCars[] = [
-                'xe' => $xe,
-                'images' => $imgs
-            ];
+            // Lấy xe theo trang
+            $listFavorite = array_slice($listFavorite, $offset, $itemsPerPage);
+
+            foreach ($listFavorite as $xe) {
+                $idxe = $xe->get_idxe();
+                $imgs = $this->Vdao->getAnhxebyIdxe($idxe);
+                $favotiteCars[] = [
+                    'xe' => $xe,
+                    'images' => $imgs
+                ];
+            }
         }
-    }
 
-    include_once __DIR__ . "/../View/taikhoan/personal.php";
-}
+        include_once __DIR__ . "/../View/taikhoan/personal.php";
+    }
 
     public function forgot()
     {
@@ -386,7 +386,10 @@ class taikhoanController
 
             if ($this->Adao->checkUserforgot($username)) {
                 $_SESSION['reset_username'] = $username;
-                header("Location: /web_project/View/taikhoan/reset_password.php");
+                // header("Location: /web_project/View/taikhoan/reset_password.php");
+                echo "<script>
+        window.location='/web_project/View/taikhoan/reset_password.php';
+        </script>";
                 exit;
             } else {
                 echo "<script>alert('Username không tồn tại!'); history.back();</script>";

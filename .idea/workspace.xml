@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc57676d-8953-4829-a031-03241f5b656e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/chatController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/chatController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/chat/chatbox.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/chat/chatbox.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/chat/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/chat/index.php" afterDir="false" />
-    </list>
+    <list default="true" id="bc57676d-8953-4829-a031-03241f5b656e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,6 +78,7 @@
       <workItem from="1768222125119" duration="2569000" />
       <workItem from="1768225965731" duration="4168000" />
       <workItem from="1768232714965" duration="2213000" />
+      <workItem from="1768289978432" duration="50000" />
     </task>
     <servers />
   </component>
