@@ -6,7 +6,7 @@ class HoaDonModel {
         $this->conn = $db;
     }
 
-    public function getHoaDonChuaThanhToan() {
+    public function getHoaDonChuaThanhToan($idtaikhoan) {
         $query = "SELECT hd.*, x.tenxe, x.giathue, tt.hoten 
                   FROM hoadon hd JOIN xe x ON hd.idxe = x.idxe
                   JOIN thongtintaikhoan tt ON hd.idtaikhoan = tt.idtaikhoan
@@ -33,18 +33,19 @@ class HoaDonModel {
 
     public function xacNhanTraXe($idhoadon, $ngay_qua_han, $tong_tien, $phuongthuc) {
 
+        $phuongthuc = 'VNpay';
+
         $query_hd = "UPDATE hoadon SET trangthai = 1, tongtien = ? WHERE idhoadon = ?";
         $stmt1 = mysqli_prepare($this->conn, $query_hd);
         mysqli_stmt_bind_param($stmt1, "di", $tong_tien, $idhoadon); 
         $res1 = mysqli_stmt_execute($stmt1);
 
         $magiaodich = rand(1000000, 9999999);
-        $query_tt = "INSERT INTO thanhtoan (idhoadon, idtaikhoan, sotien, phuongthuc, magiaodich) 
-                    SELECT idhoadon, idtaikhoan, ?, ?, ? 
-                    FROM hoadon WHERE idhoadon = ?";
-        
+        $query_tt = "INSERT INTO thanhtoan (idhoadon, idtaikhoan, sotien, phuongthuc, ngaythanhtoan, magiaodich)
+                     SELECT idhoadon, idtaikhoan, ?, ?, NOW(), ?
+                     FROM hoadon WHERE idhoadon = ?";
         $stmt2 = mysqli_prepare($this->conn, $query_tt);
-        mysqli_stmt_bind_param($stmt2, "dsii", $tong_tien, $phuongthuc, $magiaodich, $idhoadon);
+        mysqli_stmt_bind_param($stmt2,"dsii",  $tong_tien, $phuongthuc, $magiaodich, $idhoadon);
         $res2 = mysqli_stmt_execute($stmt2);
 
         return ($res1 && $res2);

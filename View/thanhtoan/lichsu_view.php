@@ -10,7 +10,7 @@
                         <tr>
                             <th>Mã GD</th>
                             <th>Tên Xe</th>
-                            <th>Ngày Thuê/Trả</th>
+                            <th>Ngày Thuê - Trả</th>
                             <th>Tổng Tiền</th>
                             <th>Phương Thức</th>
                             <th>Ngày Thanh Toán</th>

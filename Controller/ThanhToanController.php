@@ -62,4 +62,8 @@ class ThanhToanController {
         
         echo json_encode(['error' => 'Không tìm thấy hóa đơn']);
     }
+
+    
+
+
 }

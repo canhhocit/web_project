@@ -27,7 +27,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">XÁC NHẬN THANH TOÁN</h5>
+                    <h5 class="modal-title">THÔNG TIN THANH TOÁN</h5>
                 </div>
                 <div class="modal-body">
                     <form id="formTraXe">
@@ -37,31 +37,31 @@
                             <input type="text" class="form-control bg-light" id="tenxe" readonly>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-2">
                                 <label class="fw-bold">Số ngày thuê:</label>
                                 <input type="text" class="form-control bg-light" id="ngay_thue_du_kien" readonly>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-2">
                                 <label class="fw-bold">Số ngày quá hạn:</label>
                                 <input type="text" class="form-control bg-light" id="ngay_qua_han" readonly>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="fw-bold">Phương thức thanh toán:</label>
-                            <select class="form-select" id="phuongthuc">
-                                <option value="Tiền mặt">Tiền mặt</option>
-                                <option value="Chuyển khoản">Chuyển khoản</option>
-                            </select>
-                        </div>
+
                         <div class="mb-3">
                             <label class="fw-bold text-danger">Tổng tiền:</label>
                             <input type="text" class="form-control fw-bold text-danger" id="tong_tien" readonly>
                         </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold">Ghi chú:</label>
+                            <option value="Ghi chú" class="form-control bg-light" >Thanh toán tiền thuê xe</option>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="huyTT()">Hủy</button>
-                    <button type="button" class="btn btn-primary" onclick="xacNhanTraXe()">Đã thanh toán</button>
+                    <button type="button" class="btn btn-primary" onclick="xacNhanTraXe()">Tiếp tục</button>
                 </div>
             </div>
         </div>

@@ -36,32 +36,52 @@ window.addEventListener('beforeunload', function (e) {
 function xacNhanTraXe() {
     window.isModalOpen = false; 
 
-    let formData = {
-        idhoadon: $('#idhoadon').val(),
-        ngay_qua_han: $('#ngay_qua_han').val(),
-        tong_tien: $('#tong_tien').val().replace(/\D/g, ''),
-        phuongthuc: $('#phuongthuc').val()
+    let idhoadon = $('#idhoadon').val();
+    let tong_tien = $('#tong_tien').val().replace(/\D/g, '');
+    let tenxe = $('#tenxe').val();
+    
+    let form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/web_project/vnpay_create_payment.php';
+    
+    let fields = {
+        'order_id': idhoadon,
+        'order_desc': 'Thanh toan tien thue: ' + tenxe,
+        'order_type': 'billpayment',
+        'amount': tong_tien,
+        'language': 'vn',
+        'bank_code': '',
+        'txtexpire': '',
+        'txt_billing_mobile': '',
+        'txt_billing_email': '',
+        'txt_billing_fullname': '',
+        'txt_inv_addr1': '',
+        'txt_bill_city': '',
+        'txt_bill_country': '',
+        'txt_bill_state': '',
+        'txt_inv_mobile': '',
+        'txt_inv_email': '',
+        'txt_inv_customer': '',
+        'txt_inv_company': '',
+        'txt_inv_taxcode': '',
+        'cbo_inv_type': '',
+        'redirect': 'true'
     };
     
-    $.ajax({
-        url: 'index.php?controller=thanhtoan&action=xacNhanTraXe',
-        type: 'POST',
-        data: formData,
-        success: function(response) {
-            let res = JSON.parse(response);
-            if (res.success) {
-                alert('Thanh toán thành công!');
-                location.reload(); 
-            } else {
-                isModalOpen = true;
-                alert('Có lỗi xảy ra khi lưu dữ liệu!');
-            }
-        }
-    });
+    for (let key in fields) {
+        let input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = fields[key];
+        form.appendChild(input);
+    }
+    
+    document.body.appendChild(form);
+    form.submit();
 }
 
 function huyTT() {
-    if (confirm("Xác nhận hủy thanh toán ?")) {
+    if (confirm("Bạn chắc chắn muốn hủy giao dịch này?")) {
         window.isModalOpen = false;
         var modalElement = document.getElementById('modalTraXe');
         var modalInstance = bootstrap.Modal.getInstance(modalElement);
