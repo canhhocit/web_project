@@ -86,7 +86,7 @@
         </button>
     </form>
 </div>
-
+ 
 <script>
     const CURRENT_CHAT_ID = document.querySelector('.chatbox')
 .dataset.chatId;
