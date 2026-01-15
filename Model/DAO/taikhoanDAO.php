@@ -39,18 +39,19 @@ class taikhoanDAO
         $rs = mysqli_query($this->conn, "select * from thongtintaikhoan where idtaikhoan = '$idtaikhoan'");
         return mysqli_num_rows($rs) > 0;
     }
-    public function checkdefaultAvatar($idtaikhoan){
+    public function checkdefaultAvatar($idtaikhoan)
+    {
         $rs = mysqli_query($this->conn, "SELECT anhdaidien FROM thongtintaikhoan WHERE idtaikhoan = '$idtaikhoan'");
         $row = mysqli_fetch_assoc($rs);
         $avt = $row['anhdaidien'];
-        if($avt==='default-avt.jpg'){
+        if ($avt === 'default-avt.jpg') {
             return true;
         }
         return false;
     }
-    public function delAvatar($idtaikhoan){
+    public function delAvatar($idtaikhoan)
+    {
         return mysqli_query($this->conn, "update thongtintaikhoan set anhdaidien='default-avt.jpg' where idtaikhoan = '$idtaikhoan'");
-       
     }
     public function checkThongtinTK_isNULL($idtaikhoan)
     {
@@ -60,17 +61,18 @@ class taikhoanDAO
             return true;
         }
 
-        return false; 
+        return false;
     }
-    public function checkUserforgot($username){
-         $rs = mysqli_query($this->conn, "SELECT * FROM taikhoan WHERE username = '$username'");
-        if(mysqli_num_rows($rs)>0){
+    public function checkUserforgot($username)
+    {
+        $rs = mysqli_query($this->conn, "SELECT * FROM taikhoan WHERE username = '$username'");
+        if (mysqli_num_rows($rs) > 0) {
             return true;
         }
         return false;
     }
 
-    
+
     //THÔNG TIN TÀI KHOẢN
     //$idthongtin, $idtaikhoan, $hoten, $sdt, $email, $cccd, $anhdaidien
     // public function addThongTinTaiKhoan($thongtin)
@@ -137,9 +139,26 @@ class taikhoanDAO
         $sql = "UPDATE taikhoan SET pass = '$newpass' WHERE idtaikhoan = '$idtaikhoan'";
         return mysqli_query($this->conn, $sql);
     }
+    // page-- Canh
+    // public function getXebyIdChuxePaging($id, $limit, $offset)
+    // {
+    //     $sql = "SELECT * FROM xe 
+    //         WHERE id_chuxe = ?
+    //         LIMIT ? OFFSET ?";
+    //     $stmt = $this->conn->prepare($sql);
+    //     $stmt->execute([$id, $limit, $offset]);
+    //     return $stmt->fetchAll();
+    // }
+    // public function countXeByChuxe($id)
+    // {
+    //     $sql = "SELECT COUNT(*) FROM xe WHERE id_chuxe = ?";
+    //     $stmt = $this->conn->prepare($sql);
+    //     $stmt->execute([$id]);
+    //     return (int) $stmt->fetchColumn();
+    // }
 
     //-----------------
-    
+
     //-----------------
     public function updateisChuxe($idtaikhoan)
     {
