@@ -1,9 +1,5 @@
 <?php
-/**
- * Class chatDAO
- * Quản lý tất cả các thao tác với database liên quan đến chat
- * Bao gồm: Cuộc trò chuyện, Tin nhắn, Xóa mềm
- */
+
 class chatDAO
 {
     private $conn;
@@ -57,9 +53,8 @@ class chatDAO
             ORDER BY thoi_gian_gui DESC 
             LIMIT 1
         ) as tin_nhan_cuoi";
-    }
+    } 
 
-    // Đếm số tin nhắn chưa đọc (từ người khác)
      
     private function getSQLTinNhanChuaDoc($idtaikhoan)
     {
