@@ -44,7 +44,6 @@
             <ul>
                 <li>Sử dụng mật khẩu mạnh (khuyên dùng 8 ký tự)</li>
                 <li>Kết hợp chữ hoa, chữ thường và số</li>
-                <li>Sử dụng kết hợp với ký tự đặc biệt</li>
                 <li>Thay đổi mật khẩu định kỳ</li>
                 <li>Không chia sẻ mật khẩu với người khác</li>
             </ul>
