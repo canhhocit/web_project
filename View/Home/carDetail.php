@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_thueXe.css" />
 <link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_popupXacNhan.css" />
+<link rel="stylesheet" href="/web_project/View/CSS/nguyen_css_termAndPolicy.css" />
 
 <div class="container mt-4 mb-5">
     <nav aria-label="breadcrumb">
@@ -232,13 +233,13 @@
                         <input type="checkbox" id="terms_thuexe" />
                         <span class="checkmark"></span>
                         <span>I accept
-                            <a href="#" class="link-highlight">the Terms of use</a></span>
+                            <a href="#" class="link-highlight" onclick="modalterm()">the Terms of use</a></span>
                     </label>
                     <label class="custom-check-row">
                         <input type="checkbox" id="policy_thuexe" />
                         <span class="checkmark"></span>
                         <span>I have read
-                            <a href="#" class="link-highlight">the Privacy policy</a></span>
+                            <a href="#" class="link-highlight" onclick="modalpolicy()">the Privacy policy</a></span>
                     </label>
                     <div class="scroll-spacer"></div>
                 </div>
@@ -305,6 +306,8 @@
         </div>
     </div>
 </div>
+
+<script src="/web_project/View/JS/nguyen_js_termAndPolicy.js"></script>
 
 <script>
     var RENT_PRICE = 0;
