@@ -33,7 +33,7 @@ window.addEventListener('beforeunload', function (e) {
     }
 });
 
-function xacNhanTraXe() {
+function thanhToanVNPay() {
     window.isModalOpen = false; 
 
     let idhoadon = $('#idhoadon').val();
@@ -66,6 +66,36 @@ function xacNhanTraXe() {
         'txt_inv_taxcode': '',
         'cbo_inv_type': '',
         'redirect': 'true'
+    };
+    
+    for (let key in fields) {
+        let input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = fields[key];
+        form.appendChild(input);
+    }
+    
+    document.body.appendChild(form);
+    form.submit();
+}
+
+
+function thanhToanSePay() {
+    window.isModalOpen = false;
+
+    let idhoadon = $('#idhoadon').val();
+    let tong_tien = $('#tong_tien').val().replace(/\D/g, '');
+    let tenxe = $('#tenxe').val();
+    
+    let form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/web_project/sepay_create_payment.php';
+    
+    let fields = {
+        'order_id': idhoadon,
+        'order_desc': 'Thanh toan tien thue: ' + tenxe,
+        'amount': tong_tien
     };
     
     for (let key in fields) {

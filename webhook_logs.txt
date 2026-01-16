@@ -1,0 +1,60 @@
+
+=== WEBHOOK RECEIVED AT 2026-01-16 17:44:12 ===
+Headers: Array
+(
+    [Host] => unrubrical-breann-unextortable.ngrok-free.dev
+    [User-Agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0
+    [Accept] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [Accept-Encoding] => gzip, deflate, br, zstd
+    [Accept-Language] => en-US,en;q=0.9
+    [Cookie] => abuse_interstitial=unrubrical-breann-unextortable.ngrok-free.dev; PHPSESSID=ubvov1id48n2pvna6lj23vm4at
+    [Priority] => u=0, i
+    [Sec-Ch-Ua] => "Microsoft Edge";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+    [Sec-Ch-Ua-Mobile] => ?0
+    [Sec-Ch-Ua-Platform] => "Windows"
+    [Sec-Fetch-Dest] => document
+    [Sec-Fetch-Mode] => navigate
+    [Sec-Fetch-Site] => none
+    [Sec-Fetch-User] => ?1
+    [Upgrade-Insecure-Requests] => 1
+    [X-Forwarded-For] => 118.70.120.255
+    [X-Forwarded-Host] => unrubrical-breann-unextortable.ngrok-free.dev
+    [X-Forwarded-Proto] => https
+)
+
+Received Auth Header: 
+ERROR: Invalid API Key. Expected: Apikey GMYHCFMLHF0AM5RTINESAGYJQXG9W6IJO4ZX1ISDNR8NSR6SWUBEEV2ANF1JCGDR
+[2026-01-16 18:52:59] === HIT ===
+[2026-01-16 18:52:59] METHOD=POST
+[2026-01-16 18:52:59] UA=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
+[2026-01-16 18:52:59] CT=application/json
+[2026-01-16 18:52:59] HAS_AUTH=1
+[2026-01-16 18:52:59] HAS_JSON=1
+[2026-01-16 18:52:59] RAW={"gateway":"BIDV","transactionDate":"2026-01-17 00:53:03","accountNumber":"8841165866","subAccount":"96247LVD02","code":null,"content":"MBVCB.12619815351.294950.LO VAN DIEP chuyen tien.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV","transferType":"in","description":"BankAPINotify MBVCB.12619815351.294950.LO VAN DIEP chuyen tien.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV","transferAmount":2000,"referenceCode":"c373018b-8afa-4142-8ebd-91d1518fd9c7","accumulated":0,"id":39096591}
+[2026-01-16 18:52:59] CONTENT=MBVCB.12619815351.294950.LO VAN DIEP chuyen tien.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV
+[2026-01-16 18:52:59] AMOUNT=2000
+[2026-01-16 18:52:59] INFO: No payment code found -> ignore
+[2026-01-16 19:39:20] === HIT ===
+[2026-01-16 19:39:20] METHOD=POST
+[2026-01-16 19:39:20] UA=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
+[2026-01-16 19:39:20] CT=application/json
+[2026-01-16 19:39:20] HAS_AUTH=1
+[2026-01-16 19:39:20] HAS_JSON=1
+[2026-01-16 19:39:20] RAW={"gateway":"BIDV","transactionDate":"2026-01-17 01:39:24","accountNumber":"8841165866","subAccount":"96247LVD02","code":null,"content":"MBVCB.12619935172.378114.HD12T1768588718.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV","transferType":"in","description":"BankAPINotify MBVCB.12619935172.378114.HD12T1768588718.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV","transferAmount":150000,"referenceCode":"9cb7cab5-e71f-4830-b8c4-4b30c1d46eb2","accumulated":0,"id":39097526}
+[2026-01-16 19:39:20] CONTENT=MBVCB.12619935172.378114.HD12T1768588718.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV
+[2026-01-16 19:39:20] AMOUNT=150000
+[2026-01-16 19:39:20] ORDER_ID=12 CODE=HD12
+[2026-01-16 19:39:20] EXPECTED=150000 DIFF=0
+[2026-01-16 19:39:20] SUCCESS: Updated DB
+[2026-01-16 19:43:29] === HIT ===
+[2026-01-16 19:43:29] METHOD=POST
+[2026-01-16 19:43:29] UA=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
+[2026-01-16 19:43:29] CT=application/json
+[2026-01-16 19:43:29] HAS_AUTH=1
+[2026-01-16 19:43:29] HAS_JSON=1
+[2026-01-16 19:43:29] RAW={"gateway":"BIDV","transactionDate":"2026-01-17 01:43:33","accountNumber":"8841165866","subAccount":"96247LVD02","code":null,"content":"MBVCB.12619932104.384383.HD13T1768588960.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV","transferType":"in","description":"BankAPINotify MBVCB.12619932104.384383.HD13T1768588960.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV","transferAmount":150000,"referenceCode":"ad84fd1f-1ec7-496f-a350-60aa6cbd8208","accumulated":0,"id":39097606}
+[2026-01-16 19:43:29] CONTENT=MBVCB.12619932104.384383.HD13T1768588960.CT tu 1041158151 LO VAN DIEP toi 96247LVD02 LO VAN DIEP tai BIDV
+[2026-01-16 19:43:29] AMOUNT=150000
+[2026-01-16 19:43:29] ORDER_ID=13 CODE=HD13
+[2026-01-16 19:43:29] EXPECTED=150000 DIFF=0
+[2026-01-16 19:43:29] SUCCESS: Updated DB
