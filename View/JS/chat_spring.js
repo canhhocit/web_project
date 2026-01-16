@@ -5,7 +5,6 @@ let stompClient = null;
 let currentSubscription = null;
 let currentChatId = null;
 
-
 document.addEventListener('DOMContentLoaded', () => {
     if (!CURRENT_USER_ID) {
         alert('Vui lòng đăng nhập!');
