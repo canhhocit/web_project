@@ -28,7 +28,7 @@ function initModal_term() {
 
     closeTermX.onclick = () => closeModal_term();
     modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeModal();
+        if (e.target === modal) closeModal_term();
     });
 
     btnTerm.onclick = () => {
@@ -77,22 +77,22 @@ function modalpolicy() {
 function initModal_policy() {
     console.log("into func initmodal_policy");
     const modal = document.getElementById("modalOverlay_policy");
-    const closeTermX = document.getElementById("closeTermX");
-    const btnTerm = document.getElementById("btn_term");
+    const closePolicyX = document.getElementById("closePolicyX");
+    const btnPolicy = document.getElementById("btn_policy");
 
     openModal_policy();
-    closeTermX.onclick = () => closeModal_policy();
+    closePolicyX.onclick = () => closeModal_policy();
     modal.addEventListener("click", (e) => {
         if (e.target === modal) closeModal_policy();
     });
 
-    btnTerm.onclick = () => {
+    btnPolicy.onclick = () => {
         closeModal_policy();
     };
 }
 
 function openModal_policy() {
-    console.log("into func openmodal_policy");
+    console.log("into func openmodal_policyAAA");
     const modal = document.getElementById("modalOverlay_policy");
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
