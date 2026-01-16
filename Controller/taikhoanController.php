@@ -241,7 +241,8 @@ class taikhoanController
 
             try {
                 if ($this->Adao->updatePassword($idtaikhoan, $newpass)) {
-                    echo "<script>alert('Đổi mật khẩu thành công!'); window.location='/web_project/index.php';</script>";
+                    echo "<script>alert('Đổi mật khẩu thành công!');
+                     window.location='/web_project/index.php?controller=taikhoan&action=personal&selection=password';</script>";
                 } else {
                     echo "<script>alert('Đổi mật khẩu thất bại!'); history.back();</script>";
                 }

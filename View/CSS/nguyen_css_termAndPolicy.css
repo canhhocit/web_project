@@ -1,0 +1,128 @@
+.modal-overlayTP {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 40px 40px;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 99;
+}
+
+.modal-overlayTP.active {
+    opacity: 1;
+    visibility: visible;
+    background: #0000008f;
+}
+
+.modal-overlayTP.active .container_modalTerm {
+    transform: scale(1);
+}
+.container_modalTerm {
+    background-color: #fefeff;
+    color: #2a2a2a;
+    width: 55%;
+    max-width: 80%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: visible;
+    overflow-y: auto;
+
+    padding: 40px;
+    transform: scale(0.9);
+    transition: 0.3s;
+}
+.container_modalTerm::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.modal-overlayTP.active .container_modalPolicy {
+    transform: scale(1);
+}
+.container_modalPolicy {
+    background-color: #fefeff;
+    color: #2a2a2a;
+    width: 55%;
+    max-width: 80%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: visible;
+    overflow-y: auto;
+
+    padding: 40px;
+    transform: scale(0.9);
+    transition: 0.3s;
+}
+.container_modalPolicy::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.close-btnX {
+    position: absolute;
+    top: -3px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #111;
+    z-index: 100;
+}
+
+.main_title {
+    font-size: 36px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.btn_term {
+    width: 30%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.2s;
+}
+
+.btn_term:hover {
+    background-color: #0d6efd;
+}
+.btn_term_container {
+    display: flex;
+    justify-content: center;
+}
+
+.scroll-spacer {
+    height: 36px;
+}
+
+.container_modalPolicy table {
+    width: 100%;
+    border-collapse: collapse; /* dính line */
+    border: 1px solid #bbb; /* viền ngoài */
+}
+
+.container_modalPolicy th,
+.container_modalPolicy td {
+    border: 1px solid #bbb; /* line trong */
+    padding: 10px 12px;
+    vertical-align: top;
+    text-align: left;
+}

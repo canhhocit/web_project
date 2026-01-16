@@ -72,21 +72,6 @@ class taikhoanDAO
         return false;
     }
 
-
-    //THÔNG TIN TÀI KHOẢN
-    //$idthongtin, $idtaikhoan, $hoten, $sdt, $email, $cccd, $anhdaidien
-    // public function addThongTinTaiKhoan($thongtin)
-    // {
-    //     $idtaikhoan = $thongtin->get_idtaikhoan();
-    //     $hoten = $thongtin->get_hoten();
-    //     $sdt = $thongtin->get_sdt();
-    //     $email = $thongtin->get_email();
-    //     $cccd = $thongtin->get_cccd();
-    //     $anhdaidien = $thongtin->get_anhdaidien();
-    //     $sql = "INSERT INTO thongtintaikhoan (idtaikhoan, hoten, sdt, email, cccd, anhdaidien) VALUES ('$idtaikhoan', '$hoten', '$sdt', '$email', '$cccd', '$anhdaidien')";
-    //     $result = mysqli_query($this->conn, $sql);
-    //     return $result;
-    // }
     public function addThongTinTaiKhoan($idtaikhoan, $anhdaidien)
     {
         $sql = "INSERT INTO thongtintaikhoan (idtaikhoan, anhdaidien) VALUES ('$idtaikhoan', '$anhdaidien')";
