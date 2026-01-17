@@ -30,7 +30,7 @@
                 $hinhAnh = 'View/image/' . $listCarImages[$idxe][0]->get_duongdan();
             }
     ?>
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="col-lg-4 col-md-4 col-sm-6 mb-4">
                 <div class="card h-100 shadow-sm border-0 hover-card">
                     <div class="position-relative" style="height: 200px; overflow: hidden;">
                         <img src="<?php echo $hinhAnh; ?>" class="card-img-top w-100 h-100" style="object-fit: cover;" alt="<?php echo $tenxe; ?>">
@@ -71,7 +71,7 @@
                 <a class="page-link" href="index.php?controller=home&page=<?php echo $page - 1; ?>">Trước</a>
             </li>
 
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <?php for ($i = 1; $i <= $tongTrang; $i++): ?>
                 <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
                     <a class="page-link" href="index.php?controller=home&page=<?php echo $i; ?>">
                         <?php echo $i; ?>
@@ -79,7 +79,7 @@
                 </li>
             <?php endfor; ?>
 
-            <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
+            <li class="page-item <?php echo ($page >= $tongTrang) ? 'disabled' : ''; ?>">
                 <a class="page-link" href="index.php?controller=home&page=<?php echo $page + 1; ?>">Sau</a>
             </li>
         </ul>

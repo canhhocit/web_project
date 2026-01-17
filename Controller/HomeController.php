@@ -14,7 +14,7 @@
             $this->hoadonDAO = new nguyen_hoadonDAO($conn);
         }
         public function index(){
-            $limit = 15;
+            $limit = 6;
             $page = isset($_GET['page']) ? $_GET['page'] : 1;
             $page = (int)$page; 
             $offset = ($page -1) * $limit; 
