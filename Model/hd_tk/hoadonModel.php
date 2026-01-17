@@ -33,7 +33,7 @@ class HoaDonModel {
 
     public function xacNhanTraXe($idhoadon, $ngay_qua_han, $tong_tien, $phuongthuc) {
 
-        $phuongthuc = 'VNpay';
+      //  $phuongthuc = 'VNpay';
 
         $query_hd = "UPDATE hoadon SET trangthai = 1, tongtien = ? WHERE idhoadon = ?";
         $stmt1 = mysqli_prepare($this->conn, $query_hd);

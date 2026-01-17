@@ -34,7 +34,7 @@ require_once __DIR__ . "/../../config.php"; ?>
 
                 <label>Giá thuê (VNĐ / ngày)<span style="color: red">*</span></label>
                 <input type="number" name="giathue" min="0" required>
-
+                
                 <label>Mô tả</label>
                 <textarea name="mota" rows="4"></textarea>
 
@@ -48,7 +48,7 @@ require_once __DIR__ . "/../../config.php"; ?>
             </form>
         </div>
     </div>
-    <script src="../JS/vehicle/addVehicle.js"></script>
+    <script src="View/JS/vehicle/addVehicle.js"></script>
 </body>
 
 </html>

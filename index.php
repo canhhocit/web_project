@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-define('ACCESSED_FROM_CONTROLLER', true); // ngăn chặn truy cập trực tiếp từ trình duyệt
+define('ACCESSED_FROM_CONTROLLER', true); 
 define('ACCESS_HOPLE', true);
 
 

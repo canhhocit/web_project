@@ -59,9 +59,16 @@
 
                     </form>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" style="display: flex; justify-content: space-between; gap: 10px;">
                     <button type="button" class="btn btn-secondary" onclick="huyTT()">Hủy</button>
-                    <button type="button" class="btn btn-primary" onclick="xacNhanTraXe()">Tiếp tục</button>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn btn-success" onclick="thanhToanSePay()">
+                            <i class="fas fa-qrcode"></i> SePay
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="thanhToanVNPay()">
+                            <i class="fas fa-credit-card"></i> VNPay
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
