@@ -25,6 +25,10 @@ $_SESSION['pending_payment'] = array(
     'va_code' => $vaCode
 );
 
+// Lưu thời gian tạo giao dịch
+$_SESSION['pending_payment']['created_at'] = time();
+$_SESSION['pending_payment']['expires_at'] = time() + (10 * 60); // 10 phút
+
 
 $sepay_va = '96247LVD02';
 
@@ -464,10 +468,13 @@ $qr_url = "https://qr.sepay.vn/img"
             </div>
             
             <div class="status">
-                <div class="status-text">
+                 <div class="status-text">
                     <div class="spinner"></div>
-                    <span>Đang xác nhận...</span>
-                </div>
+                    <span id="statusText">Đang xác nhận...</span>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #666;">
+                        Giao dịch hết hạn sau: <strong id="countdown">10:00</strong>
+                    </div>
             </div>
             
             <div class="alert" id="copyAlert">
@@ -556,6 +563,31 @@ function checkPaymentStatus() {
             console.error('Fetch error:', error);
         });
 }
+
+        let timeLeft = 10 * 60; // 10 phút = 600 giây
+        const countdownEl = document.getElementById('countdown');
+        const statusTextEl = document.getElementById('statusText');
+        
+        const countdownTimer = setInterval(() => {
+            timeLeft--;
+            
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            countdownEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                clearInterval(checkInterval);
+                
+                // Hủy giao dịch
+                statusTextEl.innerHTML = '<span style="color: #f44336;">Giao dịch đã hết hạn</span>';
+                
+                // Chuyển về trang thanh toán sau 3 giây
+                setTimeout(() => {
+                    window.location.href = '/web_project/index.php?controller=thanhtoan&action=index&expired=1';
+                }, 3000);
+            }
+        }, 1000);
 
 // Kiểm tra ngay khi load trang
 setTimeout(checkPaymentStatus, 2000);

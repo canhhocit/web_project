@@ -15,10 +15,27 @@ if (!isset($_GET['order_id'])) {
     exit;
 }
 
+
 $order_id = (int)$_GET['order_id'];
 if ($order_id <= 0) {
     echo json_encode(['success' => false, 'message' => 'Invalid order_id']);
     exit;
+}
+
+// Kiểm tra session có tồn tại và chưa hết hạn
+if (isset($_SESSION['pending_payment'])) {
+    $expires_at = $_SESSION['pending_payment']['expires_at'] ?? 0;
+    
+    if (time() > $expires_at) {
+        // Đã hết hạn
+        unset($_SESSION['pending_payment']);
+        echo json_encode([
+            'success' => false, 
+            'expired' => true,
+            'message' => 'Transaction expired'
+        ]);
+        exit;
+    }
 }
 
 require_once __DIR__ . '/Model/Database/dbconnect.php';
