@@ -243,5 +243,4 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Xuất hàm này ra ngoài để trang khác (Chi tiết xe) có thể gọi
 window.createChatFromCarDetail = createConversation;
